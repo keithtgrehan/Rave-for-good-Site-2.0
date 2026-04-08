@@ -111,22 +111,26 @@ export default function Partners() {
 
         {/* CTA */}
         <motion.div 
-          className="bg-primary text-primary-foreground p-12 md:p-20 text-center"
+          className="relative border border-border bg-card p-12 md:p-20 text-center overflow-hidden"
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="font-display text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-6 text-background">
-            Ready to align?
-          </h2>
-          <p className="text-background/80 font-medium text-lg md:text-xl max-w-2xl mx-auto mb-10">
-            If your venue, agency, or collective wants to integrate direct impact into your operations, let's talk.
-          </p>
-          <Link href="/contact">
-            <Button variant="outline" className="rounded-none border-background text-background hover:bg-background hover:text-primary font-bold tracking-widest uppercase h-14 px-10" data-testid="button-partner-contact">
-              Initiate Contact
-            </Button>
-          </Link>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+          <div className="relative z-10">
+            <p className="font-mono text-xs text-primary uppercase tracking-widest mb-6">Become an Ally</p>
+            <h2 className="font-display text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-6">
+              Ready to align?
+            </h2>
+            <p className="text-foreground/60 font-medium text-lg md:text-xl max-w-2xl mx-auto mb-10">
+              If your venue, agency, or collective wants to integrate direct impact into your operations, let's talk.
+            </p>
+            <Link href="/contact">
+              <Button className="rounded-none font-bold tracking-widest uppercase h-14 px-10" data-testid="button-partner-contact">
+                Initiate Contact
+              </Button>
+            </Link>
+          </div>
         </motion.div>
 
       </div>

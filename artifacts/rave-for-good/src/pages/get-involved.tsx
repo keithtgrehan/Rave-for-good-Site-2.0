@@ -44,7 +44,7 @@ export default function GetInvolved() {
             transition={{ duration: 0.6, delay: 0.3 }}
             data-testid="section-donate"
           >
-            <div className="inline-block bg-primary text-primary-foreground px-3 py-1 font-mono text-xs font-bold uppercase tracking-widest mb-8">
+            <div className="inline-block border border-primary/40 text-primary px-3 py-1 font-mono text-xs font-bold uppercase tracking-widest mb-8">
               Direct Support
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-bold uppercase tracking-tighter mb-6">

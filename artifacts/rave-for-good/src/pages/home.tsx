@@ -83,18 +83,18 @@ export default function Home() {
       </section>
 
       {/* MARQUEE */}
-      <div className="w-full bg-primary text-primary-foreground py-4 overflow-hidden flex border-y border-primary/20" data-testid="section-marquee">
+      <div className="w-full bg-card py-4 overflow-hidden flex border-y border-border" data-testid="section-marquee">
         <motion.div 
           className="flex whitespace-nowrap gap-8 items-center"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ ease: "linear", duration: 20, repeat: Infinity }}
+          transition={{ ease: "linear", duration: 24, repeat: Infinity }}
         >
           {[...Array(6)].map((_, i) => (
             <div key={i} className="flex items-center gap-8">
-              <span className="font-display font-bold text-xl uppercase tracking-wider">More than a party</span>
-              <span className="text-2xl">✦</span>
-              <span className="font-display font-bold text-xl uppercase tracking-wider">A scene that gives back</span>
-              <span className="text-2xl">✦</span>
+              <span className="font-display font-bold text-base uppercase tracking-widest text-foreground/50">More than a party</span>
+              <span className="text-primary text-lg font-light">✦</span>
+              <span className="font-display font-bold text-base uppercase tracking-widest text-foreground/50">A scene that gives back</span>
+              <span className="text-primary text-lg font-light">✦</span>
             </div>
           ))}
         </motion.div>
