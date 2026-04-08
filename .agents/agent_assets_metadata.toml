@@ -1,0 +1,32 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "MpCpZITt9i-DMlZGDF6u0"
+uri = "file://artifacts/rave-for-good/public/images/hero.png"
+type = "image"
+title = "Berlin techno event crowd"
+
+[[generated]]
+id = "Ne_iaibehxa-nWqGxzqwS"
+uri = "file://artifacts/rave-for-good/public/images/impact.png"
+type = "image"
+title = "Burkina Faso well project"
+
+[[generated]]
+id = "BvI0UJZ5-MZdZ2ME_dX2M"
+uri = "file://artifacts/rave-for-good/public/images/about.png"
+type = "image"
+title = "Berlin music community"
+
+[[generated]]
+id = "K7wX0fX4SyBElu68Kchoy"
+uri = "file://artifacts/rave-for-good/public/images/event-1.png"
+type = "image"
+title = "Summer Edition Rave"
+
+[[generated]]
+id = "xJISqnSQ1qivpabThK-mB"
+uri = "file://artifacts/rave-for-good/public/images/event-2.png"
+type = "image"
+title = "Solidarity Sounds Rave"

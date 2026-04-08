@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Rave for Good"
+version = "1.0.0"
+id = "artifacts/rave-for-good"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26023
+
+[services.development]
+run = "pnpm --filter @workspace/rave-for-good run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rave-for-good", "run", "build" ]
+publicDir = "artifacts/rave-for-good/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26023"
+BASE_PATH = "/"

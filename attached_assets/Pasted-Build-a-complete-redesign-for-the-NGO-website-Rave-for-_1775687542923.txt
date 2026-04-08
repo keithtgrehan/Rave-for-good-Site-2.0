@@ -1,0 +1,202 @@
+Build a complete redesign for the NGO website “Rave for Good” as a modern, visually striking, responsive website.
+
+Project context:
+- Existing site: https://raveforgood.berlin/
+- Inspiration 1: https://www.katerclub.de/ for nightlife energy, visual atmosphere, edge, and a more immersive feel
+- Inspiration 2: https://www.wateraid.org/uk for better structure, navigation, CTA hierarchy, clarity, trust, and nonprofit conversion flow
+
+Goal:
+Create a website that feels like:
+“Berlin nightlife with real-world social impact”
+It must look credible enough for partners and donors, but still feel culturally relevant, cool, and rooted in electronic music.
+
+Core brand tension to solve:
+- Not a corporate charity site
+- Not a messy underground flyer page
+- It should sit between a progressive Berlin club brand and a sharp nonprofit campaign site
+
+What is wrong with the current site:
+- Too plain and generic
+- Weak visual identity
+- Not enough nightlife atmosphere
+- Structure is too basic
+- CTA hierarchy is weak
+- Event section does not feel alive
+- Impact story is present but not told powerfully enough
+- Overall UI does not feel premium, modern, or memorable
+
+Required stack:
+- Build with React + Next.js
+- Use Tailwind CSS
+- Use a clean component structure
+- Use modern animation sparingly but effectively (Framer Motion allowed)
+- Prioritize mobile-first responsive design
+- Make content editable through simple structured data files or a lightweight CMS-ready content layer
+- Optimize for fast load speed
+- Include accessible semantic HTML
+
+Design direction:
+- Dark, immersive, nightlife-led visual language with strong editorial layout
+- Rich hero section with layered imagery/video possibility, strong headline, and immediate CTA
+- Blend nightlife aesthetics with nonprofit clarity
+- Use bold typography, oversized section headers, strong image cards, atmospheric gradients, and subtle motion
+- Keep the site elegant, not chaotic
+- Should feel premium, intentional, and culturally credible
+- Avoid cheesy “charity template” visuals
+- Avoid generic startup SaaS design
+- Avoid overdesigned festival poster chaos
+
+Information architecture:
+Create the following main pages and navigation:
+
+1. Home
+2. About / Mission
+3. Events
+4. Impact
+5. Partners
+6. Get Involved
+7. Contact
+
+Optional:
+8. Gallery / Recaps
+9. Donate / Support
+
+Home page requirements:
+- Sticky transparent-to-solid header
+- Strong hero with headline, subheadline, and 2 CTAs
+  Example CTA logic:
+  - View Events
+  - Support the Mission
+- Short intro section explaining what Rave for Good is
+- “Nightlife with impact” section showing the concept clearly
+- Featured event / next event block
+- Past event recaps teaser
+- Impact highlight section focused on the Burkina Faso well project
+- Partner / supporter logos strip
+- Get involved cards:
+  - Attend
+  - Partner
+  - Donate / Support
+  - Volunteer
+- Instagram/social proof section
+- Strong footer with social links, contact info, quick links, nonprofit credibility
+
+About / Mission page:
+- Story-led layout
+- Explain origins: Berlin electronic music community + fundraising + nonprofit action
+- Include the transition from grassroots gatherings to registered NGO
+- Include committee / board section with portraits/cards
+- Tone should feel human, cultural, and serious without sounding stiff
+
+Events page:
+- Must feel much stronger than current site
+- Clear separation between:
+  - Upcoming events
+  - Past events
+- Event cards with date, venue, city, short description, ticket/status CTA
+- Past recap cards with imagery and links
+- Make it easy later to plug in RA / ticket links / Instagram recap links
+
+Impact page:
+- One strong flagship impact story section
+- Focus on Zigla Pakala / Burkina Faso clean water initiative
+- Show progress visually:
+  - problem
+  - action
+  - result
+  - next goal
+- Include key stats cards
+- Include image-led storytelling
+- Add trust markers and proof-oriented layout
+- This page should borrow structural clarity from strong NGO websites
+
+Partners page:
+- Designed for venues, brands, collectives, media, and supporters
+- Clear reasons to partner
+- Partnership types
+- CTA to contact / collaborate
+- Logo wall and testimonials-ready section
+
+Get Involved page:
+- Multiple paths:
+  - Attend events
+  - Donate
+  - Partner
+  - Volunteer
+  - Spread the word
+- Clear CTA hierarchy
+- Each option should feel easy and actionable
+
+Contact page:
+- Clean form
+- Email
+- Instagram
+- Optional WhatsApp link placeholder
+- Basic FAQ or contact guidance
+
+Visual features to include:
+- Large immersive hero
+- Editorial split-layout sections
+- Image-heavy cards
+- Hover interactions
+- Smooth scroll
+- Scroll-triggered reveal animation
+- Optional background grain / subtle texture
+- Optional marquee or ticker for upcoming events / mission messaging
+- Optional dynamic counters for impact stats
+- Optional embedded Instagram feed placeholder
+- Optional audio/music-inspired visual motif used tastefully, not gimmicky
+
+Copy direction:
+Use sharper, better copy than the current site.
+Tone:
+- clear
+- confident
+- culturally aware
+- not corporate
+- not cringe
+- not overhyped
+
+Example tone:
+“We turn dancefloors into direct impact.”
+“Berlin nightlife, channelled into clean water and community action.”
+“More than a party. A scene that gives back.”
+
+Important UX goals:
+- Immediate clarity: what this is, why it matters, what to do next
+- Stronger conversion into event attendance, partner interest, and support
+- Better storytelling
+- Better trust
+- Better visual memorability
+- Easy for a small NGO team to maintain
+
+Technical requirements:
+- Use reusable components
+- Use a structured design system
+- Include mock content based on the existing Rave for Good site
+- Create all pages, navigation, footer, buttons, cards, sections, and responsive layouts
+- Include placeholder assets and clear comments for where real photography, event posters, and logos go
+- Use realistic demo copy based on the current brand and mission
+- Build it so it can be deployed easily later
+
+Deliverables:
+- Full homepage
+- All core inner pages
+- Shared layout and nav/footer
+- Tailwind styling
+- Mobile responsive implementation
+- Clean folder structure
+- Easy-to-edit content source
+- README with setup and editing instructions
+
+Also include:
+1. A short explanation of the design system
+2. Suggested color palette
+3. Suggested font pairings
+4. A list of future upgrades:
+   - donations integration
+   - CMS
+   - event sync
+   - Instagram feed
+   - partner CRM
+   - volunteer signup
