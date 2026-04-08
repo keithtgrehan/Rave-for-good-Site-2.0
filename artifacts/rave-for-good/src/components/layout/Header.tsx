@@ -17,10 +17,8 @@ export function Header() {
   const [location] = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -30,56 +28,67 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled || isMobileMenuOpen
-          ? "bg-background/90 backdrop-blur-lg border-b border-white/[0.06] py-4"
-          : "bg-transparent py-6"
+          ? "bg-background/92 backdrop-blur-xl border-b border-white/[0.055] py-4"
+          : "bg-transparent py-7"
       }`}
       data-testid="layout-header"
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+
         <Link href="/" className="z-50 relative">
-          <span className="font-display font-bold text-lg tracking-tighter uppercase cursor-pointer text-foreground/90 hover:text-foreground transition-colors" data-testid="link-home">
+          <span
+            className="font-display font-bold tracking-[-0.04em] uppercase cursor-pointer text-foreground/95 hover:text-foreground transition-colors duration-200 text-[15px]"
+            data-testid="link-home"
+          >
             RAVE FOR GOOD
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8" data-testid="nav-desktop">
-          {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href}>
-              <span
-                className={`text-xs font-medium tracking-[0.14em] uppercase transition-colors cursor-pointer ${
-                  location === link.href
-                    ? "text-foreground"
-                    : "text-foreground/40 hover:text-foreground/80"
-                }`}
-                data-testid={`link-${link.label.toLowerCase()}`}
-              >
-                {link.label}
-              </span>
-            </Link>
-          ))}
+        <nav className="hidden md:flex items-center gap-10" data-testid="nav-desktop">
+          {NAV_LINKS.map((link) => {
+            const isActive = location === link.href;
+            return (
+              <Link key={link.href} href={link.href}>
+                <span
+                  className={`relative text-[11px] font-medium tracking-[0.14em] uppercase transition-colors duration-200 cursor-pointer pb-1 ${
+                    isActive
+                      ? "text-foreground nav-active"
+                      : "text-foreground/38 hover:text-foreground/75"
+                  }`}
+                  data-testid={`link-${link.label.toLowerCase()}`}
+                >
+                  {link.label}
+                </span>
+              </Link>
+            );
+          })}
           <Link href="/get-involved">
-            <Button variant="default" className="font-bold tracking-widest uppercase rounded-none text-xs" data-testid="button-get-involved-nav">
+            <Button
+              variant="default"
+              className="btn-cta font-bold tracking-[0.14em] uppercase rounded-none text-[11px] h-9 px-5"
+              data-testid="button-get-involved-nav"
+            >
               Get Involved
             </Button>
           </Link>
         </nav>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Toggle */}
         <button
-          className="md:hidden z-50 relative text-foreground/60 hover:text-foreground p-2 transition-colors"
+          className="md:hidden z-50 relative text-foreground/50 hover:text-foreground p-2 transition-colors duration-200"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           data-testid="button-mobile-menu-toggle"
           aria-label="Toggle menu"
         >
-          {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
-        {/* Mobile Nav Overlay */}
+        {/* Mobile Overlay */}
         <div
-          className={`fixed inset-0 bg-background/97 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 ease-in-out ${
+          className={`fixed inset-0 bg-background/96 backdrop-blur-2xl z-40 flex flex-col items-center justify-center gap-10 transition-all duration-400 ease-in-out ${
             isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
           }`}
           data-testid="nav-mobile"
@@ -87,8 +96,8 @@ export function Header() {
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href}>
               <span
-                className={`text-3xl font-display font-bold tracking-tight uppercase cursor-pointer transition-colors ${
-                  location === link.href ? "text-primary" : "text-foreground/60 hover:text-foreground"
+                className={`font-display text-4xl font-bold tracking-[-0.025em] uppercase cursor-pointer transition-colors duration-200 ${
+                  location === link.href ? "text-primary" : "text-foreground/50 hover:text-foreground"
                 }`}
                 data-testid={`mobile-link-${link.label.toLowerCase()}`}
               >
@@ -97,11 +106,16 @@ export function Header() {
             </Link>
           ))}
           <Link href="/get-involved">
-            <Button size="lg" className="mt-8 font-bold tracking-widest uppercase rounded-none text-lg px-12 py-6" data-testid="button-get-involved-mobile">
+            <Button
+              size="lg"
+              className="btn-cta mt-6 font-bold tracking-[0.14em] uppercase rounded-none px-12 h-14"
+              data-testid="button-get-involved-mobile"
+            >
               Get Involved
             </Button>
           </Link>
         </div>
+
       </div>
     </header>
   );

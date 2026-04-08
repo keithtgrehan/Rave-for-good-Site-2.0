@@ -1,0 +1,214 @@
+We have completed a UI cleanup and color system refinement.
+
+Now move from “clean UI” to “distinct, high-end brand experience.”
+
+Do NOT change:
+- Any content
+- Any routes
+- Any data files
+- Any text
+- Any structure
+
+Only improve:
+- Visual identity depth
+- Interaction quality
+- Atmosphere
+- Perceived premium level
+- Conversion clarity
+
+This is NOT a redesign. This is a refinement pass to make the site feel:
+- more intentional
+- more editorial
+- more Berlin nightlife
+- more premium
+- more memorable
+
+--------------------------------
+PHASE 2 OBJECTIVES
+--------------------------------
+
+1. Add DEPTH (critical)
+The site still feels flat.
+
+Implement:
+- Subtle radial lighting behind key sections (hero, events, impact)
+- Very soft gradient noise / texture layer (low opacity)
+- Layered backgrounds (not just flat color blocks)
+- Slight vignette effect on full-width sections
+
+Goal:
+Make it feel like a physical space, not a flat page
+
+--------------------------------
+
+2. Improve TYPOGRAPHY HIERARCHY
+
+Current issue:
+Everything likely feels same-weight and safe
+
+Fix:
+- Increase contrast between headings and body
+- Make hero headline more dominant (scale + tighter leading)
+- Reduce paragraph width for readability (~60–75ch max)
+- Introduce slight letter-spacing on labels (events, badges, meta text)
+- Use uppercase + tracking for small UI labels
+
+Goal:
+More editorial, less “web app”
+
+--------------------------------
+
+3. Upgrade CARD SYSTEM
+
+Current issue:
+Cards are clean but forgettable
+
+Improve:
+- Add subtle inner gradient or lighting edge
+- Add very soft hover elevation (translateY + shadow blur)
+- Add glow interaction on hover (extremely subtle, colored by accent)
+- Ensure consistent spacing rhythm across all cards
+
+Do NOT:
+- Add heavy shadows
+- Add thick borders
+
+Goal:
+Cards feel tactile and premium
+
+--------------------------------
+
+4. HERO — MAKE IT FEEL LIKE A SCENE
+
+Current issue:
+Hero is clean but still static
+
+Enhance:
+- Add slow, subtle animated gradient or light movement (VERY subtle)
+- Add soft grain texture overlay
+- Add depth layer behind text (radial violet/blue glow already exists — refine it)
+- Slight fade-in stagger for:
+  - headline
+  - subtext
+  - CTAs
+
+Optional:
+- Very subtle parallax on scroll
+
+Goal:
+Feels alive, not static
+
+--------------------------------
+
+5. CTA SYSTEM (IMPORTANT FOR CONVERSION)
+
+Current issue:
+CTAs likely look good but not systemized
+
+Standardize:
+- Primary CTA = filled (deep violet or blue)
+- Secondary CTA = outline / ghost
+- Tertiary = text link
+
+Add:
+- Consistent hover states across all CTAs
+- Slight scale (1.02–1.04) on hover
+- Faster interaction timing (snappy, not slow)
+
+Goal:
+User always knows what to click next
+
+--------------------------------
+
+6. SECTION TRANSITIONS
+
+Current issue:
+Sections likely feel stacked
+
+Improve:
+- Add subtle dividers (gradients, fades, or spacing rhythm)
+- Introduce slight background variation between sections
+- Use spacing as a design tool (more breathing room in key sections)
+
+Goal:
+Flow, not blocks
+
+--------------------------------
+
+7. EVENTS PAGE — MAKE IT FEEL LIKE CULTURE
+
+Current issue:
+Still might feel like a list
+
+Enhance:
+- Make event cards more visual-first (image dominance)
+- Add subtle overlay gradient for readability
+- Improve date/location hierarchy
+- Add hover state that feels like “entering the event”
+
+Optional:
+- Slight zoom-in on image hover
+
+Goal:
+Feels like nightlife, not a table
+
+--------------------------------
+
+8. IMPACT PAGE — INCREASE TRUST + WEIGHT
+
+Current issue:
+Too design-focused, not enough gravity
+
+Improve:
+- Increase contrast in “problem → action → result”
+- Add more visual separation between sections
+- Make stats feel more important (scale + spacing)
+- Add subtle emphasis on “Next Goal” as forward momentum
+
+Goal:
+Feels serious, credible, real
+
+--------------------------------
+
+9. MICRO-INTERACTIONS (FINAL POLISH)
+
+Add:
+- Smooth hover transitions (200–300ms max)
+- Consistent easing across the entire site
+- Subtle link underline animation (not default browser)
+- Icon movement (very slight)
+
+Goal:
+Everything feels intentional
+
+--------------------------------
+
+10. PERFORMANCE GUARDRAILS
+
+Do NOT:
+- Add heavy animations
+- Add large video files
+- Add anything that slows initial load
+
+Keep:
+- Fast
+- Clean
+- Responsive
+
+--------------------------------
+
+FINAL CHECK
+
+After implementation, validate:
+
+- Does the site feel like a Berlin club brand, not a template?
+- Does it feel premium without being overdesigned?
+- Is there depth and atmosphere?
+- Are CTAs clear and consistent?
+- Does each page have a distinct feel but still coherent?
+
+Do not add new features.
+Do not change content.
+Do not overdesign.
+
+This is a refinement pass, not a rebuild.
