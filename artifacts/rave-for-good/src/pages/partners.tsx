@@ -21,10 +21,10 @@ export default function Partners() {
   return (
     <div className="w-full pt-32 pb-24 md:pt-40 md:pb-32" data-testid="page-partners">
       <div className="container px-4 md:px-6">
-        
+
         {/* Header */}
         <div className="max-w-4xl mb-20 md:mb-32">
-          <motion.h1 
+          <motion.h1
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter mb-8 leading-[0.9]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -33,8 +33,8 @@ export default function Partners() {
           >
             Built by the <br/><span className="text-primary">Scene</span>
           </motion.h1>
-          <motion.p 
-            className="text-xl md:text-2xl text-foreground/80 font-serif leading-relaxed"
+          <motion.p
+            className="text-xl md:text-2xl text-foreground/55 font-light leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -45,12 +45,12 @@ export default function Partners() {
 
         {/* Partner Types Grid */}
         <div className="mb-32">
-          <h2 className="font-display text-3xl font-bold uppercase tracking-tighter mb-10 border-b border-border pb-4">
+          <h2 className="font-display text-2xl font-bold uppercase tracking-tighter mb-10 border-b border-white/[0.06] pb-4 text-foreground/70">
             How to Partner
           </h2>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04]"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -62,15 +62,15 @@ export default function Partners() {
               { icon: Megaphone, title: "Collectives", desc: "Co-host an event where profits go to the NGO." },
               { icon: Handshake, title: "Agencies", desc: "Provide logistical, ticketing, or media support pro bono." }
             ].map((item, i) => (
-              <motion.div 
-                key={i} 
+              <motion.div
+                key={i}
                 variants={cardVariant}
-                className="bg-card border border-border p-8"
+                className="bg-card hover:bg-background transition-colors duration-300 p-8"
                 data-testid={`card-partner-type-${i}`}
               >
-                <item.icon size={32} className="text-primary mb-6" />
+                <item.icon size={22} className="text-primary/60 mb-6" />
                 <h3 className="font-display text-xl font-bold uppercase tracking-tight mb-3">{item.title}</h3>
-                <p className="text-foreground/60 text-sm">{item.desc}</p>
+                <p className="text-foreground/50 text-sm font-light leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -85,44 +85,44 @@ export default function Partners() {
             className="text-center mb-16"
           >
             <h2 className="font-display text-4xl font-bold uppercase tracking-tighter mb-4">Current Allies</h2>
-            <p className="text-foreground/60 font-mono text-xs uppercase tracking-widest">Standing with us</p>
+            <p className="text-foreground/35 font-mono text-[10px] uppercase tracking-[0.18em]">Standing with us</p>
           </motion.div>
 
-          <motion.div 
-            className="flex flex-wrap justify-center gap-6 md:gap-10"
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 md:gap-6"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
           >
             {partners.map((partner, i) => (
-              <motion.div 
-                key={i} 
+              <motion.div
+                key={i}
                 variants={cardVariant}
-                className="px-8 py-6 border border-border bg-background hover:border-primary/50 hover:bg-card transition-all text-center flex-grow sm:flex-grow-0"
+                className="px-8 py-6 border border-white/[0.06] bg-card hover:border-white/[0.14] hover:bg-background transition-all duration-300 text-center"
                 data-testid={`partner-logo-${i}`}
               >
                 <div className="font-display font-bold text-2xl uppercase tracking-tighter mb-2">{partner.name}</div>
-                <div className="text-primary font-mono text-[10px] uppercase tracking-widest">{partner.type}</div>
+                <div className="text-primary/60 font-mono text-[10px] uppercase tracking-widest">{partner.type}</div>
               </motion.div>
             ))}
           </motion.div>
         </div>
 
         {/* CTA */}
-        <motion.div 
-          className="relative border border-border bg-card p-12 md:p-20 text-center overflow-hidden"
+        <motion.div
+          className="relative border border-white/[0.06] bg-card p-12 md:p-20 text-center overflow-hidden"
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(109,94,245,0.07)_0%,rgba(77,163,255,0.04)_40%,transparent_70%)] pointer-events-none" />
           <div className="relative z-10">
-            <p className="font-mono text-xs text-primary uppercase tracking-widest mb-6">Become an Ally</p>
+            <p className="font-mono text-[10px] text-primary/70 uppercase tracking-[0.18em] mb-6">Become an Ally</p>
             <h2 className="font-display text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-6">
               Ready to align?
             </h2>
-            <p className="text-foreground/60 font-medium text-lg md:text-xl max-w-2xl mx-auto mb-10">
+            <p className="text-foreground/50 font-light text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
               If your venue, agency, or collective wants to integrate direct impact into your operations, let's talk.
             </p>
             <Link href="/contact">

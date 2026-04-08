@@ -1,0 +1,194 @@
+You are editing an EXISTING Rave for Good website.
+
+PRIMARY GOAL:
+Apply a premium visual redesign only.
+Do NOT rewrite, invent, replace, or expand content.
+
+SOURCE OF TRUTH:
+The current live site and the existing codebase are the only source of truth.
+Preserve the real copy, real images, real links, real routes, real page structure, and real data bindings exactly as they already exist.
+
+NON-NEGOTIABLE RULES:
+- NO hallucinated content
+- NO new pages
+- NO renamed pages
+- NO rewritten NGO story
+- NO fake stats
+- NO fake events
+- NO fake team members
+- NO fake partner categories
+- NO placeholder copy
+- NO changing images unless the exact existing assets are being reused
+- NO restructuring content/data unless required purely to improve styling consistency
+- NO breaking existing routes, components, or data files
+- SAME text
+- SAME images
+- SAME pages
+- SAME data
+- NEW UI ONLY
+
+TASK ORDER:
+1. First inspect the existing app structure, routes, components, styles, and data sources
+2. Identify every place where neon green / acid-lime or loud accent usage appears
+3. Create or update a centralized theme system
+4. Apply the new palette consistently across shared components first
+5. Then update page-level styling
+6. Before finishing, verify that content and images are unchanged
+
+OUTPUT FORMAT:
+Before editing, print:
+- pages/routes found
+- data files found
+- shared UI components found
+- all files that contain color tokens or hardcoded colors
+- exact list of files you will modify
+
+Then make the edits.
+
+DESIGN DIRECTION:
+The site should feel:
+- Berlin nightlife
+- premium
+- editorial
+- atmospheric
+- sharp
+- restrained
+- culturally credible
+- dark and elegant
+
+It must NOT feel:
+- neon
+- cheap
+- rave flyer chaos
+- startup SaaS
+- juvenile
+- gimmicky
+- overly gradient-heavy
+- overly saturated
+
+NEW PALETTE:
+Background: #0A0A0D
+Section background: #12131A
+Surface/card: #181A22
+Border/divider: rgba(255,255,255,0.08)
+
+Primary text: #F5F7FA
+Secondary text: #B8C0CC
+Muted text: #7E8795
+
+Accent blue: #4DA3FF
+Accent violet: #6D5EF5
+Accent purple: #C85CFF
+Accent pink: #FF5FA2
+
+COLOR RULES:
+- The UI should be mostly black/off-black/dark neutral
+- Accent colors should be sparse and intentional
+- Blue and violet should carry the mood
+- Pink should be minimal and secondary only
+- No neon green or acid-lime anywhere
+- No oversized bright fills
+- Gradients must be subtle and atmospheric only
+- Use color mainly for focus, hover, CTA emphasis, active states, small highlights, or soft background glow
+
+VISUAL RULES:
+- Strong dark base
+- Clean editorial spacing
+- High contrast typography
+- Refined card surfaces
+- Subtle borders
+- Elegant hover states
+- Soft atmospheric blue/violet lighting only where controlled
+- Minimal but premium motion
+- Keep everything legible and sharp
+
+TYPOGRAPHY RULES:
+- Preserve existing content exactly
+- Improve only visual hierarchy, spacing, weight, scale, and rhythm
+- Headlines should feel editorial, not gimmicky
+- Body text must stay highly readable
+- Maintain strong contrast throughout
+
+MUST UPDATE VISUALLY:
+- header / sticky nav
+- hero
+- CTA buttons
+- credibility / stat areas
+- marquee / ticker if present
+- cards
+- event cards
+- impact section
+- partner section
+- contact section
+- footer
+- forms / inputs
+- section dividers
+- hover / focus / active states
+
+SPECIFIC COMPONENT DIRECTION:
+
+HEADER / NAV
+- Transparent over hero, dark solid surface on scroll
+- Clean active state using underline, border, or restrained accent glow
+- No loud filled nav pills unless extremely controlled
+
+HERO
+- Keep the exact existing headline, subcopy, and CTAs
+- Improve composition and atmosphere only
+- Add subtle blue/violet lighting depth if useful
+- No new slogans or claims
+
+TICKER / MARQUEE
+- Dark editorial strip
+- Subtle separators
+- Elegant, quiet, premium treatment
+
+CARDS
+- Surface: dark refined panel
+- Soft border
+- Very subtle hover lift or glow
+- No loud color fills
+
+BUTTONS
+- Primary: restrained violet/blue emphasis
+- Secondary: dark ghost/outline treatment
+- Premium, not app-store gimmicky
+
+IMPACT SECTION
+- Preserve exact real content and imagery
+- Make it feel credible, emotional, and editorial
+- No invented metrics or added claims
+
+EVENTS
+- Preserve exact existing event content, images, dates, and labels from the real site/code
+- Improve layout and hierarchy only
+- Do not invent upcoming or past events
+
+FOOTER
+- Keep all real links and contact details intact
+- Improve spacing, styling, and hierarchy only
+
+TECHNICAL RULES:
+- Centralize all color tokens where possible
+- Remove neon green / acid-lime from tokens, classes, inline styles, gradients, borders, shadows, focus states, buttons, badges, and icons
+- Prefer reusable theme variables/tokens over scattered hardcoded colors
+- Preserve responsiveness
+- Preserve accessibility contrast
+- Preserve existing content bindings
+- Do not alter the underlying data model unless necessary for styling consistency
+
+FINAL VALIDATION:
+Before you finish, explicitly verify:
+- no neon green remains
+- no content was invented
+- no copy was changed
+- no images were changed
+- no routes/pages were changed
+- no data meaning was changed
+- only UI/theme/styling was changed
+
+FINAL DELIVERABLE:
+Return:
+1. the exact files changed
+2. a concise summary of styling changes
+3. a validation checklist confirming content was preserved

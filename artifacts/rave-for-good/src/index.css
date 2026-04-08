@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -50,17 +50,18 @@
 }
 
 :root {
-  /* Palette:
-   * Background:     #0A0A0D  → 240 14% 5%
-   * Card/section:   #12131A  → 237 18% 9%
-   * Surface:        #181A22  → 234 18% 11%
-   * Primary text:   #F5F7FA  → 216 40% 97%
-   * Secondary text: #B8C0CC  → 213 17% 76%
-   * Muted text:     #7E8795  → 215 9% 54%
-   * Primary accent: #6D5EF5  → 246 88% 66%  (violet)
-   * Blue accent:    #4DA3FF  → 211 100% 65%
-   * Pink accent:    #FF5FA2  → 335 100% 68%
-   * Border:         #1E2030  → 234 22% 15%
+  /*
+   * Palette — Berlin nightlife premium
+   *
+   * Background:       #0A0A0D  → 240 14% 5%
+   * Card/section:     #12131A  → 237 18% 9%
+   * Surface:          #181A22  → 234 18% 11%
+   * Primary text:     #F5F7FA  → 216 40% 97%
+   * Secondary text:   #B8C0CC  → 213 17% 76%
+   * Muted text:       #7E8795  → 215 9% 54%
+   * Primary/violet:   #6D5EF5  → 246 88% 66%
+   * Accent/blue:      #4DA3FF  → 211 100% 65%
+   * Border:           rgba(255,255,255,0.07) approximated → 234 14% 13%
   */
 
   --background: 240 14% 5%;
@@ -68,12 +69,13 @@
 
   --card: 237 18% 9%;
   --card-foreground: 216 40% 97%;
-  --card-border: 234 22% 13%;
+  --card-border: 234 14% 13%;
 
   --popover: 237 18% 9%;
   --popover-foreground: 216 40% 97%;
-  --popover-border: 234 22% 13%;
+  --popover-border: 234 14% 13%;
 
+  /* Violet — used sparingly for CTAs and key accents */
   --primary: 246 88% 66%;
   --primary-foreground: 0 0% 100%;
 
@@ -83,14 +85,16 @@
   --muted: 234 18% 11%;
   --muted-foreground: 215 9% 54%;
 
+  /* Blue — secondary accent, hover/focus glow */
   --accent: 211 100% 65%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 70% 55%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 234 22% 14%;
-  --input: 234 22% 14%;
+  /* Borders: very subtle, close to rgba(255,255,255,0.08) */
+  --border: 234 14% 13%;
+  --input: 234 14% 13%;
   --ring: 246 88% 66%;
 
   --radius: 0rem;
@@ -98,7 +102,6 @@
   --app-font-sans: 'Inter', sans-serif;
   --app-font-display: 'Space Grotesk', sans-serif;
 
-  /* Auto-computed borders */
   --opaque-button-border-intensity: -8;
 
   --primary-border: hsl(var(--primary));
@@ -120,38 +123,34 @@
 .dark {
   --background: 240 14% 5%;
   --foreground: 216 40% 97%;
-
   --card: 237 18% 9%;
   --card-foreground: 216 40% 97%;
-  --card-border: 234 22% 13%;
-
+  --card-border: 234 14% 13%;
   --popover: 237 18% 9%;
   --popover-foreground: 216 40% 97%;
-  --popover-border: 234 22% 13%;
-
+  --popover-border: 234 14% 13%;
   --primary: 246 88% 66%;
   --primary-foreground: 0 0% 100%;
-
   --secondary: 234 18% 11%;
   --secondary-foreground: 213 17% 76%;
-
   --muted: 234 18% 11%;
   --muted-foreground: 215 9% 54%;
-
   --accent: 211 100% 65%;
   --accent-foreground: 0 0% 100%;
-
   --destructive: 0 70% 55%;
   --destructive-foreground: 0 0% 100%;
-
-  --border: 234 22% 14%;
-  --input: 234 22% 14%;
+  --border: 234 14% 13%;
+  --input: 234 14% 13%;
   --ring: 246 88% 66%;
 }
 
 @layer base {
   * {
     @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -162,13 +161,20 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight;
   }
+
+  /* Premium text selection */
+  ::selection {
+    background-color: rgba(109, 94, 245, 0.22);
+    color: hsl(216 40% 97%);
+  }
 }
 
+/* Subtle film grain overlay for depth */
 .noise-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 50;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 100;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
