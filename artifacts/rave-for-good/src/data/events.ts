@@ -1,46 +1,32 @@
 export const events = [
   {
-    id: "rave-for-good-summer",
-    title: "Rave for Good: Summer Edition",
-    date: "2025-07-19",
-    venue: "Tresor Berlin",
+    id: "party-of-hearts-kater-blau",
+    title: "Party of Hearts at Kater Blau",
+    date: "2024-06-28",
+    venue: "Kater Blau",
     city: "Berlin",
-    description: "Fundraiser night featuring local DJs. Channeling the heat of summer into clean water action.",
-    status: "upcoming",
-    ticketLink: "#",
-    image: "/images/event-1.png"
-  },
-  {
-    id: "solidarity-sounds-3",
-    title: "Solidarity Sounds Vol. 3",
-    date: "2025-09-06",
-    venue: "OHM Berlin",
-    city: "Berlin",
-    description: "100% of proceeds to clean water initiatives. An intimate night of deep techno and community.",
-    status: "upcoming",
-    ticketLink: "#",
-    image: "/images/event-2.png"
-  },
-  {
-    id: "winter-fundraiser-2024",
-    title: "Winter Fundraiser 2024",
-    date: "2024-12-14",
-    venue: "Berghain Kantine",
-    city: "Berlin",
-    description: "Closing out the year with a powerful lineup. All funds went to our first Zigla Pakala well.",
+    description: "The Party of Hearts returned to Berlin with a colorful multi-floor fundraising night after moving from Mensch Meier.",
     status: "past",
-    amountRaised: "€7,800",
-    image: "/images/event-1.png"
+    image: "/images/kater.png"
   },
   {
-    id: "rave-for-good-opening",
-    title: "Rave for Good: Opening Night",
-    date: "2023-10-21",
-    venue: "Underground Warehouse",
+    id: "rave-the-planet-2024",
+    title: "Rave The Planet 2024",
+    date: "2024-08-17",
+    venue: "Rave The Planet",
     city: "Berlin",
-    description: "The night it all started. Bringing the scene together for the first time for a direct cause.",
+    description: "A full-day community activation with partner collectives, artists, and volunteers managing float operations and safety.",
     status: "past",
-    amountRaised: "€4,200",
-    image: "/images/event-2.png"
+    image: "/images/rave-the-planet.jpg"
+  },
+  {
+    id: "rave-for-good-im-meier-2023",
+    title: "Rave for Good im Meier 2023",
+    date: "2023-11-11",
+    venue: "Mensch Meier",
+    city: "Berlin",
+    description: "A final 2023 fundraiser featuring DJ sets and live sets before the venue closure.",
+    status: "past",
+    image: "/images/meier-lineup.png"
   }
 ];

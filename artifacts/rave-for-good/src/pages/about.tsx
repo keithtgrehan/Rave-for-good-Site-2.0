@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
 import { team } from "@/data/team";
 
 const fadeIn = {
@@ -12,8 +10,6 @@ export default function About() {
   return (
     <div className="w-full pt-32 pb-24 md:pt-40 md:pb-32" data-testid="page-about">
       <div className="container px-4 md:px-6">
-
-        {/* Header */}
         <div className="max-w-4xl mb-20 md:mb-32">
           <motion.h1
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter mb-8 leading-[0.9]"
@@ -22,8 +18,8 @@ export default function About() {
             transition={{ duration: 0.6 }}
             data-testid="heading-about"
           >
-            The <br/>
-            <span className="text-primary">Origin</span>
+            Our <br />
+            <span className="text-primary">Story</span>
           </motion.h1>
           <motion.div
             className="h-px mb-8 bg-gradient-to-r from-primary/50 to-transparent"
@@ -37,11 +33,10 @@ export default function About() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Rave for Good began in a late-night conversation outside a Berlin club in 2022. We asked a simple question: What if the immense energy and capital flowing through nightlife could be captured for tangible humanitarian impact?
+            Rave for Good began in 2018 with a simple but powerful idea: to bring our community together through music and dance while creating a positive impact beyond the dance floor.
           </motion.p>
         </div>
 
-        {/* Story Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-32 items-center">
           <motion.div
             className="relative aspect-[3/4] border border-white/[0.06]"
@@ -50,11 +45,10 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="absolute inset-0 bg-background/10 mix-blend-multiply z-10" />
             <img
-              src="/images/about.png"
-              alt="Berlin music community"
-              className="w-full h-full object-cover grayscale"
+              src="/images/team.jpg"
+              alt="Rave for Good committee"
+              className="w-full h-full object-cover"
               data-testid="img-about-story"
             />
           </motion.div>
@@ -70,51 +64,45 @@ export default function About() {
             }}
           >
             <motion.p variants={fadeIn}>
-              Berlin's club culture has always been rooted in community, safe spaces, and collective experience. However, that community often remains isolated within the walls of the venue.
+              What started as private raves quickly grew into a movement with purpose - raising awareness, collecting donations from our scene, and using the collective energy of nightlife to support meaningful initiatives.
             </motion.p>
             <motion.p variants={fadeIn}>
-              We realized that the infrastructure of a party—promoters, artists, venues, and dancers—could function exactly like a high-efficiency fundraising machine, without losing the authenticity of the experience.
+              In December 2021, we took the next step by formally establishing our nonprofit organization. This milestone marked the beginning of a new chapter - one filled with creative initiatives, ambitious projects, and the challenge of transforming the power of music culture into lasting change.
             </motion.p>
             <motion.p variants={fadeIn} className="text-foreground/80 font-normal">
-              In 2023, we registered as an official NGO (e.V.) in Germany. Our mandate: 100% of event profits fund clean water and community action projects, fully audited and transparent.
+              Our first major focus lies in Zigla Pakala, a small village in Burkina Faso - one of the poorest countries in the world. Here, basic infrastructure such as water and energy supply is almost nonexistent.
             </motion.p>
-            <motion.div variants={fadeIn} className="pt-8">
-              <Link href="/impact">
-                <Button variant="outline" className="rounded-none border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground font-bold tracking-widest uppercase h-14 px-8 transition-colors" data-testid="button-about-impact">
-                  See Our Impact
-                </Button>
-              </Link>
-            </motion.div>
           </motion.div>
         </div>
 
-        {/* Team Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
           <h2 className="font-display text-4xl font-bold uppercase tracking-tighter mb-12 border-b border-white/[0.06] pb-6">
-            The Committee
+            Rave For Good Committee
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04]">
+          <p className="text-foreground/55 font-light leading-relaxed max-w-3xl mb-10">
+            Rave for Good is a Berlin based NGO and collective, we incorporate a wide variety of sounds including but not limited to house, techno, breakbeat, slow wave, jungle and garage.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-white/[0.04]">
             {team.map((member, i) => (
               <div key={i} className="group bg-background hover:bg-card transition-colors duration-300 p-8" data-testid={`card-team-${i}`}>
                 <div className="aspect-square bg-card border border-white/[0.06] mb-6 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-primary/70">Reach out via Contact</span>
-                  </div>
                   <span className="font-display text-6xl font-bold text-foreground/[0.06]">{member.name.charAt(0)}</span>
                 </div>
-                <h3 className="font-display text-xl font-bold uppercase tracking-tight mb-1">{member.name}</h3>
-                <p className="text-primary/70 font-mono text-[10px] uppercase tracking-widest mb-3">{member.role}</p>
-                <p className="text-sm text-foreground/45 font-light">{member.background}</p>
+                <h3 className="font-display text-xl font-bold uppercase tracking-tight">{member.name}</h3>
               </div>
             ))}
           </div>
-        </motion.div>
 
+          <p className="text-foreground/55 font-light leading-relaxed max-w-4xl mt-10">
+            Matt, Creti, Diana, Keith, Bianka and Sven work with both collective members and our wider community to bring you quality events with our focus always being on raising funds for our social causes. We are more than a party, we Rave For Good!
+          </p>
+        </motion.div>
       </div>
     </div>
   );
