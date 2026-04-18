@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 
+const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: easeOut } }
 };
 
 export default function Impact() {
@@ -25,7 +27,7 @@ export default function Impact() {
               className="font-display text-[clamp(3.5rem,10vw,9rem)] font-bold uppercase tracking-[-0.035em] leading-[0.85] mb-8"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, ease: easeOut }}
               data-testid="heading-impact"
             >
               Our Social <br />
@@ -79,7 +81,7 @@ export default function Impact() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.65, ease: easeOut }}
             >
               <div className="aspect-[4/5] bg-muted relative overflow-hidden border border-white/[0.06]">
                 <img

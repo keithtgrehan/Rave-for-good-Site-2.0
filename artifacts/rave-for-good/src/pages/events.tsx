@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { events } from "@/data/events";
 
+const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 const stagger = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.12 } }
@@ -8,7 +10,7 @@ const stagger = {
 
 const cardVariant = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } }
 };
 
 export default function Events() {
@@ -34,7 +36,7 @@ export default function Events() {
               className="font-display text-[clamp(4rem,12vw,9rem)] font-bold uppercase tracking-[-0.035em] leading-[0.85] mb-8"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, ease: easeOut }}
               data-testid="heading-events"
             >
               Past <br />

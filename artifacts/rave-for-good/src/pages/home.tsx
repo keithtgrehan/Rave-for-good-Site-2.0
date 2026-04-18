@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { events } from "@/data/events";
 import { getHubSpotFormDestination } from "@/lib/hubspot";
 
+const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay }
+    transition: { duration: 0.7, ease: easeOut, delay }
   })
 };
 
@@ -21,7 +23,7 @@ const stagger = {
 
 const itemFade = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: easeOut } }
 };
 
 export default function Home() {
@@ -160,7 +162,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, ease: easeOut }}
             >
               Past events <span className="text-primary">highlights</span>
             </motion.h2>
@@ -168,7 +170,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, ease: easeOut }}
             >
               <Link href="/events">
                 <span className="link-line uppercase tracking-[0.16em] text-[11px] font-medium text-foreground/35 hover:text-foreground/70 cursor-pointer flex items-center gap-2 group transition-colors duration-200" data-testid="link-all-events">
@@ -187,7 +189,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.65, ease: easeOut }}
                 data-testid={`home-past-event-${event.id}`}
               >
                 <img src={event.image} alt={event.title} className="h-72 w-full object-cover" />
@@ -215,7 +217,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.65, ease: easeOut }}
             >
               <span className="text-primary font-mono text-[10px] tracking-[0.2em] uppercase mb-5 block">Direct Action</span>
               <h2 className="font-display text-4xl md:text-[3.5rem] lg:text-[4rem] font-bold uppercase tracking-[-0.025em] leading-[1.0] mb-6">
@@ -244,7 +246,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.96 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.65, ease: easeOut }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent z-10" />
               <img
@@ -270,7 +272,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: easeOut }}
           >
             <h2 className="font-display text-4xl md:text-[3.25rem] font-bold uppercase tracking-[-0.025em] mb-3">
               Join the <em className="text-primary not-italic">Movement</em>
