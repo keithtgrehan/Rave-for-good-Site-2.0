@@ -48,3 +48,4 @@ Thumbs.db
 .cache/
 .local/
 rave-website-export.tar.gz
+.env.local
