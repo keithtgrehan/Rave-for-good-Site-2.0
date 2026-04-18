@@ -1,14 +1,18 @@
 import { motion } from "framer-motion";
-import { MapPin, Mail, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { MapPin, Mail } from "lucide-react";
+import { HubSpotFormEmbed } from "@/components/hubspot/HubSpotFormEmbed";
+import { getHubSpotForm, isHubSpotFormKey } from "@/lib/hubspot";
 
 export default function Contact() {
+  const rawFormKey = typeof window === "undefined"
+    ? null
+    : new URLSearchParams(window.location.search).get("form")
+  const activeFormKey = isHubSpotFormKey(rawFormKey) ? rawFormKey : "contact"
+  const activeForm = getHubSpotForm(activeFormKey)
+
   return (
     <div className="w-full pt-32 pb-24 md:pt-40 md:pb-32" data-testid="page-contact">
       <div className="container px-4 md:px-6">
-
         <div className="max-w-4xl mb-20 md:mb-32">
           <motion.h1
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter mb-8 leading-[0.9]"
@@ -17,21 +21,19 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             data-testid="heading-contact"
           >
-            Open <br/><span className="text-primary">Channel</span>
+            Contact
           </motion.h1>
           <motion.p
             className="text-xl md:text-2xl text-foreground/55 font-light leading-relaxed max-w-2xl"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Reach out for partnerships, volunteering, or press inquiries. We operate in Berlin, impacting globally.
+            For bookings, partnerships, press, and collaborations. Tell us what you are planning and we will get back to you
           </motion.p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-
-          {/* Form */}
           <motion.div
             className="lg:col-span-7"
             initial={{ opacity: 0, x: -20 }}
@@ -39,39 +41,23 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <div className="bg-card border border-white/[0.06] p-8 md:p-10">
-              <h2 className="font-display text-2xl font-bold uppercase tracking-tight mb-8 text-foreground/80">Send a Transmission</h2>
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()} data-testid="form-contact">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/40">Name</label>
-                    <Input className="bg-background border-white/[0.08] rounded-none focus-visible:ring-primary/50" data-testid="input-contact-name" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/40">Email</label>
-                    <Input type="email" className="bg-background border-white/[0.08] rounded-none focus-visible:ring-primary/50" data-testid="input-contact-email" />
-                  </div>
+              <div className="flex items-center justify-between gap-4 mb-8">
+                <div>
+                  <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground/80">{activeForm.name} Form</h2>
+                  <p className="text-sm text-foreground/45 font-light mt-2">
+                    This request is handled through our HubSpot form setup so CTA routing stays code-driven and in sync.
+                  </p>
                 </div>
-                <div className="space-y-2">
-                  <label className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/40">Subject</label>
-                  <select className="flex h-10 w-full rounded-none border border-white/[0.08] bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none text-foreground/70" data-testid="select-contact-subject">
-                    <option>Partnership Inquiry</option>
-                    <option>Volunteer Application</option>
-                    <option>Press / Media</option>
-                    <option>General Question</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <label className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/40">Message</label>
-                  <Textarea className="bg-background border-white/[0.08] rounded-none focus-visible:ring-primary/50 min-h-[150px] font-light" data-testid="textarea-contact-message" />
-                </div>
-                <Button type="submit" className="w-full rounded-none font-bold tracking-widest uppercase h-14" data-testid="button-contact-submit">
-                  Transmit
-                </Button>
-              </form>
+                <span className="inline-flex items-center justify-center min-h-10 px-4 py-2 border border-white/[0.1] text-foreground/55 bg-transparent rounded-none text-sm font-medium uppercase tracking-[0.12em]">
+                  {activeForm.submitButtonText}
+                </span>
+              </div>
+              <div data-testid={`form-contact-${activeFormKey}`}>
+                <HubSpotFormEmbed formKey={activeFormKey} />
+              </div>
             </div>
           </motion.div>
 
-          {/* Info */}
           <motion.div
             className="lg:col-span-5 space-y-12"
             initial={{ opacity: 0, x: 20 }}
@@ -79,29 +65,26 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div>
-              <h3 className="font-mono text-[10px] text-primary/60 uppercase tracking-[0.18em] mb-6">Direct Lines</h3>
+              <h3 className="font-mono text-[10px] text-primary/60 uppercase tracking-[0.18em] mb-6">Direct contact</h3>
+              <p className="text-foreground/45 text-sm leading-relaxed font-light mb-6">
+                Use the form for structured requests, or email us directly for quick coordination.
+              </p>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <Mail className="text-foreground/30 mt-1 shrink-0" size={18} />
                   <div>
                     <div className="font-bold uppercase tracking-tight mb-1 text-sm">Email</div>
-                    <a href="mailto:hello@raveforgood.org" className="text-foreground/50 hover:text-foreground transition-colors text-sm font-light">hello@raveforgood.org</a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <MessageSquare className="text-foreground/30 mt-1 shrink-0" size={18} />
-                  <div>
-                    <div className="font-bold uppercase tracking-tight mb-1 text-sm">WhatsApp</div>
-                    <span className="text-foreground/50 text-sm font-light">+49 151 0000 0000</span>
+                    <a href="mailto:hello@raveforgood.berlin" className="text-foreground/50 hover:text-foreground transition-colors text-sm font-light">hello@raveforgood.berlin</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <MapPin className="text-foreground/30 mt-1 shrink-0" size={18} />
                   <div>
-                    <div className="font-bold uppercase tracking-tight mb-1 text-sm">HQ</div>
+                    <div className="font-bold uppercase tracking-tight mb-1 text-sm">Address</div>
                     <address className="text-foreground/50 text-sm font-light not-italic">
-                      Berlin, Germany<br/>
-                      Registered NGO (e.V.)
+                      Relativ Studios<br />
+                      Weserstr. 190<br />
+                      Berlin 12045
                     </address>
                   </div>
                 </div>
@@ -121,10 +104,8 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-
           </motion.div>
         </div>
-
       </div>
     </div>
   );

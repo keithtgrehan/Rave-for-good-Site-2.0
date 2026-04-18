@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getHubSpotFormDestination } from "@/lib/hubspot";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -101,7 +102,7 @@ export default function GetInvolved() {
               <p className="text-foreground/50 text-sm mb-6 flex-grow font-light leading-relaxed">
                 We need hands in Berlin: door staff, promoters, designers. Donate your time and skills to the crew.
               </p>
-              <Link href="/contact">
+              <Link href={getHubSpotFormDestination("volunteer")}>
                 <span className="inline-flex items-center gap-2 text-foreground/40 hover:text-primary font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-volunteer-contact">
                   Apply to Crew <ArrowRight size={14} />
                 </span>
@@ -113,7 +114,7 @@ export default function GetInvolved() {
               <p className="text-foreground/50 text-sm mb-6 flex-grow font-light leading-relaxed">
                 Represent a venue, label, or artist agency? Let's build a structural alliance.
               </p>
-              <Link href="/partners">
+              <Link href={getHubSpotFormDestination("partner")}>
                 <span className="inline-flex items-center gap-2 text-foreground/40 hover:text-primary font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-partner-info">
                   View Info <ArrowRight size={14} />
                 </span>

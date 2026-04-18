@@ -38,12 +38,12 @@ export function Header() {
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
 
         <Link href="/" className="z-50 relative">
-          <span
-            className="font-display font-bold tracking-[-0.04em] uppercase cursor-pointer text-foreground/95 hover:text-foreground transition-colors duration-200 text-[15px]"
+          <img
+            src="/images/rfg-logo.png"
+            alt="Rave for Good e.V."
+            className="h-12 w-auto max-w-[120px] object-contain brightness-0 invert"
             data-testid="link-home"
-          >
-            RAVE FOR GOOD
-          </span>
+          />
         </Link>
 
         {/* Desktop Nav */}
