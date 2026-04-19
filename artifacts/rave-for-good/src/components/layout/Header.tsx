@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,8 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
+  const mobileMenuToggleRef = useRef<HTMLButtonElement | null>(null);
+  const mobileMenuCloseRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
@@ -43,8 +45,11 @@ export function Header() {
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
+      mobileMenuToggleRef.current?.focus();
       return;
     }
+
+    mobileMenuCloseRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -110,6 +115,7 @@ export function Header() {
 
         {/* Mobile Toggle */}
         <button
+          ref={mobileMenuToggleRef}
           className="md:hidden z-50 relative flex min-h-11 min-w-11 items-center justify-center p-3 text-foreground/50 transition-colors duration-200 hover:text-foreground"
           onClick={toggleMobileMenu}
           data-testid="button-mobile-menu-toggle"
@@ -154,6 +160,7 @@ export function Header() {
             </Link>
 
             <button
+              ref={mobileMenuCloseRef}
               type="button"
               className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/[0.08] bg-card/70 p-3 text-foreground/62 transition-colors duration-200 hover:text-foreground"
               onClick={() => setIsMobileMenuOpen(false)}
