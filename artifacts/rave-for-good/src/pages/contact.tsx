@@ -74,7 +74,7 @@ export default function Contact() {
                   <Mail className="text-foreground/30 mt-1 shrink-0" size={18} />
                   <div>
                     <div className="font-bold uppercase tracking-tight mb-1 text-sm">Email</div>
-                    <a href="mailto:hello@raveforgood.berlin" className="text-foreground/50 hover:text-foreground transition-colors text-sm font-light">hello@raveforgood.berlin</a>
+                    <a href="mailto:info@raveforgood.berlin" className="text-foreground/50 hover:text-foreground transition-colors text-sm font-light">info@raveforgood.berlin</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">

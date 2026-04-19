@@ -64,4 +64,4 @@
   - `target="_blank"`
   - `rel="noopener noreferrer"`
 - Updated the email icon link to:
-  - `mailto:hello@raveforgood.berlin`
+  - `mailto:info@raveforgood.berlin`

@@ -27,7 +27,7 @@ export function Footer() {
                 <Instagram size={16} className="group-hover:scale-110 transition-transform" />
               </a>
               <a
-                href="mailto:hello@raveforgood.berlin"
+                href="mailto:info@raveforgood.berlin"
                 className="w-9 h-9 border border-white/[0.1] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300 group text-foreground/40"
                 aria-label="Email"
                 data-testid="link-email-footer"

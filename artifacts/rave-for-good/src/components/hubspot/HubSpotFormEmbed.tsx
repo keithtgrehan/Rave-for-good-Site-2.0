@@ -106,7 +106,7 @@ export function HubSpotFormEmbed({ formKey }: HubSpotFormEmbedProps) {
       <div id={targetId} data-testid={`hubspot-form-${formKey}`} />
       {hasError ? (
         <p className="text-sm text-foreground/50 font-light" data-testid="hubspot-form-fallback">
-          The form could not be loaded right now. Please email hello@raveforgood.berlin and we will help directly.
+          The form could not be loaded right now. Please email info@raveforgood.berlin and we will help directly.
         </p>
       ) : null}
     </div>
