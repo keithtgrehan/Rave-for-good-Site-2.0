@@ -28,20 +28,40 @@ export function Header() {
 
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
+    const originalTouchAction = document.body.style.touchAction;
 
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
     }
 
     return () => {
       document.body.style.overflow = originalOverflow;
+      document.body.style.touchAction = originalTouchAction;
     };
   }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen((open) => !open);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isMobileMenuOpen
+        isScrolled
           ? "bg-background/92 backdrop-blur-xl border-b border-white/[0.055] py-3 md:py-4"
           : "bg-transparent py-4 md:py-7"
       }`}
@@ -91,44 +111,101 @@ export function Header() {
         {/* Mobile Toggle */}
         <button
           className="md:hidden z-50 relative flex min-h-11 min-w-11 items-center justify-center p-3 text-foreground/50 transition-colors duration-200 hover:text-foreground"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={toggleMobileMenu}
           data-testid="button-mobile-menu-toggle"
           aria-label="Toggle menu"
           aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-navigation-overlay"
         >
           {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
-        {/* Mobile Overlay */}
-        <div
-          className={`fixed inset-0 z-40 flex flex-col items-stretch justify-start gap-6 overflow-y-auto bg-background/96 px-6 pt-24 pb-10 backdrop-blur-2xl transition-all duration-400 ease-in-out sm:px-8 ${
-            isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-          }`}
-          data-testid="nav-mobile"
-        >
-          {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href}>
-              <span
-                className={`block w-full border-b border-white/[0.06] py-4 font-display text-3xl font-bold tracking-[-0.025em] uppercase transition-colors duration-200 sm:text-4xl ${
-                  location === link.href ? "text-primary" : "text-foreground/50 hover:text-foreground"
-                }`}
-                data-testid={`mobile-link-${link.label.toLowerCase()}`}
-              >
-                {link.label}
-              </span>
-            </Link>
-          ))}
-          <Link href="/get-involved">
-            <Button
-              size="lg"
-              className="btn-cta mt-2 h-12 w-full self-start rounded-none px-6 font-bold tracking-[0.14em] uppercase sm:mt-4 sm:h-14 sm:max-w-sm sm:px-12"
-              data-testid="button-get-involved-mobile"
-            >
-              Get Involved
-            </Button>
-          </Link>
-        </div>
+      </div>
 
+      <div
+        id="mobile-navigation-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+        className={`fixed inset-0 z-[60] md:hidden transition-[visibility,opacity] duration-300 ${
+          isMobileMenuOpen ? "visible opacity-100" : "invisible opacity-0 pointer-events-none"
+        }`}
+        data-testid="nav-mobile"
+      >
+        <div className="absolute inset-0 bg-background/98 backdrop-blur-2xl" />
+        <div className="relative flex min-h-full flex-col px-5 pb-8 pt-5 sm:px-6">
+          <div className="flex items-center justify-between gap-4 border-b border-white/[0.06] pb-5">
+            <Link href="/" className="min-w-0" onClick={() => setIsMobileMenuOpen(false)}>
+              <div className="flex min-w-0 items-center gap-3">
+                <img
+                  src="/images/rfg-logo.png"
+                  alt="Rave for Good e.V."
+                  className="h-10 w-auto max-w-[96px] object-contain brightness-0 invert"
+                />
+                <div className="min-w-0">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/35">
+                    Menu
+                  </p>
+                  <p className="truncate font-display text-lg font-semibold uppercase tracking-[-0.02em] text-foreground/88">
+                    Rave For Good
+                  </p>
+                </div>
+              </div>
+            </Link>
+
+            <button
+              type="button"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/[0.08] bg-card/70 p-3 text-foreground/62 transition-colors duration-200 hover:text-foreground"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Close menu"
+              data-testid="button-mobile-menu-close"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto py-6">
+            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-primary/65">
+              Navigate
+            </p>
+            <div className="space-y-3">
+              {NAV_LINKS.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  <div
+                    className={`group flex w-full items-center justify-between border px-5 py-4 transition-colors duration-200 ${
+                      location === link.href
+                        ? "border-primary/35 bg-primary/[0.08] text-primary"
+                        : "border-white/[0.08] bg-card/75 text-foreground/78 hover:border-white/[0.16] hover:text-foreground"
+                    }`}
+                    data-testid={`mobile-link-${link.label.toLowerCase()}`}
+                  >
+                    <span className="font-display text-[1.7rem] font-bold uppercase leading-none tracking-[-0.03em] sm:text-[1.9rem]">
+                      {link.label}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/32 transition-colors group-hover:text-foreground/55">
+                      Open
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-white/[0.06] pt-5">
+            <p className="mb-4 max-w-sm text-sm font-light leading-relaxed text-foreground/42">
+              Choose a page or jump straight into the main call to action.
+            </p>
+            <Link href="/get-involved">
+              <Button
+                size="lg"
+                className="btn-cta h-12 w-full rounded-none px-6 font-bold tracking-[0.14em] uppercase sm:h-14"
+                data-testid="button-get-involved-mobile"
+              >
+                Get Involved
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
     </header>
   );
