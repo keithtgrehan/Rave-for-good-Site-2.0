@@ -26,22 +26,34 @@ export function Header() {
     setIsMobileMenuOpen(false);
   }, [location]);
 
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled || isMobileMenuOpen
-          ? "bg-background/92 backdrop-blur-xl border-b border-white/[0.055] py-4"
-          : "bg-transparent py-7"
+          ? "bg-background/92 backdrop-blur-xl border-b border-white/[0.055] py-3 md:py-4"
+          : "bg-transparent py-4 md:py-7"
       }`}
       data-testid="layout-header"
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between gap-3 px-4 sm:px-6">
 
         <Link href="/" className="z-50 relative">
           <img
             src="/images/rfg-logo.png"
             alt="Rave for Good e.V."
-            className="h-12 w-auto max-w-[120px] object-contain brightness-0 invert"
+            className="h-10 w-auto max-w-[96px] object-contain brightness-0 invert sm:h-11 sm:max-w-[108px] md:h-12 md:max-w-[120px]"
             data-testid="link-home"
           />
         </Link>
@@ -78,17 +90,18 @@ export function Header() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden z-50 relative text-foreground/50 hover:text-foreground p-2 transition-colors duration-200"
+          className="md:hidden z-50 relative flex min-h-11 min-w-11 items-center justify-center p-3 text-foreground/50 transition-colors duration-200 hover:text-foreground"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           data-testid="button-mobile-menu-toggle"
           aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
         >
           {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
         {/* Mobile Overlay */}
         <div
-          className={`fixed inset-0 bg-background/96 backdrop-blur-2xl z-40 flex flex-col items-center justify-center gap-10 transition-all duration-400 ease-in-out ${
+          className={`fixed inset-0 z-40 flex flex-col items-stretch justify-start gap-6 overflow-y-auto bg-background/96 px-6 pt-24 pb-10 backdrop-blur-2xl transition-all duration-400 ease-in-out sm:px-8 ${
             isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
           }`}
           data-testid="nav-mobile"
@@ -96,7 +109,7 @@ export function Header() {
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href}>
               <span
-                className={`font-display text-4xl font-bold tracking-[-0.025em] uppercase cursor-pointer transition-colors duration-200 ${
+                className={`block w-full border-b border-white/[0.06] py-4 font-display text-3xl font-bold tracking-[-0.025em] uppercase transition-colors duration-200 sm:text-4xl ${
                   location === link.href ? "text-primary" : "text-foreground/50 hover:text-foreground"
                 }`}
                 data-testid={`mobile-link-${link.label.toLowerCase()}`}
@@ -108,7 +121,7 @@ export function Header() {
           <Link href="/get-involved">
             <Button
               size="lg"
-              className="btn-cta mt-6 font-bold tracking-[0.14em] uppercase rounded-none px-12 h-14"
+              className="btn-cta mt-2 h-12 w-full self-start rounded-none px-6 font-bold tracking-[0.14em] uppercase sm:mt-4 sm:h-14 sm:max-w-sm sm:px-12"
               data-testid="button-get-involved-mobile"
             >
               Get Involved

@@ -11,11 +11,11 @@ export default function Contact() {
   const activeForm = getHubSpotForm(activeFormKey)
 
   return (
-    <div className="w-full pt-32 pb-24 md:pt-40 md:pb-32" data-testid="page-contact">
-      <div className="container px-4 md:px-6">
-        <div className="max-w-4xl mb-20 md:mb-32">
+    <div className="w-full pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-40 md:pb-32" data-testid="page-contact">
+      <div className="container px-4 sm:px-6">
+        <div className="mb-14 max-w-4xl sm:mb-20 md:mb-32">
           <motion.h1
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter mb-8 leading-[0.9]"
+            className="mb-6 font-display text-4xl font-bold uppercase leading-[0.9] tracking-tighter sm:text-5xl md:mb-8 md:text-7xl lg:text-8xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -24,7 +24,7 @@ export default function Contact() {
             Contact
           </motion.h1>
           <motion.p
-            className="text-xl md:text-2xl text-foreground/55 font-light leading-relaxed max-w-2xl"
+            className="max-w-2xl text-lg font-light leading-relaxed text-foreground/55 sm:text-xl md:text-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -33,22 +33,22 @@ export default function Contact() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-24">
           <motion.div
             className="lg:col-span-7"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="bg-card border border-white/[0.06] p-8 md:p-10">
-              <div className="flex items-center justify-between gap-4 mb-8">
+            <div className="bg-card border border-white/[0.06] p-5 sm:p-8 md:p-10">
+              <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                  <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground/80">{activeForm.name} Form</h2>
+                  <h2 className="font-display text-xl font-bold uppercase tracking-tight text-foreground/80 sm:text-2xl">{activeForm.name} Form</h2>
                   <p className="text-sm text-foreground/45 font-light mt-2">
                     This request is handled through our HubSpot form setup so CTA routing stays code-driven and in sync.
                   </p>
                 </div>
-                <span className="inline-flex items-center justify-center min-h-10 px-4 py-2 border border-white/[0.1] text-foreground/55 bg-transparent rounded-none text-sm font-medium uppercase tracking-[0.12em]">
+                <span className="inline-flex min-h-10 items-center justify-center self-start rounded-none border border-white/[0.1] bg-transparent px-4 py-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/55">
                   {activeForm.submitButtonText}
                 </span>
               </div>
@@ -59,7 +59,7 @@ export default function Contact() {
           </motion.div>
 
           <motion.div
-            className="lg:col-span-5 space-y-12"
+            className="space-y-10 lg:col-span-5 lg:space-y-12"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -70,18 +70,18 @@ export default function Contact() {
                 Use the form for structured requests, or email us directly for quick coordination.
               </p>
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3 sm:gap-4">
                   <Mail className="text-foreground/30 mt-1 shrink-0" size={18} />
                   <div>
                     <div className="font-bold uppercase tracking-tight mb-1 text-sm">Email</div>
                     <a href="mailto:info@raveforgood.berlin" className="text-foreground/50 hover:text-foreground transition-colors text-sm font-light">info@raveforgood.berlin</a>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3 sm:gap-4">
                   <MapPin className="text-foreground/30 mt-1 shrink-0" size={18} />
                   <div>
                     <div className="font-bold uppercase tracking-tight mb-1 text-sm">Address</div>
-                    <address className="text-foreground/50 text-sm font-light not-italic">
+                    <address className="text-foreground/50 text-sm font-light not-italic break-words">
                       Relativ Studios<br />
                       Weserstr. 190<br />
                       Berlin 12045
@@ -91,7 +91,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="pt-12 border-t border-white/[0.06]">
+            <div className="border-t border-white/[0.06] pt-10 sm:pt-12">
               <h3 className="font-display text-2xl font-bold uppercase tracking-tight mb-6">FAQ</h3>
               <div className="space-y-8">
                 <div data-testid="faq-item-1">

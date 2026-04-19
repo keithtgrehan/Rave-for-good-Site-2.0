@@ -8,10 +8,10 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-[100dvh] flex flex-col w-full relative">
+    <div className="relative flex min-h-[100dvh] w-full flex-col overflow-x-hidden">
       <div className="noise-overlay" />
       <Header />
-      <main className="flex-1 w-full" data-testid="layout-main">
+      <main className="w-full flex-1 overflow-x-hidden" data-testid="layout-main">
         {children}
       </main>
       <Footer />

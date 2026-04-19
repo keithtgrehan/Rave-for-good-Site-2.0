@@ -102,7 +102,7 @@ export function HubSpotFormEmbed({ formKey }: HubSpotFormEmbedProps) {
   }, [form.id, targetId])
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 [&_.actions]:pt-2 [&_.hs-button]:min-h-11 [&_.hs-button]:w-full sm:[&_.hs-button]:w-auto [&_.hs-form]:max-w-none [&_.hs-form_fieldset]:max-w-none [&_.hs-form-field]:w-full [&_.hs-input]:w-full [&_.input]:w-full [&_input]:min-h-11 [&_input]:w-full [&_textarea]:w-full [&_select]:w-full">
       <div id={targetId} data-testid={`hubspot-form-${formKey}`} />
       {hasError ? (
         <p className="text-sm text-foreground/50 font-light" data-testid="hubspot-form-fallback">

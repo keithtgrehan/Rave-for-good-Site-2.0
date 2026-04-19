@@ -7,11 +7,11 @@ const fadeIn = {
 
 export default function About() {
   return (
-    <div className="w-full pt-32 pb-24 md:pt-40 md:pb-32" data-testid="page-about">
-      <div className="container px-4 md:px-6">
-        <div className="max-w-4xl mb-20 md:mb-32">
+    <div className="w-full pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-40 md:pb-32" data-testid="page-about">
+      <div className="container px-4 sm:px-6">
+        <div className="mb-14 max-w-4xl sm:mb-20 md:mb-32">
           <motion.h1
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter mb-8 leading-[0.9]"
+            className="mb-6 font-display text-4xl font-bold uppercase leading-[0.9] tracking-tighter sm:text-5xl md:mb-8 md:text-7xl lg:text-8xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -27,7 +27,7 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.2 }}
           />
           <motion.p
-            className="text-xl md:text-3xl text-foreground/60 font-light leading-relaxed"
+            className="text-lg font-light leading-relaxed text-foreground/60 sm:text-xl md:text-3xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -36,9 +36,9 @@ export default function About() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-32 items-center">
+        <div className="mb-20 grid grid-cols-1 items-center gap-10 sm:mb-24 sm:gap-16 lg:grid-cols-2 lg:gap-24">
           <motion.div
-            className="relative aspect-[4/3] border border-white/[0.06] bg-card"
+            className="relative aspect-[5/4] border border-white/[0.06] bg-card sm:aspect-[4/3]"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -53,7 +53,7 @@ export default function About() {
           </motion.div>
 
           <motion.div
-            className="space-y-8 text-lg text-foreground/55 font-light leading-relaxed"
+            className="space-y-6 text-base font-light leading-relaxed text-foreground/55 sm:space-y-8 sm:text-lg"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -79,11 +79,11 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="font-display text-4xl font-bold uppercase tracking-tighter mb-12 border-b border-white/[0.06] pb-6">
+          <h2 className="mb-8 border-b border-white/[0.06] pb-5 font-display text-3xl font-bold uppercase tracking-tighter sm:mb-12 sm:pb-6 sm:text-4xl">
             Rave For Good Committee
           </h2>
 
-          <p className="text-foreground/55 font-light leading-relaxed max-w-3xl mb-10">
+          <p className="mb-10 max-w-3xl text-sm font-light leading-relaxed text-foreground/55 sm:text-base">
             Rave for Good is a Berlin based NGO and collective, we incorporate a wide variety of sounds including but not limited to house, techno, breakbeat, slow wave, jungle and garage.
           </p>
         </motion.div>

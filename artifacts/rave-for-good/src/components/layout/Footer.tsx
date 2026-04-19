@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input";
 
 export function Footer() {
   return (
-    <footer className="bg-card border-t border-white/[0.06] pt-20 pb-10" data-testid="layout-footer">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="bg-card border-t border-white/[0.06] pt-14 pb-8 sm:pt-20 sm:pb-10" data-testid="layout-footer">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-12 sm:mb-16">
           <div className="lg:col-span-2 pr-0 lg:pr-12">
             <h2 className="font-display text-2xl font-bold tracking-tighter uppercase mb-4 text-foreground/90">
               RAVE FOR GOOD
@@ -15,12 +15,12 @@ export function Footer() {
             <p className="text-foreground/45 mb-8 max-w-md text-sm font-light leading-relaxed">
               Berlin nightlife, channelled into clean water and community action. More than a party. A scene that gives back.
             </p>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <a
                 href="https://www.instagram.com/raveforgoodofficial/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 border border-white/[0.1] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300 group text-foreground/40"
+                className="flex h-10 w-10 items-center justify-center border border-white/[0.1] text-foreground/40 transition-all duration-300 group hover:border-primary/40 hover:text-primary"
                 aria-label="Instagram"
                 data-testid="link-instagram-footer"
               >
@@ -28,7 +28,7 @@ export function Footer() {
               </a>
               <a
                 href="mailto:info@raveforgood.berlin"
-                className="w-9 h-9 border border-white/[0.1] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300 group text-foreground/40"
+                className="flex h-10 w-10 items-center justify-center border border-white/[0.1] text-foreground/40 transition-all duration-300 group hover:border-primary/40 hover:text-primary"
                 aria-label="Email"
                 data-testid="link-email-footer"
               >
@@ -55,24 +55,24 @@ export function Footer() {
 
           <div>
             <h3 className="font-mono font-bold tracking-[0.16em] uppercase mb-6 text-foreground/30 text-[10px]">Stay Connected</h3>
-            <p className="text-foreground/40 mb-4 text-xs font-light leading-relaxed">Join the movement. Updates on events and impact.</p>
+            <p className="mb-4 max-w-sm text-xs font-light leading-relaxed text-foreground/40">Join the movement. Updates on events and impact.</p>
             <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()} data-testid="form-newsletter-footer">
               <Input
                 type="email"
                 placeholder="EMAIL ADDRESS"
-                className="bg-background border-white/[0.08] rounded-none focus-visible:ring-primary/50 font-mono text-[10px] uppercase tracking-widest"
+                className="min-h-11 bg-background border-white/[0.08] rounded-none font-mono text-[10px] uppercase tracking-widest focus-visible:ring-primary/50"
                 data-testid="input-newsletter-email"
               />
-              <Button type="submit" variant="outline" className="rounded-none w-full border-white/[0.1] text-foreground/50 hover:bg-primary hover:text-primary-foreground hover:border-primary/60 font-bold tracking-widest uppercase text-xs transition-colors" data-testid="button-newsletter-submit">
+              <Button type="submit" variant="outline" className="min-h-11 w-full rounded-none border-white/[0.1] text-xs font-bold tracking-widest uppercase text-foreground/50 transition-colors hover:border-primary/60 hover:bg-primary hover:text-primary-foreground" data-testid="button-newsletter-submit">
                 Subscribe
               </Button>
             </form>
           </div>
         </div>
 
-        <div className="border-t border-white/[0.06] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-foreground/25 font-mono uppercase tracking-widest">
+        <div className="flex flex-col items-start justify-between gap-3 border-t border-white/[0.06] pt-6 text-left font-mono text-[10px] uppercase tracking-widest text-foreground/25 md:flex-row md:items-center">
           <p data-testid="text-copyright">© {new Date().getFullYear()} RAVE FOR GOOD e.V.</p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-4 sm:gap-6">
             <Link href="/imprint"><span className="hover:text-foreground/50 cursor-pointer transition-colors" data-testid="footer-link-imprint">Imprint</span></Link>
             <Link href="/privacy"><span className="hover:text-foreground/50 cursor-pointer transition-colors" data-testid="footer-link-privacy">Privacy</span></Link>
           </div>
