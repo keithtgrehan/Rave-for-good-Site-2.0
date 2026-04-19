@@ -16,10 +16,22 @@ export function Footer() {
               Berlin nightlife, channelled into clean water and community action. More than a party. A scene that gives back.
             </p>
             <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 border border-white/[0.1] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300 group text-foreground/40" aria-label="Instagram" data-testid="link-instagram-footer">
+              <a
+                href="https://www.instagram.com/raveforgoodofficial/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 border border-white/[0.1] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300 group text-foreground/40"
+                aria-label="Instagram"
+                data-testid="link-instagram-footer"
+              >
                 <Instagram size={16} className="group-hover:scale-110 transition-transform" />
               </a>
-              <a href="#" className="w-9 h-9 border border-white/[0.1] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300 group text-foreground/40" aria-label="Email" data-testid="link-email-footer">
+              <a
+                href="mailto:hello@raveforgood.berlin"
+                className="w-9 h-9 border border-white/[0.1] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300 group text-foreground/40"
+                aria-label="Email"
+                data-testid="link-email-footer"
+              >
                 <Mail size={16} className="group-hover:scale-110 transition-transform" />
               </a>
             </div>

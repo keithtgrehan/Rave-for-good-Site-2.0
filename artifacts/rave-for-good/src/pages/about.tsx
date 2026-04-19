@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { team } from "@/data/team";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -39,7 +38,7 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-32 items-center">
           <motion.div
-            className="relative aspect-[3/4] border border-white/[0.06]"
+            className="relative aspect-[4/3] border border-white/[0.06] bg-card"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -48,7 +47,7 @@ export default function About() {
             <img
               src="/images/team.jpg"
               alt="Rave for Good committee"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain object-center"
               data-testid="img-about-story"
             />
           </motion.div>
@@ -86,21 +85,6 @@ export default function About() {
 
           <p className="text-foreground/55 font-light leading-relaxed max-w-3xl mb-10">
             Rave for Good is a Berlin based NGO and collective, we incorporate a wide variety of sounds including but not limited to house, techno, breakbeat, slow wave, jungle and garage.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-white/[0.04]">
-            {team.map((member, i) => (
-              <div key={i} className="group bg-background hover:bg-card transition-colors duration-300 p-8" data-testid={`card-team-${i}`}>
-                <div className="aspect-square bg-card border border-white/[0.06] mb-6 flex items-center justify-center relative overflow-hidden">
-                  <span className="font-display text-6xl font-bold text-foreground/[0.06]">{member.name.charAt(0)}</span>
-                </div>
-                <h3 className="font-display text-xl font-bold uppercase tracking-tight">{member.name}</h3>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-foreground/55 font-light leading-relaxed max-w-4xl mt-10">
-            Matt, Creti, Diana, Keith, Bianka and Sven work with both collective members and our wider community to bring you quality events with our focus always being on raising funds for our social causes. We are more than a party, we Rave For Good!
           </p>
         </motion.div>
       </div>

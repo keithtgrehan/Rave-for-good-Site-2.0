@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
@@ -11,6 +12,8 @@ const fadeIn = {
 };
 
 export default function GetInvolved() {
+  const [donationAmount, setDonationAmount] = useState("");
+
   return (
     <div className="w-full pt-32 pb-24 md:pt-40 md:pb-32" data-testid="page-get-involved">
       <div className="container px-4 md:px-6">
@@ -58,7 +61,15 @@ export default function GetInvolved() {
             <div className="space-y-6">
               <div className="grid grid-cols-3 gap-3">
                 {["€10", "€25", "€50"].map((amt) => (
-                  <Button key={amt} variant="outline" className="rounded-none border-white/[0.1] hover:border-primary/50 hover:text-primary font-display text-xl h-16 bg-transparent transition-colors" data-testid={`button-donate-${amt.replace('€', '')}`}>
+                  <Button
+                    key={amt}
+                    type="button"
+                    variant="outline"
+                    className="rounded-none border-white/[0.1] hover:border-primary/50 hover:text-primary font-display text-xl h-16 bg-transparent transition-colors"
+                    data-testid={`button-donate-${amt.replace('€', '')}`}
+                    aria-pressed={donationAmount === amt.replace("€", "")}
+                    onClick={() => setDonationAmount(amt.replace("€", ""))}
+                  >
                     {amt}
                   </Button>
                 ))}
@@ -69,9 +80,17 @@ export default function GetInvolved() {
                   placeholder="Custom Amount (€)"
                   className="bg-background border-white/[0.08] rounded-none focus-visible:ring-primary/50 h-14 font-display text-lg"
                   data-testid="input-donate-custom"
+                  value={donationAmount}
+                  onChange={(event) => setDonationAmount(event.target.value)}
                 />
-                <Button className="rounded-none font-bold tracking-widest uppercase px-8 h-14" data-testid="button-donate-submit">
-                  Donate
+                <Button asChild className="rounded-none font-bold tracking-widest uppercase px-8 h-14" data-testid="button-donate-submit">
+                  <a
+                    href="https://www.paypal.com/paypalme/RaveForGoodeV"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Donate
+                  </a>
                 </Button>
               </div>
             </div>
