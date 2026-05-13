@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Building2, Music, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getHubSpotFormDestination } from "@/lib/hubspot";
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -85,7 +84,7 @@ export default function Partners() {
             <p className="mx-auto mb-8 max-w-2xl text-base font-light leading-relaxed text-foreground/50 sm:mb-10 sm:text-lg md:text-xl">
               Clear campaign concept and role definition. Joint communication plan and event visibility. Impact reporting after each activation.
             </p>
-            <Link href={getHubSpotFormDestination("partner")}>
+            <Link href="/contact">
               <Button className="h-12 w-full rounded-none px-6 font-bold uppercase tracking-widest sm:h-14 sm:w-auto sm:px-10" data-testid="button-partner-contact">
                 Share your collaboration idea
               </Button>

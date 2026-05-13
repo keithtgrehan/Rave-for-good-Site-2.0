@@ -1,15 +1,8 @@
 import { motion } from "framer-motion";
-import { MapPin, Mail } from "lucide-react";
-import { HubSpotFormEmbed } from "@/components/hubspot/HubSpotFormEmbed";
-import { getHubSpotForm, isHubSpotFormKey } from "@/lib/hubspot";
+import { ArrowUpRight, MapPin, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Contact() {
-  const rawFormKey = typeof window === "undefined"
-    ? null
-    : new URLSearchParams(window.location.search).get("form")
-  const activeFormKey = isHubSpotFormKey(rawFormKey) ? rawFormKey : "contact"
-  const activeForm = getHubSpotForm(activeFormKey)
-
   return (
     <div className="w-full pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-40 md:pb-32" data-testid="page-contact">
       <div className="container px-4 sm:px-6">
@@ -29,7 +22,7 @@ export default function Contact() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            For bookings, partnerships, press, and collaborations. Tell us what you are planning and we will get back to you
+            For bookings, partnerships, press, volunteering, and collaborations. Email us directly and we will get back to you.
           </motion.p>
         </div>
 
@@ -41,20 +34,19 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <div className="bg-card border border-white/[0.06] p-5 sm:p-8 md:p-10">
-              <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-                <div>
-                  <h2 className="font-display text-xl font-bold uppercase tracking-tight text-foreground/80 sm:text-2xl">{activeForm.name} Form</h2>
-                  <p className="text-sm text-foreground/45 font-light mt-2">
-                    This request is handled through our HubSpot form setup so CTA routing stays code-driven and in sync.
-                  </p>
-                </div>
-                <span className="inline-flex min-h-10 items-center justify-center self-start rounded-none border border-white/[0.1] bg-transparent px-4 py-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/55">
-                  {activeForm.submitButtonText}
-                </span>
-              </div>
-              <div data-testid={`form-contact-${activeFormKey}`}>
-                <HubSpotFormEmbed formKey={activeFormKey} />
-              </div>
+              <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.18em] text-primary/70">Direct email</p>
+              <h2 className="mb-5 font-display text-3xl font-bold uppercase tracking-tight text-foreground/88 sm:text-4xl">
+                Start a conversation
+              </h2>
+              <p className="mb-8 max-w-xl text-sm font-light leading-relaxed text-foreground/50 sm:text-base">
+                Send a short note with the topic, timeline, and any useful links. This keeps communication simple and avoids collecting information through a website form.
+              </p>
+              <Button asChild className="h-12 w-full rounded-none px-6 font-bold uppercase tracking-widest sm:h-14 sm:w-auto sm:px-10" data-testid="button-contact-email">
+                <a href="mailto:info@raveforgood.berlin">
+                  Email us
+                  <ArrowUpRight size={16} />
+                </a>
+              </Button>
             </div>
           </motion.div>
 
@@ -67,7 +59,7 @@ export default function Contact() {
             <div>
               <h3 className="font-mono text-[10px] text-primary/60 uppercase tracking-[0.18em] mb-6">Direct contact</h3>
               <p className="text-foreground/45 text-sm leading-relaxed font-light mb-6">
-                Use the form for structured requests, or email us directly for quick coordination.
+                Use this email for partnerships, press, volunteer interest, donation questions, and general coordination.
               </p>
               <div className="space-y-6">
                 <div className="flex items-start gap-3 sm:gap-4">
@@ -82,9 +74,11 @@ export default function Contact() {
                   <div>
                     <div className="font-bold uppercase tracking-tight mb-1 text-sm">Address</div>
                     <address className="text-foreground/50 text-sm font-light not-italic break-words">
-                      Relativ Studios<br />
+                      Rave for Good e.V.<br />
+                      c/o Relativ Studios<br />
                       Weserstr. 190<br />
-                      Berlin 12045
+                      12045 Berlin<br />
+                      Deutschland
                     </address>
                   </div>
                 </div>
@@ -100,7 +94,7 @@ export default function Contact() {
                 </div>
                 <div data-testid="faq-item-2">
                   <h4 className="font-semibold mb-2 text-sm text-foreground/80 uppercase tracking-wide">Are you a registered charity?</h4>
-                  <p className="text-foreground/45 text-sm leading-relaxed font-light">Yes, Rave for Good is a registered eingetragener Verein (e.V.) in Germany. Donations are tax-deductible for German residents.</p>
+                  <p className="text-foreground/45 text-sm leading-relaxed font-light">Rave for Good is a registered eingetragener Verein (e.V.) in Germany with the non-profit purpose Förderung der Entwicklungszusammenarbeit.</p>
                 </div>
               </div>
             </div>

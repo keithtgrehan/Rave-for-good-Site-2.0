@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import { ArrowRight, Droplets, HeartHandshake, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { events } from "@/data/events";
-import { getHubSpotFormDestination } from "@/lib/hubspot";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -87,7 +86,7 @@ export default function Home() {
                   See Past Events
                 </Button>
               </Link>
-              <Link href={getHubSpotFormDestination("partner")}>
+              <Link href="/contact">
                 <Button
                   size="lg"
                   variant="outline"
@@ -290,8 +289,8 @@ export default function Home() {
             {[
               { icon: Zap, title: "Attend", desc: "Show up to events and power direct fundraising through community participation.", link: "/events" },
               { icon: HeartHandshake, title: "Donate", desc: "Directly fund our water infrastructure projects.", link: "/get-involved" },
-              { icon: Droplets, title: "Partner", desc: "For venues, artists, and brands.", link: getHubSpotFormDestination("partner") },
-              { icon: ArrowRight, title: "Volunteer", desc: "Join our crew on the ground in Berlin.", link: getHubSpotFormDestination("volunteer") }
+              { icon: Droplets, title: "Partner", desc: "For venues, artists, and brands.", link: "/contact" },
+              { icon: ArrowRight, title: "Volunteer", desc: "Join our crew on the ground in Berlin.", link: "/contact" }
             ].map((item, i) => (
               <motion.div key={i} variants={itemFade}>
                 <Link href={item.link}>
