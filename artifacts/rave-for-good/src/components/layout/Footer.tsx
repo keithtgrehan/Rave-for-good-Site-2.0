@@ -1,7 +1,5 @@
 import { Link } from "wouter";
 import { Instagram, Mail, ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 export function Footer() {
   return (
@@ -55,26 +53,25 @@ export function Footer() {
 
           <div>
             <h3 className="font-mono font-bold tracking-[0.16em] uppercase mb-6 text-foreground/30 text-[10px]">Stay Connected</h3>
-            <p className="mb-4 max-w-sm text-xs font-light leading-relaxed text-foreground/40">Join the movement. Updates on events and impact.</p>
-            <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()} data-testid="form-newsletter-footer">
-              <Input
-                type="email"
-                placeholder="EMAIL ADDRESS"
-                className="min-h-11 bg-background border-white/[0.08] rounded-none font-mono text-[10px] uppercase tracking-widest focus-visible:ring-primary/50"
-                data-testid="input-newsletter-email"
-              />
-              <Button type="submit" variant="outline" className="min-h-11 w-full rounded-none border-white/[0.1] text-xs font-bold tracking-widest uppercase text-foreground/50 transition-colors hover:border-primary/60 hover:bg-primary hover:text-primary-foreground" data-testid="button-newsletter-submit">
-                Subscribe
-              </Button>
-            </form>
+            <p className="mb-4 max-w-sm text-xs font-light leading-relaxed text-foreground/40">
+              For collaborations, press, volunteer interest, and donation questions, email us directly.
+            </p>
+            <a
+              href="mailto:info@raveforgood.berlin"
+              className="link-line inline-flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-foreground/45 transition-colors hover:text-foreground"
+              data-testid="footer-link-contact-email"
+            >
+              info@raveforgood.berlin
+              <ArrowUpRight size={12} />
+            </a>
           </div>
         </div>
 
         <div className="flex flex-col items-start justify-between gap-3 border-t border-white/[0.06] pt-6 text-left font-mono text-[10px] uppercase tracking-widest text-foreground/25 md:flex-row md:items-center">
           <p data-testid="text-copyright">© {new Date().getFullYear()} RAVE FOR GOOD e.V.</p>
           <div className="flex flex-wrap gap-4 sm:gap-6">
-            <Link href="/imprint"><span className="hover:text-foreground/50 cursor-pointer transition-colors" data-testid="footer-link-imprint">Imprint</span></Link>
-            <Link href="/privacy"><span className="hover:text-foreground/50 cursor-pointer transition-colors" data-testid="footer-link-privacy">Privacy</span></Link>
+            <Link href="/impressum"><span className="hover:text-foreground/50 cursor-pointer transition-colors" data-testid="footer-link-impressum">Impressum</span></Link>
+            <Link href="/datenschutz"><span className="hover:text-foreground/50 cursor-pointer transition-colors" data-testid="footer-link-datenschutz">Datenschutz</span></Link>
           </div>
         </div>
       </div>

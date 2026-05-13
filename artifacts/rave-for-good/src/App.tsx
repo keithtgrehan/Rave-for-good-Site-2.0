@@ -12,8 +12,26 @@ import Impact from "@/pages/impact";
 import Partners from "@/pages/partners";
 import GetInvolved from "@/pages/get-involved";
 import Contact from "@/pages/contact";
+import Impressum from "@/pages/impressum";
+import Datenschutz from "@/pages/datenschutz";
 
 const queryClient = new QueryClient();
+
+function ImpressumPage() {
+  return <Impressum />;
+}
+
+function DatenschutzPage() {
+  return <Datenschutz />;
+}
+
+function ImpressumAliasPage() {
+  return <Impressum canonicalPath="/impressum" noindex />;
+}
+
+function DatenschutzAliasPage() {
+  return <Datenschutz canonicalPath="/datenschutz" noindex />;
+}
 
 function Router() {
   return (
@@ -25,6 +43,10 @@ function Router() {
       <Route path="/partners" component={Partners} />
       <Route path="/get-involved" component={GetInvolved} />
       <Route path="/contact" component={Contact} />
+      <Route path="/impressum" component={ImpressumPage} />
+      <Route path="/datenschutz" component={DatenschutzPage} />
+      <Route path="/imprint" component={ImpressumAliasPage} />
+      <Route path="/privacy" component={DatenschutzAliasPage} />
       <Route component={NotFound} />
     </Switch>
   );

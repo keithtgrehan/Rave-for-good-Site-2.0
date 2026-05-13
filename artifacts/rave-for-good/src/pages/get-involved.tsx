@@ -1,10 +1,7 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Copy, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { getHubSpotFormDestination } from "@/lib/hubspot";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -12,8 +9,6 @@ const fadeIn = {
 };
 
 export default function GetInvolved() {
-  const [donationAmount, setDonationAmount] = useState("");
-
   return (
     <div className="w-full pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-40 md:pb-32" data-testid="page-get-involved">
       <div className="container px-4 sm:px-6">
@@ -58,41 +53,60 @@ export default function GetInvolved() {
               Can't make it to a dancefloor? You can still contribute directly to our active infrastructure projects. 100% of public donations go to implementation, zero to admin overhead.
             </p>
 
-            <div className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 gap-2 min-[360px]:grid-cols-3 sm:gap-3">
-                {["€10", "€25", "€50"].map((amt) => (
-                  <Button
-                    key={amt}
-                    type="button"
-                    variant="outline"
-                    className="h-12 rounded-none border-white/[0.1] bg-transparent font-display text-lg transition-colors hover:border-primary/50 hover:text-primary sm:h-16 sm:text-xl"
-                    data-testid={`button-donate-${amt.replace('€', '')}`}
-                    aria-pressed={donationAmount === amt.replace("€", "")}
-                    onClick={() => setDonationAmount(amt.replace("€", ""))}
-                  >
-                    {amt}
-                  </Button>
-                ))}
+            <div className="space-y-6">
+              <div className="grid gap-3 text-sm font-light text-foreground/55 sm:grid-cols-2">
+                <div className="border border-white/[0.06] bg-background/45 p-4">
+                  <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.16em] text-primary/70">Bank</div>
+                  <dl className="space-y-2">
+                    <div>
+                      <dt className="text-foreground/30">Bank</dt>
+                      <dd className="text-foreground/75">GLS Bank</dd>
+                    </div>
+                    <div>
+                      <dt className="text-foreground/30">Account holder</dt>
+                      <dd className="text-foreground/75">Rave for good berlin</dd>
+                    </div>
+                    <div>
+                      <dt className="text-foreground/30">IBAN</dt>
+                      <dd className="break-all font-mono text-foreground/75">DE86 4306 0967 1270 1648 00</dd>
+                    </div>
+                  </dl>
+                </div>
+                <div className="border border-white/[0.06] bg-background/45 p-4">
+                  <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.16em] text-primary/70">PayPal</div>
+                  <dl className="space-y-2">
+                    <div>
+                      <dt className="text-foreground/30">PayPal</dt>
+                      <dd className="text-foreground/75">info@raveforgood.berlin</dd>
+                    </div>
+                    <div>
+                      <dt className="text-foreground/30">Link</dt>
+                      <dd className="break-all text-foreground/75">paypal.me/RaveForGoodeV</dd>
+                    </div>
+                  </dl>
+                </div>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-                <Input
-                  type="number"
-                  placeholder="Custom Amount (€)"
-                  className="h-12 rounded-none border-white/[0.08] bg-background font-display text-base focus-visible:ring-primary/50 sm:h-14 sm:text-lg"
-                  data-testid="input-donate-custom"
-                  value={donationAmount}
-                  onChange={(event) => setDonationAmount(event.target.value)}
-                />
                 <Button asChild className="h-12 w-full rounded-none px-8 font-bold uppercase tracking-widest sm:h-14 sm:w-auto" data-testid="button-donate-submit">
                   <a
-                    href="https://www.paypal.com/paypalme/RaveForGoodeV"
+                    href="https://paypal.me/RaveForGoodeV"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     Donate
                   </a>
                 </Button>
+                <Button asChild variant="outline" className="h-12 w-full rounded-none border-white/[0.1] bg-transparent px-8 font-bold uppercase tracking-widest text-foreground/60 hover:border-primary/50 hover:text-primary sm:h-14 sm:w-auto" data-testid="button-donate-email">
+                  <a href="mailto:info@raveforgood.berlin">
+                    <Mail size={16} />
+                    Questions
+                  </a>
+                </Button>
               </div>
+              <p className="flex items-start gap-2 text-xs font-light leading-relaxed text-foreground/40">
+                <Copy size={14} className="mt-0.5 shrink-0 text-foreground/25" />
+                For questions about donations, contact info@raveforgood.berlin.
+              </p>
             </div>
           </motion.div>
 
@@ -121,7 +135,7 @@ export default function GetInvolved() {
               <p className="text-foreground/50 text-sm mb-6 flex-grow font-light leading-relaxed">
                 We need hands in Berlin: door staff, promoters, designers. Donate your time and skills to the crew.
               </p>
-              <Link href={getHubSpotFormDestination("volunteer")}>
+              <Link href="/contact">
                 <span className="inline-flex items-center gap-2 text-foreground/40 hover:text-primary font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-volunteer-contact">
                   Apply to Crew <ArrowRight size={14} />
                 </span>
@@ -133,7 +147,7 @@ export default function GetInvolved() {
               <p className="text-foreground/50 text-sm mb-6 flex-grow font-light leading-relaxed">
                 Represent a venue, label, or artist agency? Let's build a structural alliance.
               </p>
-              <Link href={getHubSpotFormDestination("partner")}>
+              <Link href="/contact">
                 <span className="inline-flex items-center gap-2 text-foreground/40 hover:text-primary font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-partner-info">
                   View Info <ArrowRight size={14} />
                 </span>
