@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, Droplets, HeartHandshake, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SoundCloudPlayer } from "@/components/SoundCloudPlayer";
 import { events } from "@/data/events";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -152,6 +153,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      <SoundCloudPlayer />
 
       <section className="bg-background pb-20 sm:pb-28 md:pb-40" data-testid="section-featured-event">
         <div className="container px-4 sm:px-6">
