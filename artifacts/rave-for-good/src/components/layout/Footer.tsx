@@ -38,7 +38,7 @@ export function Footer() {
           <div>
             <h3 className="font-mono font-bold tracking-[0.16em] uppercase mb-6 text-foreground/30 text-[10px]">Explore</h3>
             <ul className="flex flex-col gap-4">
-              {["About", "Events", "Impact", "Partners"].map((item) => (
+              {["About", "Events", "Artists", "Impact", "Partners"].map((item) => (
                 <li key={item}>
                   <Link href={`/${item.toLowerCase()}`}>
                     <span className="text-foreground/45 hover:text-foreground transition-colors uppercase tracking-wide text-xs font-medium flex items-center gap-1 group cursor-pointer" data-testid={`footer-link-${item.toLowerCase()}`}>

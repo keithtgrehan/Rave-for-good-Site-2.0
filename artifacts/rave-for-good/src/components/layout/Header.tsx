@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 const NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/events", label: "Events" },
+  { href: "/artists", label: "Artists" },
   { href: "/impact", label: "Impact" },
   { href: "/partners", label: "Partners" },
   { href: "/contact", label: "Contact" },
@@ -84,7 +85,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-10" data-testid="nav-desktop">
+        <nav className="hidden items-center gap-5 md:flex lg:gap-8 xl:gap-10" data-testid="nav-desktop">
           {NAV_LINKS.map((link) => {
             const isActive = location === link.href;
             return (

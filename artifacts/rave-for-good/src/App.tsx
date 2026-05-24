@@ -10,6 +10,7 @@ import About from "@/pages/about";
 import Events from "@/pages/events";
 import Impact from "@/pages/impact";
 import Partners from "@/pages/partners";
+import Artists from "@/pages/artists";
 import GetInvolved from "@/pages/get-involved";
 import Contact from "@/pages/contact";
 import Impressum from "@/pages/impressum";
@@ -41,6 +42,7 @@ function Router() {
       <Route path="/events" component={Events} />
       <Route path="/impact" component={Impact} />
       <Route path="/partners" component={Partners} />
+      <Route path="/artists" component={Artists} />
       <Route path="/get-involved" component={GetInvolved} />
       <Route path="/contact" component={Contact} />
       <Route path="/impressum" component={ImpressumPage} />
