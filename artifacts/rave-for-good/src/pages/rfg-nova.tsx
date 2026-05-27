@@ -99,11 +99,11 @@ export default function RfgNova() {
       <div className="absolute right-0 top-0 h-[420px] w-[420px] bg-[radial-gradient(ellipse,rgba(109,94,245,0.08)_0%,transparent_68%)] pointer-events-none sm:h-[760px] sm:w-[820px]" />
       <div className="absolute left-0 top-[45rem] h-[360px] w-[360px] bg-[radial-gradient(ellipse,rgba(77,163,255,0.055)_0%,transparent_70%)] pointer-events-none sm:h-[640px] sm:w-[640px]" />
 
-      <section className="relative pt-24 pb-16 sm:pt-28 sm:pb-24 md:pt-40 md:pb-32" data-testid="hero-rfg-nova">
+      <section className="relative pt-24 pb-14 sm:pt-28 sm:pb-24 md:pt-40 md:pb-32" data-testid="hero-rfg-nova">
         <div className="container relative z-10 px-4 sm:px-6">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-16 xl:gap-24">
+          <div className="grid grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-16 xl:gap-24">
             <motion.div
-              className="flex flex-col justify-center"
+              className="flex min-w-0 flex-col justify-center"
               initial="hidden"
               animate="visible"
               variants={stagger}
@@ -116,7 +116,7 @@ export default function RfgNova() {
               </motion.div>
 
               <motion.h1
-                className="mb-6 font-display text-[clamp(3.5rem,12vw,9rem)] font-bold uppercase leading-[0.84] tracking-[-0.04em]"
+                className="mb-6 font-display text-[clamp(3.25rem,14vw,9rem)] font-bold uppercase leading-[0.86] tracking-[-0.04em]"
                 variants={fadeUp}
               >
                 RFG @ <br />
@@ -124,7 +124,7 @@ export default function RfgNova() {
               </motion.h1>
 
               <motion.p
-                className="mb-8 border-y border-white/[0.06] py-5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/40"
+                className="mb-8 border-y border-white/[0.06] py-5 font-mono text-[10px] uppercase leading-relaxed tracking-[0.11em] text-foreground/40 sm:tracking-[0.16em]"
                 variants={fadeUp}
               >
                 June 26–29, 2026 · Palace in Debrznica
@@ -149,7 +149,7 @@ export default function RfgNova() {
                     <ArrowUpRight size={14} />
                   </a>
                 </Button>
-                <Link href="/upcoming-events">
+                <Link href="/upcoming-events" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant="outline"
@@ -163,7 +163,7 @@ export default function RfgNova() {
             </motion.div>
 
             <motion.div
-              className="relative min-h-[320px] overflow-hidden border border-white/[0.06] bg-card sm:min-h-[440px] lg:min-h-[620px]"
+              className="relative aspect-[1068/645] overflow-hidden border border-white/[0.06] bg-background sm:min-h-[440px] lg:aspect-auto lg:min-h-[620px] lg:bg-card"
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: easeOut, delay: 0.18 }}
@@ -171,14 +171,14 @@ export default function RfgNova() {
               <img
                 src={`${imageBasePath}/festival-flyer.jpg`}
                 alt="NOVUM festival flyer for June 26 to 29, 2026 at Palace in Debrznica"
-                className="h-full w-full object-cover object-center"
+                className="h-full w-full object-contain object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/76 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3 border border-white/[0.08] bg-background/72 px-4 py-3 backdrop-blur-sm sm:bottom-6 sm:left-6 sm:right-6">
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
+              <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 border border-white/[0.08] bg-background/78 px-3 py-2.5 backdrop-blur-sm sm:bottom-6 sm:left-6 sm:right-6 sm:gap-3 sm:px-4 sm:py-3">
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-foreground/45 sm:text-[10px] sm:tracking-[0.18em]">
                   Palace in Debrznica, Poland
                 </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary/75">
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-primary/75 sm:text-[10px] sm:tracking-[0.18em]">
                   26–29.06.2026
                 </span>
               </div>
@@ -187,7 +187,7 @@ export default function RfgNova() {
         </div>
       </section>
 
-      <section className="relative bg-card py-16 sm:py-20 md:py-28">
+      <section className="relative bg-card py-14 sm:py-20 md:py-28">
         <div className="container px-4 sm:px-6">
           <motion.div
             className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-20"
@@ -205,7 +205,7 @@ export default function RfgNova() {
               </h2>
             </motion.div>
             <motion.div className="lg:col-span-8" variants={fadeUp}>
-              <p className="max-w-[74ch] text-lg font-light leading-[1.65] text-foreground/58 sm:text-xl md:text-2xl">
+              <p className="max-w-[74ch] text-base font-light leading-[1.65] text-foreground/58 sm:text-xl md:text-2xl">
                 For two days and two nights, NOVUM brings three stages, music from dawn to dawn, nature, art, workshops and relaxation zones into one palace landscape. The weekend is built around tolerance, freedom and community, with open-air dancefloors and quiet reset spaces moving in the same rhythm.
               </p>
             </motion.div>
@@ -213,7 +213,7 @@ export default function RfgNova() {
         </div>
       </section>
 
-      <section className="relative py-16 sm:py-20 md:py-32">
+      <section className="relative py-14 sm:py-20 md:py-32">
         <div className="container px-4 sm:px-6">
           <motion.div
             className="mb-10 flex flex-col justify-between gap-4 md:mb-14 md:flex-row md:items-end"
@@ -257,7 +257,7 @@ export default function RfgNova() {
         </div>
       </section>
 
-      <section className="relative bg-card py-16 sm:py-20 md:py-32" data-testid="section-four-places">
+      <section className="relative bg-card py-14 sm:py-20 md:py-32" data-testid="section-four-places">
         <div className="container px-4 sm:px-6">
           <motion.div
             className="mb-10 max-w-4xl md:mb-14"
@@ -290,11 +290,11 @@ export default function RfgNova() {
                 className="border border-white/[0.06] bg-background p-5 sm:p-7 md:p-8"
                 variants={fadeUp}
               >
-                <div className="mb-6 flex flex-col gap-2 border-b border-white/[0.06] pb-5 sm:flex-row sm:items-end sm:justify-between">
+                <div className="mb-6 flex min-w-0 flex-col gap-2 border-b border-white/[0.06] pb-5 sm:flex-row sm:items-end sm:justify-between">
                   <h3 className="font-display text-3xl font-bold uppercase leading-none tracking-[-0.025em] text-primary sm:text-4xl">
                     {place.title}
                   </h3>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/36">
+                  <span className="min-w-0 font-mono text-[10px] uppercase leading-relaxed tracking-[0.12em] text-foreground/36 sm:tracking-[0.16em]">
                     {place.styles}
                   </span>
                 </div>
@@ -307,7 +307,7 @@ export default function RfgNova() {
         </div>
       </section>
 
-      <section className="relative py-16 sm:py-20 md:py-32">
+      <section className="relative py-14 sm:py-20 md:py-32">
         <div className="container px-4 sm:px-6">
           <motion.div
             className="mb-10 flex flex-col justify-between gap-4 md:mb-14 md:flex-row md:items-end"
@@ -340,9 +340,9 @@ export default function RfgNova() {
               className="relative"
               data-testid="rfg-nova-carousel"
             >
-              <CarouselContent className="-ml-3 sm:-ml-4">
+              <CarouselContent className="-ml-2 sm:-ml-4">
                 {venueImages.map((image) => (
-                  <CarouselItem key={image.src} className="pl-3 sm:pl-4">
+                  <CarouselItem key={image.src} className="pl-2 sm:pl-4">
                     <figure className="overflow-hidden border border-white/[0.06] bg-card">
                       <img
                         src={image.src}
@@ -350,7 +350,7 @@ export default function RfgNova() {
                         loading="lazy"
                         className="aspect-[4/3] w-full object-cover sm:aspect-[16/9]"
                       />
-                      <figcaption className="border-t border-white/[0.06] px-4 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/35 sm:px-5">
+                      <figcaption className="border-t border-white/[0.06] px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/35 sm:px-5 sm:tracking-[0.16em]">
                         {image.caption}
                       </figcaption>
                     </figure>
@@ -359,18 +359,18 @@ export default function RfgNova() {
               </CarouselContent>
               <CarouselPrevious
                 aria-label="Previous venue image"
-                className="left-3 top-1/2 h-11 w-11 -translate-y-1/2 rounded-none border-white/[0.16] bg-background/80 text-foreground/70 backdrop-blur-md hover:text-foreground sm:left-5"
+                className="left-2 top-[calc(50%-18px)] h-12 w-12 -translate-y-1/2 rounded-none border-white/[0.16] bg-background/85 text-foreground/80 backdrop-blur-md hover:text-foreground sm:left-5 sm:top-1/2"
               />
               <CarouselNext
                 aria-label="Next venue image"
-                className="right-3 top-1/2 h-11 w-11 -translate-y-1/2 rounded-none border-white/[0.16] bg-background/80 text-foreground/70 backdrop-blur-md hover:text-foreground sm:right-5"
+                className="right-2 top-[calc(50%-18px)] h-12 w-12 -translate-y-1/2 rounded-none border-white/[0.16] bg-background/85 text-foreground/80 backdrop-blur-md hover:text-foreground sm:right-5 sm:top-1/2"
               />
             </Carousel>
           </motion.div>
         </div>
       </section>
 
-      <section className="bg-card py-16 sm:py-20 md:py-28">
+      <section className="bg-card py-14 sm:py-20 md:py-28">
         <div className="container px-4 sm:px-6">
           <motion.div
             className="border border-white/[0.06] bg-background p-6 sm:p-8 md:p-12"
