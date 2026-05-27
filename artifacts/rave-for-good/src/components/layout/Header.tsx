@@ -86,7 +86,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-4 md:flex lg:gap-6 xl:gap-8" data-testid="nav-desktop">
+        <nav className="hidden items-center gap-4 lg:flex lg:gap-6 xl:gap-8" data-testid="nav-desktop">
           {NAV_LINKS.map((link) => {
             const isActive = location === link.href || (link.href === "/upcoming-events" && location.startsWith("/upcoming-events/"));
             return (
@@ -118,7 +118,7 @@ export function Header() {
         {/* Mobile Toggle */}
         <button
           ref={mobileMenuToggleRef}
-          className="md:hidden z-50 relative flex min-h-11 min-w-11 items-center justify-center p-3 text-foreground/50 transition-colors duration-200 hover:text-foreground"
+          className="lg:hidden z-50 relative flex min-h-11 min-w-11 items-center justify-center p-3 text-foreground/50 transition-colors duration-200 hover:text-foreground"
           onClick={toggleMobileMenu}
           data-testid="button-mobile-menu-toggle"
           aria-label="Toggle menu"
@@ -135,7 +135,7 @@ export function Header() {
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
-        className={`fixed inset-0 z-[60] md:hidden transition-[visibility,opacity] duration-300 ${
+        className={`fixed inset-0 z-[60] lg:hidden transition-[visibility,opacity] duration-300 ${
           isMobileMenuOpen ? "visible opacity-100" : "invisible opacity-0 pointer-events-none"
         }`}
         data-testid="nav-mobile"

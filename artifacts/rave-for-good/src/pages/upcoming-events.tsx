@@ -20,9 +20,9 @@ export default function UpcomingEvents() {
       <div className="absolute right-0 top-0 h-[360px] w-[360px] bg-[radial-gradient(ellipse,rgba(109,94,245,0.075)_0%,transparent_68%)] pointer-events-none sm:h-[680px] sm:w-[760px]" />
       <div className="absolute bottom-0 left-0 h-[320px] w-[320px] bg-[radial-gradient(ellipse,rgba(77,163,255,0.055)_0%,transparent_70%)] pointer-events-none sm:h-[520px] sm:w-[520px]" />
 
-      <div className="pt-24 pb-16 sm:pt-28 sm:pb-24 md:pt-44 md:pb-36">
+      <div className="pt-24 pb-14 sm:pt-28 sm:pb-24 md:pt-44 md:pb-36">
         <div className="container relative z-10 px-4 sm:px-6">
-          <div className="mb-14 max-w-5xl sm:mb-20 md:mb-28">
+          <div className="mb-12 max-w-5xl sm:mb-20 md:mb-28">
             <motion.div
               className="mb-6 flex items-center gap-2 sm:mb-8 sm:gap-3"
               initial={{ opacity: 0 }}
@@ -36,7 +36,7 @@ export default function UpcomingEvents() {
             </motion.div>
 
             <motion.h1
-              className="mb-6 font-display text-[clamp(3rem,14vw,9rem)] font-bold uppercase leading-[0.85] tracking-[-0.035em] sm:mb-8"
+              className="mb-6 font-display text-[clamp(2.8rem,13vw,9rem)] font-bold uppercase leading-[0.86] tracking-[-0.035em] sm:mb-8"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: easeOut }}
@@ -56,23 +56,23 @@ export default function UpcomingEvents() {
           </div>
 
           <motion.article
-            className="group grid overflow-hidden border border-white/[0.06] bg-card md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+            className="group grid overflow-hidden border border-white/[0.06] bg-card lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             variants={fadeUp}
             data-testid="card-rfg-nova"
           >
-            <div className="relative min-h-[260px] overflow-hidden bg-muted sm:min-h-[360px] md:min-h-[520px]">
+            <div className="relative aspect-[1068/645] overflow-hidden bg-background lg:aspect-auto lg:min-h-[520px] lg:bg-muted">
               <img
                 src="/images/events/rfg-nova/festival-flyer.jpg"
                 alt="RFG at NOVUM festival flyer for June 26 to 29, 2026"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/82 via-background/16 to-transparent md:bg-gradient-to-r md:from-transparent md:to-card/36" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/82 via-background/16 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-card/36" />
             </div>
 
-            <div className="flex flex-col justify-between p-5 sm:p-8 md:p-10 lg:p-12">
+            <div className="flex min-w-0 flex-col justify-between p-5 sm:p-8 md:p-10 lg:p-12">
               <div>
                 <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
                   Featured appearance
@@ -81,14 +81,14 @@ export default function UpcomingEvents() {
                   RFG @ Nova
                 </h2>
 
-                <div className="mb-8 grid gap-3 border-y border-white/[0.06] py-5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/38 sm:grid-cols-2">
-                  <div className="flex items-center gap-2">
-                    <CalendarDays size={14} className="text-primary/70" />
-                    <span>June 26–29, 2026</span>
+                <div className="mb-8 grid gap-3 border-y border-white/[0.06] py-5 font-mono text-[10px] uppercase tracking-[0.11em] text-foreground/38 sm:grid-cols-2 sm:tracking-[0.16em]">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <CalendarDays size={14} className="shrink-0 text-primary/70" />
+                    <span className="min-w-0 leading-relaxed">June 26–29, 2026</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin size={14} className="text-accent/70" />
-                    <span>Palace in Debrznica, Poland</span>
+                  <div className="flex min-w-0 items-center gap-2">
+                    <MapPin size={14} className="shrink-0 text-accent/70" />
+                    <span className="min-w-0 leading-relaxed">Palace in Debrznica, Poland</span>
                   </div>
                 </div>
 
@@ -98,7 +98,7 @@ export default function UpcomingEvents() {
               </div>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-                <Link href="/upcoming-events/rfg-nova">
+                <Link href="/upcoming-events/rfg-nova" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     className="btn-cta h-12 w-full rounded-none px-6 text-xs font-bold uppercase tracking-[0.14em] sm:w-auto sm:px-8"
