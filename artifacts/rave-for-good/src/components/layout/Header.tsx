@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 const NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/events", label: "Events" },
+  { href: "/upcoming-events", label: "Upcoming" },
   { href: "/artists", label: "Artists" },
   { href: "/impact", label: "Impact" },
   { href: "/partners", label: "Partners" },
@@ -85,9 +86,9 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-5 md:flex lg:gap-8 xl:gap-10" data-testid="nav-desktop">
+        <nav className="hidden items-center gap-4 md:flex lg:gap-6 xl:gap-8" data-testid="nav-desktop">
           {NAV_LINKS.map((link) => {
-            const isActive = location === link.href;
+            const isActive = location === link.href || (link.href === "/upcoming-events" && location.startsWith("/upcoming-events/"));
             return (
               <Link key={link.href} href={link.href}>
                 <span
