@@ -3,6 +3,15 @@ import { Instagram, Mail, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+const EXPLORE_LINKS = [
+  { href: "/about", label: "About" },
+  { href: "/events", label: "Events" },
+  { href: "/upcoming-events", label: "Upcoming" },
+  { href: "/artists", label: "Artists" },
+  { href: "/impact", label: "Impact" },
+  { href: "/partners", label: "Partners" },
+];
+
 export function Footer() {
   return (
     <footer className="bg-card border-t border-white/[0.06] pt-14 pb-8 sm:pt-20 sm:pb-10" data-testid="layout-footer">
@@ -40,11 +49,11 @@ export function Footer() {
           <div>
             <h3 className="font-mono font-bold tracking-[0.16em] uppercase mb-6 text-foreground/30 text-[10px]">Explore</h3>
             <ul className="flex flex-col gap-4">
-              {["About", "Events", "Artists", "Impact", "Partners"].map((item) => (
-                <li key={item}>
-                  <Link href={`/${item.toLowerCase()}`}>
-                    <span className="text-foreground/45 hover:text-foreground transition-colors uppercase tracking-wide text-xs font-medium flex items-center gap-1 group cursor-pointer" data-testid={`footer-link-${item.toLowerCase()}`}>
-                      {item}
+              {EXPLORE_LINKS.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href}>
+                    <span className="text-foreground/45 hover:text-foreground transition-colors uppercase tracking-wide text-xs font-medium flex items-center gap-1 group cursor-pointer" data-testid={`footer-link-${item.label.toLowerCase()}`}>
+                      {item.label}
                       <ArrowUpRight size={12} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     </span>
                   </Link>
