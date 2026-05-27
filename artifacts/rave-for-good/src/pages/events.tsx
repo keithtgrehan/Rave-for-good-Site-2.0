@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { events } from "@/data/events";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -50,6 +51,17 @@ export default function Events() {
             >
               Music, people, and purpose in action.
             </motion.p>
+            <motion.a
+              href="https://www.raveforgood.berlin/upcoming-events"
+              className="link-line group mt-8 inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-primary transition-colors duration-200 hover:text-accent"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.38, ease: easeOut }}
+              data-testid="link-events-upcoming"
+            >
+              Upcoming Events
+              <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1" />
+            </motion.a>
           </div>
 
           <div>

@@ -4,13 +4,13 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const NAV_LINKS = [
-  { href: "/about", label: "About" },
-  { href: "/events", label: "Events" },
-  { href: "/upcoming-events", label: "Upcoming" },
-  { href: "/artists", label: "Artists" },
-  { href: "/impact", label: "Impact" },
-  { href: "/partners", label: "Partners" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About", testId: "about" },
+  { href: "/events", label: "Events", testId: "events" },
+  { href: "/upcoming-events", label: "Upcoming Events", testId: "upcoming-events" },
+  { href: "/artists", label: "Artists", testId: "artists" },
+  { href: "/impact", label: "Impact", testId: "impact" },
+  { href: "/partners", label: "Partners", testId: "partners" },
+  { href: "/contact", label: "Contact", testId: "contact" },
 ];
 
 export function Header() {
@@ -97,7 +97,7 @@ export function Header() {
                       ? "text-foreground nav-active"
                       : "text-foreground/38 hover:text-foreground/75"
                   }`}
-                  data-testid={`link-${link.label.toLowerCase()}`}
+                  data-testid={`link-${link.testId}`}
                 >
                   {link.label}
                 </span>
@@ -186,7 +186,7 @@ export function Header() {
                         ? "border-primary/35 bg-primary/[0.08] text-primary"
                         : "border-white/[0.08] bg-card/75 text-foreground/78 hover:border-white/[0.16] hover:text-foreground"
                     }`}
-                    data-testid={`mobile-link-${link.label.toLowerCase()}`}
+                    data-testid={`mobile-link-${link.testId}`}
                   >
                     <span className="font-display text-[1.7rem] font-bold uppercase leading-none tracking-[-0.03em] sm:text-[1.9rem]">
                       {link.label}
