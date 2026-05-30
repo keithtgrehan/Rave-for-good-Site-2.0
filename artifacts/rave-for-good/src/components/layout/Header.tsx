@@ -181,17 +181,17 @@ export function Header() {
               {NAV_LINKS.map((link) => (
                 <Link key={link.href} href={link.href}>
                   <div
-                    className={`group flex w-full items-center justify-between border px-5 py-4 transition-colors duration-200 ${
+                    className={`group flex w-full min-w-0 items-center justify-between gap-3 border px-5 py-4 transition-colors duration-200 ${
                       location === link.href
                         ? "border-primary/35 bg-primary/[0.08] text-primary"
                         : "border-white/[0.08] bg-card/75 text-foreground/78 hover:border-white/[0.16] hover:text-foreground"
                     }`}
                     data-testid={`mobile-link-${link.testId}`}
                   >
-                    <span className="font-display text-[1.7rem] font-bold uppercase leading-none tracking-[-0.03em] sm:text-[1.9rem]">
+                    <span className="min-w-0 flex-1 break-words font-display text-[1.7rem] font-bold uppercase leading-none tracking-[-0.03em] sm:text-[1.9rem]">
                       {link.label}
                     </span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/32 transition-colors group-hover:text-foreground/55">
+                    <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/32 transition-colors group-hover:text-foreground/55">
                       Open
                     </span>
                   </div>

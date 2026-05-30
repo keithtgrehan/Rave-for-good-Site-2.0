@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const LOAD_SOUNDCLOUD_IMMEDIATELY = true;
-// GDPR note: set this to false and require a user click before loading the SoundCloud iframe if strict third-party consent gating is required.
+const LOAD_SOUNDCLOUD_IMMEDIATELY = false;
+// GDPR note: keep this false so the external SoundCloud iframe loads only after a user action.
 
 export const SOUNDCLOUD_MIX_URLS = [
   "https://soundcloud.com/soupcollectiveberlin",
@@ -22,7 +22,7 @@ export function buildSoundCloudEmbedSrc(soundCloudUrl: string) {
     "https://w.soundcloud.com/player/?" +
     new URLSearchParams({
       url: soundCloudUrl,
-      auto_play: "true",
+      auto_play: "false",
       hide_related: "true",
       show_comments: "false",
       show_user: "true",
