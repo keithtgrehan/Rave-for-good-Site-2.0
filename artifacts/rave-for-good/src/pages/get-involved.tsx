@@ -93,13 +93,13 @@ export default function GetInvolved() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Donate
+                    Donate via PayPal
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="h-12 w-full rounded-none border-white/[0.1] bg-transparent px-8 font-bold uppercase tracking-widest text-foreground/60 hover:border-primary/50 hover:text-primary sm:h-14 sm:w-auto" data-testid="button-donate-email">
                   <a href="mailto:info@raveforgood.berlin">
                     <Mail size={16} />
-                    Questions
+                    Donation questions
                   </a>
                 </Button>
               </div>
