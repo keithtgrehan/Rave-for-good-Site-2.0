@@ -78,7 +78,7 @@ export default function UpcomingEvents() {
                   Featured appearance
                 </p>
                 <h2 className="mb-6 font-display text-4xl font-bold uppercase leading-[0.9] tracking-[-0.035em] text-foreground/92 sm:text-5xl md:text-6xl">
-                  RFG @ Nova
+                  RFG @ NOVUM
                 </h2>
 
                 <div className="mb-8 grid gap-3 border-y border-white/[0.06] py-5 font-mono text-[10px] uppercase tracking-[0.11em] text-foreground/38 sm:grid-cols-2 sm:tracking-[0.16em]">

@@ -120,7 +120,7 @@ export default function RfgNova() {
                 variants={fadeUp}
               >
                 RFG @ <br />
-                <span className="text-primary">Nova</span>
+                <span className="text-primary">NOVUM</span>
               </motion.h1>
 
               <motion.p
