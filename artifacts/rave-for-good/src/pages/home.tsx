@@ -78,13 +78,13 @@ export default function Home() {
               initial="hidden"
               animate="visible"
             >
-              <Link href="/events">
+              <Link href="/upcoming-events">
                 <Button
                   size="lg"
                   className="btn-cta h-12 w-full rounded-none px-6 text-xs font-bold uppercase tracking-[0.14em] sm:h-14 sm:w-auto sm:px-10"
-                  data-testid="button-hero-events"
+                  data-testid="button-hero-upcoming-events"
                 >
-                  See Past Events
+                  Upcoming Events
                 </Button>
               </Link>
               <Link href="/contact">
@@ -290,7 +290,7 @@ export default function Home() {
             variants={stagger}
           >
             {[
-              { icon: Zap, title: "Attend", desc: "Show up to events and power direct fundraising through community participation.", link: "/events" },
+              { icon: Zap, title: "Attend", desc: "Show up to events and power direct fundraising through community participation.", link: "/upcoming-events" },
               { icon: HeartHandshake, title: "Donate", desc: "Directly fund our water infrastructure projects.", link: "/get-involved" },
               { icon: Droplets, title: "Partner", desc: "For venues, artists, and brands.", link: "/contact" },
               { icon: ArrowRight, title: "Volunteer", desc: "Join our crew on the ground in Berlin.", link: "/contact" }
