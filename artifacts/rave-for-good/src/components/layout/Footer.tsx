@@ -5,6 +5,7 @@ const EXPLORE_LINKS = [
   { href: "/about", label: "About" },
   { href: "/events", label: "Events" },
   { href: "/upcoming-events", label: "Upcoming" },
+  { href: "/crew-radio", label: "Crew Radio" },
   { href: "/artists", label: "Artists" },
   { href: "/impact", label: "Impact" },
   { href: "/partners", label: "Partners" },

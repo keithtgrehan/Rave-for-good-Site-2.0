@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-const LOAD_SOUNDCLOUD_IMMEDIATELY = false;
-// GDPR note: keep this false so the external SoundCloud iframe loads only after a user action.
+const LOAD_SOUNDCLOUD_IMMEDIATELY = true;
 
 export const SOUNDCLOUD_MIX_URLS = [
   "https://soundcloud.com/soupcollectiveberlin",
@@ -36,7 +35,6 @@ export function buildSoundCloudEmbedSrc(soundCloudUrl: string) {
 
 export function SoundCloudPlayer() {
   const [selectedUrl] = useState(getRandomSoundCloudUrl);
-  const [loaded, setLoaded] = useState(LOAD_SOUNDCLOUD_IMMEDIATELY);
   const src = buildSoundCloudEmbedSrc(selectedUrl);
 
   return (
@@ -73,7 +71,7 @@ export function SoundCloudPlayer() {
               <span className="text-accent/70">SC-01</span>
             </div>
 
-            {loaded ? (
+            {LOAD_SOUNDCLOUD_IMMEDIATELY && (
               <>
                 <iframe
                   title="Rave for Good SoundCloud player"
@@ -96,15 +94,6 @@ export function SoundCloudPlayer() {
                   Open Soup Collective on SoundCloud
                 </a>
               </>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setLoaded(true)}
-                className="btn-cta relative flex h-[166px] w-full items-center justify-center border border-white/[0.08] bg-background/70 px-6 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-foreground/65 hover:border-primary/40 hover:text-foreground"
-                data-testid="button-load-soundcloud-player"
-              >
-                Load SoundCloud player
-              </button>
             )}
           </div>
         </div>

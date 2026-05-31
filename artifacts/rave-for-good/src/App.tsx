@@ -10,6 +10,7 @@ import About from "@/pages/about";
 import Events from "@/pages/events";
 import UpcomingEvents from "@/pages/upcoming-events";
 import RfgNova from "@/pages/rfg-nova";
+import CrewRadio from "@/pages/crew-radio";
 import Impact from "@/pages/impact";
 import Partners from "@/pages/partners";
 import Artists from "@/pages/artists";
@@ -44,6 +45,7 @@ function Router() {
       <Route path="/events" component={Events} />
       <Route path="/upcoming-events/rfg-nova" component={RfgNova} />
       <Route path="/upcoming-events" component={UpcomingEvents} />
+      <Route path="/crew-radio" component={CrewRadio} />
       <Route path="/impact" component={Impact} />
       <Route path="/partners" component={Partners} />
       <Route path="/artists" component={Artists} />

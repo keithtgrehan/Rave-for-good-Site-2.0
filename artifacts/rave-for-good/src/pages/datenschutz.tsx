@@ -94,7 +94,7 @@ const sections = [
   {
     title: "8. SoundCloud und soziale Medien",
     content: (
-      <p>SoundCloud wird nicht automatisch eingebettet. Der SoundCloud-Player wird erst nach aktiver Betätigung der Schaltfläche geladen. Soweit diese Website auf externe Plattformen wie SoundCloud, Instagram, Facebook oder andere Anbieter verlinkt oder externe Inhalte nach Nutzeraktion lädt, verarbeiten die jeweiligen Anbieter Daten in eigener Verantwortung.</p>
+      <p>SoundCloud ist auf dieser Website eingebettet. Der SoundCloud-Player startet nicht automatisch. Beim Laden von Seiten mit eingebettetem SoundCloud-Player können Daten an SoundCloud übertragen werden. Externe SoundCloud-Links führen zu SoundCloud; dort verarbeitet SoundCloud Daten in eigener Verantwortung. Gleiches gilt für externe Links zu Plattformen wie Instagram, Facebook oder anderen Anbietern.</p>
     ),
   },
   {
