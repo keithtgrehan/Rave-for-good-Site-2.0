@@ -97,6 +97,14 @@ export default function Events() {
                       {new Date(event.date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })} · {event.city} · {event.venue}
                     </p>
                     <p className="text-foreground/45 text-sm font-light leading-relaxed max-w-[52ch]">{event.description}</p>
+                    {event.detailPath ? (
+                      <Link href={event.detailPath}>
+                        <span className="link-line mt-6 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/40 transition-colors hover:text-primary" data-testid={`link-past-event-${event.id}`}>
+                          View Archive
+                          <ArrowRight size={13} />
+                        </span>
+                      </Link>
+                    ) : null}
                   </div>
                 </motion.article>
               ))}
