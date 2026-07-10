@@ -25,6 +25,61 @@ test("the app registers the Crew Radio route", async () => {
   assert.match(appSource, /<Route path="\/crew-radio" component=\{CrewRadio\} \/>/);
 });
 
+test("the app registers the Berlin park cleanup route", async () => {
+  const appSource = await readFile(path.join(sourceRoot, "App.tsx"), "utf8");
+
+  assert.match(appSource, /import BerlinParkCleanup from ["']@\/pages\/berlin-park-cleanup["'];/);
+  assert.match(appSource, /<Route path="\/berlin-park-cleanup" component=\{BerlinParkCleanup\} \/>/);
+});
+
+test("the footer includes the Berlin park cleanup discovery link", async () => {
+  const footerSource = await readFile(
+    path.join(sourceRoot, "components/layout/Footer.tsx"),
+    "utf8",
+  );
+
+  assert.match(footerSource, /href: "\/berlin-park-cleanup", label: "Park Cleanup"/);
+});
+
+test("the Berlin park cleanup page uses the required image and donation CTA", async () => {
+  const cleanupSource = await readFile(
+    path.join(sourceRoot, "pages/berlin-park-cleanup.tsx"),
+    "utf8",
+  );
+
+  assert.match(cleanupSource, /Berlin Local Action/);
+  assert.match(cleanupSource, /Berlin Park Cleanup/);
+  assert.match(cleanupSource, /\/images\/berlin-park-cleanup\.jpg/);
+  assert.match(cleanupSource, /Support the cleanup/);
+  assert.match(cleanupSource, /https:\/\/paypal\.me\/RaveForGoodeV/);
+  assert.match(cleanupSource, /info@raveforgood\.berlin/);
+});
+
+test("Novum is archived under past events and removed from upcoming cards", async () => {
+  const eventsSource = await readFile(path.join(sourceRoot, "data/events.ts"), "utf8");
+  const upcomingSource = await readFile(
+    path.join(sourceRoot, "pages/upcoming-events.tsx"),
+    "utf8",
+  );
+  const novaSource = await readFile(path.join(sourceRoot, "pages/rfg-nova.tsx"), "utf8");
+  const appSource = await readFile(path.join(sourceRoot, "App.tsx"), "utf8");
+
+  assert.match(eventsSource, /id: "rfg-nova"/);
+  assert.match(eventsSource, /date: "2026-06-26"/);
+  assert.match(eventsSource, /venue: "Palace in Debrznica"/);
+  assert.match(eventsSource, /status: "past"/);
+  assert.match(eventsSource, /image: "\/images\/events\/rfg-nova\/festival-flyer\.jpg"/);
+
+  assert.doesNotMatch(upcomingSource, /data-testid="card-rfg-nova"/);
+  assert.match(upcomingSource, /No upcoming events announced/);
+
+  assert.match(appSource, /<Route path="\/events\/rfg-nova" component=\{RfgNova\} \/>/);
+  assert.match(appSource, /<Route path="\/upcoming-events\/rfg-nova" component=\{RfgNova\} \/>/);
+  assert.doesNotMatch(novaSource, /Buy Tickets/);
+  assert.doesNotMatch(novaSource, /Back to Upcoming Events/);
+  assert.match(novaSource, /Back to Past Events/);
+});
+
 test("the rendered homepage autoloads the non-autoplay SoundCloud iframe before past events", async (t) => {
   const homeSource = await readFile(path.join(sourceRoot, "pages/home.tsx"), "utf8");
 
@@ -35,6 +90,10 @@ test("the rendered homepage autoloads the non-autoplay SoundCloud iframe before 
     appType: "custom",
     configFile: false,
     logLevel: "error",
+    optimizeDeps: {
+      noDiscovery: true,
+      include: [],
+    },
     plugins: [react()],
     root: appRoot,
     resolve: {
@@ -45,6 +104,8 @@ test("the rendered homepage autoloads the non-autoplay SoundCloud iframe before 
     },
     server: {
       middlewareMode: true,
+      hmr: false,
+      watch: null,
     },
   });
 

@@ -1,4 +1,27 @@
-export const events = [
+export type Event = {
+  id: string;
+  title: string;
+  date: string;
+  venue: string;
+  city: string;
+  description: string;
+  status: "upcoming" | "past";
+  image: string;
+  detailPath?: string;
+};
+
+export const events: Event[] = [
+  {
+    id: "rfg-nova",
+    title: "RFG @ NOVUM",
+    date: "2026-06-26",
+    venue: "Palace in Debrznica",
+    city: "Poland",
+    description: "Rave for Good joined NOVUM for a four-day electronic music gathering at a 19th-century palace in the forest, surrounded by water, nature and open-air dancefloors.",
+    status: "past",
+    image: "/images/events/rfg-nova/festival-flyer.jpg",
+    detailPath: "/events/rfg-nova"
+  },
   {
     id: "party-of-hearts-kater-blau",
     title: "Party of Hearts at Kater Blau",

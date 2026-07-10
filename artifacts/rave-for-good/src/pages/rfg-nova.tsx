@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -10,7 +10,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const ticketUrl = "https://kicket.com/wydarzenia/novum-palac-debrznica-21966?eventId=318928";
 const imageBasePath = "/images/events/rfg-nova";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -111,7 +110,7 @@ export default function RfgNova() {
               <motion.div className="mb-6 flex items-center gap-3" variants={fadeUp}>
                 <span className="h-2 w-2 rounded-full bg-primary" />
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
-                  Upcoming Event
+                  Past Event
                 </span>
               </motion.div>
 
@@ -134,29 +133,18 @@ export default function RfgNova() {
                 className="mb-10 max-w-2xl text-base font-light leading-relaxed text-foreground/58 sm:text-lg md:text-xl"
                 variants={fadeUp}
               >
-                Rave for Good joins NOVUM for a four-day electronic music gathering at a 19th-century palace in the forest, surrounded by water, nature and open-air dancefloors.
+                Rave for Good joined NOVUM for a four-day electronic music gathering at a 19th-century palace in the forest, surrounded by water, nature and open-air dancefloors.
               </motion.p>
 
               <motion.div className="flex flex-col gap-3 sm:flex-row" variants={fadeUp}>
-                <Button
-                  asChild
-                  size="lg"
-                  className="btn-cta h-12 w-full rounded-none px-6 text-xs font-bold uppercase tracking-[0.14em] sm:w-auto sm:px-8"
-                  data-testid="button-buy-rfg-nova"
-                >
-                  <a href={ticketUrl} target="_blank" rel="noopener noreferrer">
-                    Buy Tickets
-                    <ArrowUpRight size={14} />
-                  </a>
-                </Button>
-                <Link href="/upcoming-events" className="w-full sm:w-auto">
+                <Link href="/events" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant="outline"
                     className="btn-cta h-12 w-full rounded-none border-white/[0.18] bg-transparent px-6 text-xs font-bold uppercase tracking-[0.14em] text-foreground/65 hover:border-white/40 hover:text-foreground sm:w-auto sm:px-8"
                   >
                     <ArrowLeft size={14} />
-                    Back to Upcoming Events
+                    Back to Past Events
                   </Button>
                 </Link>
               </motion.div>
@@ -206,7 +194,7 @@ export default function RfgNova() {
             </motion.div>
             <motion.div className="lg:col-span-8" variants={fadeUp}>
               <p className="max-w-[74ch] text-base font-light leading-[1.65] text-foreground/58 sm:text-xl md:text-2xl">
-                For two days and two nights, NOVUM brings three stages, music from dawn to dawn, nature, art, workshops and relaxation zones into one palace landscape. The weekend is built around tolerance, freedom and community, with open-air dancefloors and quiet reset spaces moving in the same rhythm.
+                For two days and two nights, NOVUM brought three stages, music from dawn to dawn, nature, art, workshops and relaxation zones into one palace landscape. The weekend was built around tolerance, freedom and community, with open-air dancefloors and quiet reset spaces moving in the same rhythm.
               </p>
             </motion.div>
           </motion.div>
@@ -385,22 +373,20 @@ export default function RfgNova() {
                   June 26–29, 2026
                 </p>
                 <h2 className="mb-5 font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-5xl">
-                  Join us at NOVUM
+                  NOVUM archive
                 </h2>
                 <p className="max-w-2xl text-base font-light leading-relaxed text-foreground/52 sm:text-lg">
-                  Meet Rave for Good in Debrznica for a weekend of music, community and shared energy in the palace grounds.
+                  A record of Rave for Good at Debrznica: music, community and shared energy in the palace grounds.
                 </p>
               </div>
-              <Button
-                asChild
-                size="lg"
-                className="btn-cta h-12 w-full shrink-0 rounded-none px-6 text-xs font-bold uppercase tracking-[0.14em] sm:w-auto sm:px-8"
-              >
-                <a href={ticketUrl} target="_blank" rel="noopener noreferrer">
-                  Buy Tickets
-                  <ArrowUpRight size={14} />
-                </a>
-              </Button>
+              <Link href="/events" className="w-full shrink-0 sm:w-auto">
+                <Button
+                  size="lg"
+                  className="btn-cta h-12 w-full rounded-none px-6 text-xs font-bold uppercase tracking-[0.14em] sm:w-auto sm:px-8"
+                >
+                  Back to Past Events
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
