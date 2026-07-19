@@ -1,3 +1,10 @@
+export type EventLineupItem = {
+  time: string;
+  artist: string;
+};
+
+export type EventCategory = "music" | "community";
+
 export type Event = {
   id: string;
   title: string;
@@ -8,9 +15,57 @@ export type Event = {
   status: "upcoming" | "past";
   image: string;
   detailPath?: string;
+  startTime?: string;
+  endTime?: string;
+  startLocation?: string;
+  endLocation?: string;
+  lineup?: EventLineupItem[];
+  category?: EventCategory;
 };
 
 export const events: Event[] = [
+  {
+    id: "trash-pickup-2026-07-19",
+    title: "Trash Pickup",
+    date: "2026-07-19",
+    startTime: "14:00",
+    endTime: "20:00",
+    startLocation: "Lohmühlenplatz",
+    endLocation: "Schlesischer Busch",
+    venue: "Lohmühlenplatz → Schlesischer Busch",
+    city: "Berlin",
+    description:
+      "A community park cleanup bringing together volunteers, local artists and Berlin’s music community for direct action in shared public space.",
+    status: "upcoming",
+    category: "community",
+    image: "/images/events/trash-pickup-2026-07-19.jpg",
+    detailPath: "/park-cleanup",
+    lineup: [
+      { time: "14:00", artist: "l_udwig" },
+      { time: "15:00", artist: "Confidentially Blonde" },
+      { time: "16:00", artist: "Clelio" },
+      { time: "17:00", artist: "Radio Renato" },
+      { time: "18:00", artist: "Fyschy" },
+      { time: "19:00", artist: "Prisoner of Wicked" }
+    ]
+  },
+  {
+    id: "berlin-park-cleanup-2026-06-14",
+    title: "Berlin Park Cleanup",
+    date: "2026-06-14",
+    startTime: "14:00",
+    endTime: "20:00",
+    startLocation: "Lohmühlenplatz",
+    endLocation: "Schlesischer Busch",
+    venue: "Lohmühlenplatz → Schlesischer Busch",
+    city: "Berlin",
+    description:
+      "A Berlin community cleanup bringing volunteers, artists, ravers and neighbours together to care for shared public space.",
+    status: "past",
+    category: "community",
+    image: "/images/berlin-park-cleanup.jpg",
+    detailPath: "/berlin-park-cleanup"
+  },
   {
     id: "rfg-nova",
     title: "RFG @ NOVUM",

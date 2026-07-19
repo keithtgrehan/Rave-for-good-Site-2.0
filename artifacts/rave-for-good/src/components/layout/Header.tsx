@@ -7,11 +7,31 @@ const NAV_LINKS = [
   { href: "/about", label: "About", testId: "about" },
   { href: "/events", label: "Events", testId: "events" },
   { href: "/upcoming-events", label: "Upcoming Events", testId: "upcoming-events" },
+  { href: "/park-cleanup", label: "Park Cleanup", testId: "park-cleanup" },
   { href: "/artists", label: "Artists", testId: "artists" },
   { href: "/impact", label: "Impact", testId: "impact" },
   { href: "/partners", label: "Partners", testId: "partners" },
   { href: "/contact", label: "Contact", testId: "contact" },
 ];
+
+export function isNavLinkActive(currentPath: string, href: string) {
+  if (href === "/park-cleanup") {
+    return (
+      currentPath === "/park-cleanup" ||
+      currentPath.startsWith("/park-cleanup/") ||
+      currentPath === "/berlin-park-cleanup"
+    );
+  }
+
+  if (href === "/upcoming-events") {
+    return (
+      currentPath === "/upcoming-events" ||
+      currentPath.startsWith("/upcoming-events/")
+    );
+  }
+
+  return currentPath === href;
+}
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -86,13 +106,17 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-4 lg:flex lg:gap-6 xl:gap-8" data-testid="nav-desktop">
+        <nav className="hidden items-center lg:flex lg:gap-3 xl:gap-5" data-testid="nav-desktop">
           {NAV_LINKS.map((link) => {
-            const isActive = location === link.href || (link.href === "/upcoming-events" && location.startsWith("/upcoming-events/"));
+            const isActive = isNavLinkActive(location, link.href);
             return (
-              <Link key={link.href} href={link.href}>
+              <Link
+                key={link.href}
+                href={link.href}
+                className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              >
                 <span
-                  className={`relative text-[11px] font-medium tracking-[0.14em] uppercase transition-colors duration-200 cursor-pointer pb-1 ${
+                  className={`relative cursor-pointer pb-1 text-[10px] font-medium uppercase tracking-[0.1em] transition-colors duration-200 xl:text-[11px] xl:tracking-[0.14em] ${
                     isActive
                       ? "text-foreground nav-active"
                       : "text-foreground/38 hover:text-foreground/75"
@@ -104,15 +128,15 @@ export function Header() {
               </Link>
             );
           })}
-          <Link href="/get-involved">
-            <Button
-              variant="default"
-              className="btn-cta font-bold tracking-[0.14em] uppercase rounded-none text-[11px] h-9 px-5"
-              data-testid="button-get-involved-nav"
-            >
+          <Button
+            asChild
+            variant="default"
+            className="btn-cta h-9 rounded-none px-3 text-[11px] font-bold uppercase tracking-[0.14em] xl:px-5"
+          >
+            <Link href="/get-involved" data-testid="button-get-involved-nav">
               Get Involved
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </nav>
 
         {/* Mobile Toggle */}
@@ -179,10 +203,14 @@ export function Header() {
             </p>
             <div className="space-y-3">
               {NAV_LINKS.map((link) => (
-                <Link key={link.href} href={link.href}>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+                >
                   <div
                     className={`group flex w-full min-w-0 items-center justify-between gap-3 border px-5 py-4 transition-colors duration-200 ${
-                      location === link.href
+                      isNavLinkActive(location, link.href)
                         ? "border-primary/35 bg-primary/[0.08] text-primary"
                         : "border-white/[0.08] bg-card/75 text-foreground/78 hover:border-white/[0.16] hover:text-foreground"
                     }`}
@@ -204,15 +232,15 @@ export function Header() {
             <p className="mb-4 max-w-sm text-sm font-light leading-relaxed text-foreground/42">
               Choose a page or jump straight into the main call to action.
             </p>
-            <Link href="/get-involved">
-              <Button
-                size="lg"
-                className="btn-cta h-12 w-full rounded-none px-6 font-bold tracking-[0.14em] uppercase sm:h-14"
-                data-testid="button-get-involved-mobile"
-              >
+            <Button
+              asChild
+              size="lg"
+              className="btn-cta h-12 w-full rounded-none px-6 font-bold tracking-[0.14em] uppercase sm:h-14"
+            >
+              <Link href="/get-involved" data-testid="button-get-involved-mobile">
                 Get Involved
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
