@@ -10,6 +10,7 @@ import About from "@/pages/about";
 import Events from "@/pages/events";
 import UpcomingEvents from "@/pages/upcoming-events";
 import RfgNova from "@/pages/rfg-nova";
+import ParkCleanup from "@/pages/park-cleanup";
 import BerlinParkCleanup from "@/pages/berlin-park-cleanup";
 import CrewRadio from "@/pages/crew-radio";
 import Impact from "@/pages/impact";
@@ -47,6 +48,7 @@ function Router() {
       <Route path="/events/rfg-nova" component={RfgNova} />
       <Route path="/upcoming-events/rfg-nova" component={RfgNova} />
       <Route path="/upcoming-events" component={UpcomingEvents} />
+      <Route path="/park-cleanup" component={ParkCleanup} />
       <Route path="/berlin-park-cleanup" component={BerlinParkCleanup} />
       <Route path="/crew-radio" component={CrewRadio} />
       <Route path="/impact" component={Impact} />

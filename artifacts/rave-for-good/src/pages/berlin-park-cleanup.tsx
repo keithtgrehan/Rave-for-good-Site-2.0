@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Mail } from "lucide-react";
+import { Link } from "wouter";
+import { ArrowLeft, ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const donationUrl = "https://paypal.me/RaveForGoodeV";
@@ -50,10 +51,24 @@ export default function BerlinParkCleanup() {
               animate="visible"
               variants={stagger}
             >
-              <motion.div className="mb-6 flex items-center gap-3" variants={fadeUp}>
+              <motion.div variants={fadeUp}>
+                <Link
+                  href="/park-cleanup"
+                  className="link-line mb-6 inline-flex min-h-11 items-center gap-2 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-foreground/48 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                  data-testid="link-back-to-park-cleanup"
+                >
+                  <ArrowLeft size={13} />
+                  Back to Park Cleanup
+                </Link>
+              </motion.div>
+
+              <motion.div className="mb-6 flex flex-wrap items-center gap-3" variants={fadeUp}>
                 <span className="h-2 w-2 rounded-full bg-primary" />
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
                   Berlin Local Action
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/38">
+                  Previous Community Event · 14 June 2026
                 </span>
               </motion.div>
 
