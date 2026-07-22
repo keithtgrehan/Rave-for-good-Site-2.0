@@ -113,11 +113,31 @@ test("the Park Cleanup hub renders central community events and required actions
   assert.match(hubSource, /View Previous Event/);
   assert.match(hubSource, /https:\/\/paypal\.me\/RaveForGoodeV/);
   assert.match(hubSource, /info@raveforgood\.berlin/);
-  assert.match(hubSource, /Park Cleanup \| Rave for Good/);
+  assert.match(hubSource, /Rave for Good Cleanup Collective \| Rave for Good/);
+  assert.match(
+    hubSource,
+    /The Rave for Good Cleanup Collective brings together Berlin’s electronic music community to protect and restore the city’s parks, canals and public spaces through community action\./,
+  );
+  assert.match(
+    hubSource,
+    /We partner with existing environmental organisations rather than reinventing the wheel\./,
+  );
+  assert.match(hubSource, /\/images\/cleanup-collective-group-berlin\.jpeg/);
+  assert.match(hubSource, /\/images\/rave-for-good-cleanup-team\.jpeg/);
+  assert.match(hubSource, /md:grid-cols-2/);
+  assert.equal(hubSource.match(/aspect-\[7\/6\]/g)?.length, 2);
+  assert.match(
+    hubSource,
+    /Rave for Good volunteers taking part in a Berlin park cleanup/,
+  );
+  assert.match(
+    hubSource,
+    /Rave for Good cleanup team with collected waste bags in Berlin/,
+  );
   assert.match(hubSource, /https:\/\/www\.raveforgood\.berlin\/park-cleanup/);
   assert.match(
     hubSource,
-    /https:\/\/www\.raveforgood\.berlin\/images\/events\/trash-pickup-2026-07-19\.jpg/,
+    /https:\/\/www\.raveforgood\.berlin\/images\/cleanup-collective-group-berlin\.jpeg/,
   );
 });
 
@@ -190,6 +210,19 @@ test("cleanup flyer assets retain their expected byte content", async () => {
     "f860be2cb09b4b88faca44d244374782",
   );
   assert.notDeepEqual(newFlyer, archiveFlyer);
+});
+
+test("Cleanup Collective gallery assets are distinct JPEG images", async () => {
+  const galleryImages = await Promise.all([
+    readFile(path.join(appRoot, "public/images/cleanup-collective-group-berlin.jpeg")),
+    readFile(path.join(appRoot, "public/images/rave-for-good-cleanup-team.jpeg")),
+  ]);
+
+  for (const image of galleryImages) {
+    assert.equal(image.subarray(0, 3).toString("hex"), "ffd8ff");
+  }
+
+  assert.notDeepEqual(galleryImages[0], galleryImages[1]);
 });
 
 test("Novum is archived under past events and removed from upcoming cards", async () => {
