@@ -7,12 +7,15 @@ import { events } from "@/data/events";
 
 const donationUrl = "https://paypal.me/RaveForGoodeV";
 const contactEmail = "info@raveforgood.berlin";
-const pageTitle = "Park Cleanup | Rave for Good";
-const pageDescription =
-  "Discover Rave for Good’s Berlin community cleanups, platforming local artists while supporting direct local action and charity work abroad.";
+const positioningStatement =
+  "The Rave for Good Cleanup Collective brings together Berlin’s electronic music community to protect and restore the city’s parks, canals and public spaces through community action.";
+const partnershipStatement =
+  "We partner with existing environmental organisations rather than reinventing the wheel.";
+const pageTitle = "Rave for Good Cleanup Collective | Rave for Good";
+const pageDescription = positioningStatement;
 const canonicalUrl = "https://www.raveforgood.berlin/park-cleanup";
 const openGraphImageUrl =
-  "https://www.raveforgood.berlin/images/events/trash-pickup-2026-07-19.jpg";
+  "https://www.raveforgood.berlin/images/cleanup-collective-group-berlin.jpeg";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
@@ -153,20 +156,72 @@ export default function ParkCleanup() {
           </motion.div>
 
           <motion.h1
-            className="mb-7 font-display text-[clamp(3.4rem,15vw,9rem)] font-bold uppercase leading-[0.84] tracking-[-0.04em]"
+            className="mb-7 font-display text-[clamp(2.5rem,9.5vw,7.25rem)] font-bold uppercase leading-[0.84] tracking-[-0.04em]"
             variants={fadeUp}
             data-testid="heading-park-cleanup"
           >
-            Park <br />
-            <span className="text-primary">Cleanup</span>
+            <span className="block whitespace-nowrap">Rave for Good</span>
+            <span className="block whitespace-nowrap text-primary">Cleanup</span>
+            <span className="block whitespace-nowrap">Collective</span>
           </motion.h1>
 
           <motion.p
-            className="max-w-3xl text-lg font-light leading-relaxed text-foreground/58 sm:text-xl md:text-2xl"
+            className="max-w-4xl text-lg font-light leading-relaxed text-foreground/68 sm:text-xl md:text-2xl"
             variants={fadeUp}
           >
-            Rave for Good brings Berlin’s music and creative community together for direct local action, while platforming local artists and supporting charities abroad.
+            {positioningStatement}
           </motion.p>
+
+          <motion.p
+            className="mt-5 max-w-3xl border-l-2 border-primary/55 pl-5 text-sm font-medium leading-relaxed text-foreground/52 sm:mt-6 sm:text-base md:text-lg"
+            variants={fadeUp}
+          >
+            {partnershipStatement}
+          </motion.p>
+        </motion.div>
+      </section>
+
+      <section
+        className="relative pb-14 sm:pb-20 md:pb-28"
+        aria-label="Rave for Good Cleanup Collective gallery"
+      >
+        <motion.div
+          className="container grid grid-cols-1 gap-4 px-4 sm:gap-6 sm:px-6 md:grid-cols-2"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+        >
+          <motion.figure
+            className="relative aspect-[7/6] overflow-hidden border border-white/[0.07] bg-card"
+            variants={fadeUp}
+          >
+            <img
+              src="/images/cleanup-collective-group-berlin.jpeg"
+              alt="Rave for Good volunteers taking part in a Berlin park cleanup"
+              width="1106"
+              height="960"
+              decoding="async"
+              className="h-full w-full object-cover"
+              data-testid="img-cleanup-collective-group"
+            />
+          </motion.figure>
+
+          <motion.figure
+            className="relative aspect-[7/6] overflow-hidden border border-white/[0.07] bg-card"
+            variants={fadeUp}
+          >
+            <img
+              src="/images/rave-for-good-cleanup-team.jpeg"
+              alt="Rave for Good cleanup team with collected waste bags in Berlin"
+              width="1118"
+              height="955"
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+              data-testid="img-cleanup-team"
+            />
+          </motion.figure>
         </motion.div>
       </section>
 
