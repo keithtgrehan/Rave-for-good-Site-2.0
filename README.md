@@ -1,6 +1,6 @@
 # Rave for Good Site 2.0
 
-Production website for **Rave for Good e.V.** — a Vite + React + TypeScript single-page site for the NGO, events, partners, impact reporting, and contact/donation flows.
+Production website for **Rave for Good e.V.** — a Vite + React + TypeScript single-page site for the association and collective, events, partners, impact reporting, and contact/donation flows.
 
 Repository: `https://github.com/keithtgrehan/Rave-for-good-Site-2.0`
 
@@ -19,7 +19,7 @@ It is a static React app built with Vite. Routing is handled client-side with `w
 The production build outputs static files to:
 
 ```txt
-artifacts/rave-for-good/dist/public
+artifacts/rave-for-good/dist
 ```
 
 ---
@@ -103,7 +103,7 @@ PORT=3000 BASE_PATH=/ pnpm --filter @workspace/rave-for-good serve
 Successful production build output:
 
 ```txt
-artifacts/rave-for-good/dist/public
+artifacts/rave-for-good/dist
 ```
 
 ---
@@ -131,9 +131,13 @@ artifacts/rave-for-good/dist/public
 │       │   │   └── ui/
 │       │   ├── data/
 │       │   │   ├── events.ts
+│       │   │   ├── event-localizations.ts
+│       │   │   ├── governance.ts
 │       │   │   ├── impact.ts
 │       │   │   ├── partners.ts
-│       │   │   └── team.ts
+│       │   │   ├── route-manifest.ts
+│       │   │   ├── site.ts
+│       │   │   └── transparency.ts
 │       │   ├── hooks/
 │       │   └── lib/
 │       ├── package.json
@@ -171,7 +175,7 @@ Typical route pattern:
 ```tsx
 <Route path="/" component={Home} />
 <Route path="/about" component={About} />
-<Route path="/events" component={Events} />
+<Route path="/upcoming-events" component={UpcomingEvents} />
 <Route path="/impact" component={Impact} />
 <Route path="/partners" component={Partners} />
 <Route path="/get-involved" component={GetInvolved} />
@@ -184,8 +188,9 @@ To add a page:
 1. Create `src/pages/new-page.tsx`.
 2. Import it in `src/App.tsx`.
 3. Add a route.
-4. Add links in `Header.tsx` and/or `Footer.tsx`.
-5. Run typecheck and build.
+4. Add canonical metadata in `src/data/route-manifest.ts`.
+5. Add links in `Header.tsx` and/or `Footer.tsx`.
+6. Run typecheck and build.
 
 ---
 
@@ -196,9 +201,9 @@ To add a page:
 | Homepage content | `artifacts/rave-for-good/src/pages/home.tsx` |
 | About page | `artifacts/rave-for-good/src/pages/about.tsx` |
 | Events | `artifacts/rave-for-good/src/data/events.ts` |
-| Impact numbers | `artifacts/rave-for-good/src/data/impact.ts` |
+| Impact projects and evidence | `artifacts/rave-for-good/src/data/impact.ts` |
 | Partners | `artifacts/rave-for-good/src/data/partners.ts` |
-| Team | `artifacts/rave-for-good/src/data/team.ts` |
+| Governance | `artifacts/rave-for-good/src/data/governance.ts` |
 | Contact page | `artifacts/rave-for-good/src/pages/contact.tsx` |
 | Header/nav/mobile menu | `artifacts/rave-for-good/src/components/layout/Header.tsx` |
 | Footer | `artifacts/rave-for-good/src/components/layout/Footer.tsx` |
@@ -220,52 +225,66 @@ type Event = {
   id: string;
   title: string;
   date: string;          // YYYY-MM-DD
-  venue: string;
+  endDate?: string;      // YYYY-MM-DD for a multi-day event with no exact end time
+  endsAt?: string;       // ISO timestamp when a precise end is known
+  venue?: string;
   city: string;
   description: string;
-  status: "upcoming" | "past";
-  ticketLink?: string;
-  amountRaised?: string;
   image: string;         // e.g. "/images/event-1.png"
+  imageAlt?: string;
+  imageCredit?: string;
+  durationHours?: number;
+  musicProgramme?: {
+    throughout: boolean;
+    includesDjs: boolean;
+  };
+  volunteerCount?: number;
 };
 ```
 
 ### `src/data/impact.ts`
 
 ```ts
-type ImpactData = {
-  stats: {
-    wellsCompleted: number;
-    peopleServed: number;
-    amountRaised: string;
-    targetGoal: string;
-    location: string;
-  };
-  timeline: Array<{
-    phase: string;
-    description: string;
-  }>;
+type ImpactProject = {
+  id: string;
+  eventId?: string;      // References central event facts when the project is an event
+  status: "completed" | "active" | "planned";
+  beneficiaries?: string;
+  deliveryOrganisations?: string[];
+  costs?: string;
+  funding?: string;
+  outcomes?: string[];
+  evidence: Array<{ title: string; href: string }>;
 };
 ```
 
 ### `src/data/partners.ts`
 
 ```ts
-type Partner = {
-  name: string;
-  type: string;
-};
-```
-
-### `src/data/team.ts`
-
-```ts
-type TeamMember = {
+type ConfirmedPartner = {
+  id: string;
   name: string;
   role: string;
-  background: string;
+  website?: string;
+  logo?: string;
+  verifiedInWriting: true;
 };
 ```
+
+### `src/data/governance.ts`
+
+```ts
+type CommitteeMember = {
+  id: string;
+  fullName: string;
+  role: string;
+  verified: true;
+};
+```
+
+Only add committee and partner records after verification. Route titles, descriptions,
+canonicals, language alternates and sitemap membership live in
+`src/data/route-manifest.ts`.
 
 ---
 
@@ -312,10 +331,9 @@ Rules:
 
 - Use a unique `id`.
 - Use date format `YYYY-MM-DD`.
-- Use `status: "upcoming"` for future events.
-- Use `status: "past"` for completed events.
-- Use `ticketLink` only when tickets are available.
-- Use `amountRaised` only when confirmed.
+- Event status is derived in Europe/Berlin from `date`, optional date-only `endDate`, and optional `endsAt`; do not store it manually.
+- Add `endsAt` when a precise event end is confirmed. Date-only events remain upcoming throughout their Berlin calendar date.
+- Add `endDate` for multi-day events whose final date is known but exact end time is not.
 - Store event images in `public/images/`.
 
 ### Replace an image
@@ -391,16 +409,10 @@ PORT=3000 BASE_PATH=/ pnpm --filter @workspace/rave-for-good build
 Publish directory:
 
 ```txt
-artifacts/rave-for-good/dist/public
+artifacts/rave-for-good/dist
 ```
 
-For static hosting, configure SPA fallback:
-
-```txt
-/* -> /index.html
-```
-
-This is required for direct refreshes on `/about`, `/events`, `/impact`, etc.
+The build emits an HTML entry for every canonical route plus a no-index `404.html`, `robots.txt`, and `sitemap.xml`. Preserve those files when configuring static hosting.
 
 ### Replit artifact config
 
@@ -414,7 +426,7 @@ Expected values:
 kind = "web"
 previewPath = "/"
 router = "path"
-publicDir = "artifacts/rave-for-good/dist/public"
+publicDir = "artifacts/rave-for-good/dist"
 ```
 
 ---
@@ -456,7 +468,7 @@ Manual checks:
 - Desktop nav works.
 - Mobile menu opens/closes cleanly.
 - Footer links work.
-- `/about`, `/events`, `/impact`, `/partners`, `/get-involved`, `/contact` load directly.
+- `/about`, `/upcoming-events`, `/impact`, `/partners`, `/get-involved`, `/contact` load directly.
 - Images are not broken.
 - Event links are real.
 - Legal pages are reviewed before publishing.
@@ -503,11 +515,15 @@ PORT=3000 BASE_PATH=/ pnpm --filter @workspace/rave-for-good build
 
 ### Refresh gives 404 in production
 
-Add SPA fallback:
+Do not add a catch-all rewrite to `/index.html`; it would hide real 404 responses and route-specific initial metadata. Build the site and confirm the host publishes this directory unchanged:
 
 ```txt
-/* -> /index.html
+artifacts/rave-for-good/dist
 ```
+
+The Vite build creates one `index.html` inside every canonical route directory and an
+explicit `404.html`. Configure the host to serve directory indexes, preserve the four
+redirects in `vercel.json`, and use `404.html` with HTTP 404 for unknown paths.
 
 ### Images do not load
 

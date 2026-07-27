@@ -1,10 +1,26 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": false,
-  "rewrites": [
+  "cleanUrls": true,
+  "redirects": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/events/rfg-nova",
+      "destination": "/upcoming-events/rfg-nova",
+      "permanent": true
+    },
+    {
+      "source": "/events",
+      "destination": "/upcoming-events",
+      "permanent": true
+    },
+    {
+      "source": "/imprint",
+      "destination": "/impressum",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/datenschutz",
+      "permanent": true
     }
   ]
 }

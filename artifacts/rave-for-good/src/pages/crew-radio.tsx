@@ -16,7 +16,7 @@ export default function CrewRadio() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, ease: easeOut }}
           >
-            <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-primary/70">
+            <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-primary-readable">
               Listen
             </p>
             <h1 className="mb-6 font-display text-4xl font-bold uppercase leading-[0.9] tracking-tighter sm:text-5xl md:text-7xl lg:text-8xl">

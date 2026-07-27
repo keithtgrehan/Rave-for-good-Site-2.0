@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, MapPin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SITE_CONTACT, contactMailto } from "@/data/site";
 
 export default function Contact() {
   return (
@@ -34,7 +35,7 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <div className="bg-card border border-white/[0.06] p-5 sm:p-8 md:p-10">
-              <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.18em] text-primary/70">Direct email</p>
+              <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.18em] text-primary-readable">Direct email</p>
               <h2 className="mb-5 font-display text-3xl font-bold uppercase tracking-tight text-foreground/88 sm:text-4xl">
                 Start a conversation
               </h2>
@@ -42,7 +43,7 @@ export default function Contact() {
                 Send a short note with the topic, timeline, and any useful links. This keeps communication simple and avoids collecting information through a website form.
               </p>
               <Button asChild className="h-12 w-full rounded-none px-6 font-bold uppercase tracking-widest sm:h-14 sm:w-auto sm:px-10" data-testid="button-contact-email">
-                <a href="mailto:info@raveforgood.berlin">
+                <a href={contactMailto()}>
                   Email us
                   <ArrowUpRight size={16} />
                 </a>
@@ -57,8 +58,8 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div>
-              <h3 className="font-mono text-[10px] text-primary/60 uppercase tracking-[0.18em] mb-6">Direct contact</h3>
-              <p className="text-foreground/45 text-sm leading-relaxed font-light mb-6">
+              <h3 className="font-mono text-[10px] text-primary-readable uppercase tracking-[0.18em] mb-6">Direct contact</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed font-light mb-6">
                 Use this email for partnerships, press, volunteer interest, donation questions, and general coordination.
               </p>
               <div className="space-y-6">
@@ -66,7 +67,7 @@ export default function Contact() {
                   <Mail className="text-foreground/30 mt-1 shrink-0" size={18} />
                   <div>
                     <div className="font-bold uppercase tracking-tight mb-1 text-sm">Email</div>
-                    <a href="mailto:info@raveforgood.berlin" className="text-foreground/50 hover:text-foreground transition-colors text-sm font-light">info@raveforgood.berlin</a>
+                    <a href={contactMailto()} className="text-foreground/50 hover:text-foreground transition-colors text-sm font-light">{SITE_CONTACT.email}</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 sm:gap-4">
@@ -90,11 +91,11 @@ export default function Contact() {
               <div className="space-y-8">
                 <div data-testid="faq-item-1">
                   <h4 className="font-semibold mb-2 text-sm text-foreground/80 uppercase tracking-wide">Where do the funds go?</h4>
-                  <p className="text-foreground/45 text-sm leading-relaxed font-light">100% of event profits and public donations go directly to our active water projects. Administrative costs are covered by specific private donors.</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed font-light">Rave for Good uses event income and donations to support its charitable projects. Contact us for current allocation details and any supporting documents that are available.</p>
                 </div>
                 <div data-testid="faq-item-2">
-                  <h4 className="font-semibold mb-2 text-sm text-foreground/80 uppercase tracking-wide">Are you a registered charity?</h4>
-                  <p className="text-foreground/45 text-sm leading-relaxed font-light">Rave for Good is a registered eingetragener Verein (e.V.) in Germany with the non-profit purpose Förderung der Entwicklungszusammenarbeit.</p>
+                  <h4 className="font-semibold mb-2 text-sm text-foreground/80 uppercase tracking-wide">Where can I find organisational information?</h4>
+                  <p className="text-foreground/50 text-sm leading-relaxed font-light">Rave for Good e.V. publishes its existing provider information in the Impressum. Reviewed governance and supporting documents will be added to the transparency page when available.</p>
                 </div>
               </div>
             </div>

@@ -49,7 +49,7 @@ export function SoundCloudPlayer() {
       <div className="container relative z-10 px-4 sm:px-6">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-16">
           <div className="max-w-2xl">
-            <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent/70">
+            <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
               Listen
             </p>
             <h2
