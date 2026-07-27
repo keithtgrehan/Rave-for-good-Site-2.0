@@ -2,10 +2,13 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowLeft, ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { events } from "@/data/events";
+import { SITE_CONTACT, contactMailto } from "@/data/site";
+import { formatEventDate } from "@/lib/event-dates";
 
 const donationUrl = "https://paypal.me/RaveForGoodeV";
-const contactEmail = "info@raveforgood.berlin";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const cleanupEvent = events.find((event) => event.id === "berlin-park-cleanup-2026-06-14")!;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -64,29 +67,31 @@ export default function BerlinParkCleanup() {
 
               <motion.div className="mb-6 flex flex-wrap items-center gap-3" variants={fadeUp}>
                 <span className="h-2 w-2 rounded-full bg-primary" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-readable">
                   Berlin Local Action
                 </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/38">
-                  Previous Community Event · 14 June 2026
-                </span>
+                <time
+                  dateTime={cleanupEvent.date}
+                  className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground"
+                >
+                  Previous Community Event · {formatEventDate(cleanupEvent.date, "en-GB", { weekday: undefined })}
+                </time>
               </motion.div>
 
               <motion.h1
                 className="mb-6 font-display text-[clamp(3.15rem,13vw,8.5rem)] font-bold uppercase leading-[0.86] tracking-[-0.04em]"
                 variants={fadeUp}
-                aria-label="Berlin Park Cleanup"
+                aria-label={cleanupEvent.title}
                 data-testid="heading-berlin-park-cleanup"
               >
-                Berlin Park <br />
-                <span className="text-primary">Cleanup</span>
+                {cleanupEvent.title}
               </motion.h1>
 
               <motion.p
                 className="max-w-2xl text-base font-light leading-relaxed text-foreground/58 sm:text-lg md:text-xl"
                 variants={fadeUp}
               >
-                A community cleanup by Rave for Good — bringing Berlin’s creative scene together for direct local action.
+                {cleanupEvent.description}
               </motion.p>
             </motion.div>
 
@@ -98,8 +103,8 @@ export default function BerlinParkCleanup() {
             >
               <div className="relative bg-background">
                 <img
-                  src="/images/berlin-park-cleanup.jpg"
-                  alt="Rave for Good Trash Pickup visual with a DJ pushing a mobile sound system in the rain"
+                  src={cleanupEvent.image}
+                  alt={cleanupEvent.imageAlt}
                   className="w-full object-cover"
                   data-testid="img-berlin-park-cleanup"
                 />
@@ -107,6 +112,9 @@ export default function BerlinParkCleanup() {
               </div>
 
               <figcaption className="border-t border-white/[0.06] p-5 sm:p-7 md:p-8">
+                <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                  Photo: {cleanupEvent.imageCredit}
+                </p>
                 <p className="mb-5 max-w-[58ch] text-sm font-light leading-relaxed text-foreground/52 sm:text-base">
                   Your donation helps cover cleanup materials, community organising, artist support, and future Rave for Good charity projects.
                 </p>
@@ -123,12 +131,12 @@ export default function BerlinParkCleanup() {
                     </a>
                   </Button>
                   <a
-                    href={`mailto:${contactEmail}`}
-                    className="link-line inline-flex items-center justify-center gap-2 py-3 text-xs font-medium uppercase tracking-widest text-foreground/45 transition-colors hover:text-foreground sm:justify-start"
+                    href={contactMailto()}
+                    className="link-line inline-flex items-center justify-center gap-2 py-3 text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground sm:justify-start"
                     data-testid="link-cleanup-contact"
                   >
                     <Mail size={14} />
-                    {contactEmail}
+                    {SITE_CONTACT.email}
                   </a>
                 </div>
               </figcaption>
@@ -147,7 +155,7 @@ export default function BerlinParkCleanup() {
             variants={stagger}
           >
             <motion.div className="lg:col-span-4" variants={fadeUp}>
-              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
+              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary-readable">
                 Community care
               </p>
               <h2 className="font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-5xl">

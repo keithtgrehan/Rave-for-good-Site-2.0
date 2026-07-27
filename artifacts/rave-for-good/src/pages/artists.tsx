@@ -32,7 +32,7 @@ export default function Artists() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              <span className="font-mono text-[10px] text-primary/70 uppercase tracking-[0.2em]">Community Lineup</span>
+              <span className="font-mono text-[10px] text-primary-readable uppercase tracking-[0.2em]">Community Lineup</span>
             </motion.div>
 
             <motion.h1
@@ -57,8 +57,8 @@ export default function Artists() {
               </p>
               <div className="border border-white/[0.06] bg-card px-6 py-5 min-w-[180px]">
                 <div className="font-display text-3xl font-bold tracking-[-0.03em] text-foreground/90">{artists.length}</div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/35">Artists</div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary/60 mt-2">{linkedArtists} linked</div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Artists</div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary-readable mt-2">{linkedArtists} linked</div>
               </div>
             </motion.div>
           </div>
@@ -116,7 +116,7 @@ export default function Artists() {
                           href={url}
                           target="_blank"
                           rel="noreferrer noopener"
-                          className="border border-white/[0.08] px-3 py-2 font-mono text-[9px] uppercase tracking-[0.14em] text-primary/70 hover:text-primary hover:border-primary/35 transition-colors inline-flex items-center gap-1"
+                          className="border border-white/[0.08] px-3 py-2 font-mono text-[9px] uppercase tracking-[0.14em] text-primary-readable hover:text-foreground hover:border-primary/35 transition-colors inline-flex items-center gap-1"
                           data-testid={`artist-soundcloud-${index}-${urlIndex}`}
                           aria-label={`${artist.name} SoundCloud${artist.soundcloudUrls.length > 1 ? ` ${urlIndex + 1}` : ""}`}
                         >

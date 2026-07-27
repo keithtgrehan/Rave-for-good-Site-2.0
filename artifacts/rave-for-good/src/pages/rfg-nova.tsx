@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { events } from "@/data/events";
+import { formatEventDate } from "@/lib/event-dates";
 import {
   Carousel,
   CarouselContent,
@@ -11,6 +13,7 @@ import {
 } from "@/components/ui/carousel";
 
 const imageBasePath = "/images/events/rfg-nova";
+const novaEvent = events.find((event) => event.id === "rfg-nova")!;
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
@@ -42,7 +45,7 @@ const conceptCards = [
   },
   {
     title: "People",
-    copy: "Tolerance, freedom and community shape the weekend, bringing dancers together around shared passion and positive energy."
+    copy: "Tolerance, freedom and community shape the gathering, bringing dancers together around shared passion and positive energy."
   }
 ];
 
@@ -109,7 +112,7 @@ export default function RfgNova() {
             >
               <motion.div className="mb-6 flex items-center gap-3" variants={fadeUp}>
                 <span className="h-2 w-2 rounded-full bg-primary" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-readable">
                   Past Event
                 </span>
               </motion.div>
@@ -118,26 +121,27 @@ export default function RfgNova() {
                 className="mb-6 font-display text-[clamp(3.25rem,14vw,9rem)] font-bold uppercase leading-[0.86] tracking-[-0.04em]"
                 variants={fadeUp}
               >
-                RFG @ <br />
-                <span className="text-primary">NOVUM</span>
+                {novaEvent.title}
               </motion.h1>
 
               <motion.p
-                className="mb-8 border-y border-white/[0.06] py-5 font-mono text-[10px] uppercase leading-relaxed tracking-[0.11em] text-foreground/40 sm:tracking-[0.16em]"
+                className="mb-8 border-y border-white/[0.06] py-5 font-mono text-[10px] uppercase leading-relaxed tracking-[0.11em] text-muted-foreground sm:tracking-[0.16em]"
                 variants={fadeUp}
               >
-                June 26–29, 2026 · Palace in Debrznica
+                <time dateTime={novaEvent.date}>{formatEventDate(novaEvent.date, "en-GB", { weekday: undefined })}</time>
+                {novaEvent.endDate ? <><span aria-hidden="true"> – </span><time dateTime={novaEvent.endDate}>{formatEventDate(novaEvent.endDate, "en-GB", { weekday: undefined })}</time></> : null}
+                {novaEvent.venue ? ` · ${novaEvent.venue}` : ""}
               </motion.p>
 
               <motion.p
                 className="mb-10 max-w-2xl text-base font-light leading-relaxed text-foreground/58 sm:text-lg md:text-xl"
                 variants={fadeUp}
               >
-                Rave for Good joined NOVUM for a four-day electronic music gathering at a 19th-century palace in the forest, surrounded by water, nature and open-air dancefloors.
+                {novaEvent.description}
               </motion.p>
 
               <motion.div className="flex flex-col gap-3 sm:flex-row" variants={fadeUp}>
-                <Link href="/events" className="w-full sm:w-auto">
+                <Link href="/upcoming-events" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant="outline"
@@ -157,17 +161,18 @@ export default function RfgNova() {
               transition={{ duration: 0.7, ease: easeOut, delay: 0.18 }}
             >
               <img
-                src={`${imageBasePath}/festival-flyer.jpg`}
-                alt="NOVUM festival flyer for June 26 to 29, 2026 at Palace in Debrznica"
+                src={novaEvent.image}
+                alt={`NOVUM festival flyer for ${formatEventDate(novaEvent.date, "en-GB", { weekday: undefined })}${novaEvent.endDate ? ` to ${formatEventDate(novaEvent.endDate, "en-GB", { weekday: undefined })}` : ""} at ${novaEvent.venue}`}
                 className="h-full w-full object-contain object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/76 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 border border-white/[0.08] bg-background/78 px-3 py-2.5 backdrop-blur-sm sm:bottom-6 sm:left-6 sm:right-6 sm:gap-3 sm:px-4 sm:py-3">
-                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-foreground/45 sm:text-[10px] sm:tracking-[0.18em]">
-                  Palace in Debrznica, Poland
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground sm:text-[10px] sm:tracking-[0.18em]">
+                  {novaEvent.venue}, {novaEvent.city}
                 </span>
-                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-primary/75 sm:text-[10px] sm:tracking-[0.18em]">
-                  26–29.06.2026
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-primary-readable sm:text-[10px] sm:tracking-[0.18em]">
+                  <time dateTime={novaEvent.date}>{formatEventDate(novaEvent.date, "de-DE", { weekday: undefined, day: "2-digit", month: "2-digit", year: "numeric" })}</time>
+                  {novaEvent.endDate ? <><span aria-hidden="true">–</span><time dateTime={novaEvent.endDate}>{formatEventDate(novaEvent.endDate, "de-DE", { weekday: undefined, day: "2-digit", month: "2-digit", year: "numeric" })}</time></> : null}
                 </span>
               </div>
             </motion.div>
@@ -185,16 +190,16 @@ export default function RfgNova() {
             variants={stagger}
           >
             <motion.div className="lg:col-span-4" variants={fadeUp}>
-              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
+              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary-readable">
                 Overview
               </p>
               <h2 className="font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-5xl">
-                Two nights in the forest
+                Palace, forest and sound
               </h2>
             </motion.div>
             <motion.div className="lg:col-span-8" variants={fadeUp}>
               <p className="max-w-[74ch] text-base font-light leading-[1.65] text-foreground/58 sm:text-xl md:text-2xl">
-                For two days and two nights, NOVUM brought three stages, music from dawn to dawn, nature, art, workshops and relaxation zones into one palace landscape. The weekend was built around tolerance, freedom and community, with open-air dancefloors and quiet reset spaces moving in the same rhythm.
+                NOVUM brought three stages, music, nature, art, workshops and relaxation zones into one palace landscape. Tolerance, freedom and community shaped the gathering, with open-air dancefloors and quiet reset spaces moving in the same rhythm.
               </p>
             </motion.div>
           </motion.div>
@@ -211,7 +216,7 @@ export default function RfgNova() {
             variants={stagger}
           >
             <motion.div variants={fadeUp}>
-              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary-readable">
                 Festival concept
               </p>
               <h2 className="font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-5xl">
@@ -254,7 +259,7 @@ export default function RfgNova() {
             viewport={{ once: true, margin: "-80px" }}
             variants={stagger}
           >
-            <motion.p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70" variants={fadeUp}>
+            <motion.p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary-readable" variants={fadeUp}>
               Four places of power
             </motion.p>
             <motion.h2
@@ -282,7 +287,7 @@ export default function RfgNova() {
                   <h3 className="font-display text-3xl font-bold uppercase leading-none tracking-[-0.025em] text-primary sm:text-4xl">
                     {place.title}
                   </h3>
-                  <span className="min-w-0 font-mono text-[10px] uppercase leading-relaxed tracking-[0.12em] text-foreground/36 sm:tracking-[0.16em]">
+                  <span className="min-w-0 font-mono text-[10px] uppercase leading-relaxed tracking-[0.12em] text-muted-foreground sm:tracking-[0.16em]">
                     {place.styles}
                   </span>
                 </div>
@@ -305,14 +310,14 @@ export default function RfgNova() {
             variants={stagger}
           >
             <motion.div variants={fadeUp}>
-              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary-readable">
                 Venue
               </p>
               <h2 className="font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-5xl">
                 Palace, forest and water
               </h2>
             </motion.div>
-            <motion.p className="max-w-md text-sm font-light leading-relaxed text-foreground/45" variants={fadeUp}>
+            <motion.p className="max-w-md text-sm font-light leading-relaxed text-muted-foreground" variants={fadeUp}>
               A 19th-century palace surrounded by greenery, water and open-air gathering spaces.
             </motion.p>
           </motion.div>
@@ -338,7 +343,7 @@ export default function RfgNova() {
                         loading="lazy"
                         className="aspect-[4/3] w-full object-cover sm:aspect-[16/9]"
                       />
-                      <figcaption className="border-t border-white/[0.06] px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/35 sm:px-5 sm:tracking-[0.16em]">
+                      <figcaption className="border-t border-white/[0.06] px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:px-5 sm:tracking-[0.16em]">
                         {image.caption}
                       </figcaption>
                     </figure>
@@ -369,8 +374,9 @@ export default function RfgNova() {
           >
             <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
-                  June 26–29, 2026
+                <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary-readable">
+                  <time dateTime={novaEvent.date}>{formatEventDate(novaEvent.date, "en-GB", { weekday: undefined })}</time>
+                  {novaEvent.endDate ? <><span aria-hidden="true"> – </span><time dateTime={novaEvent.endDate}>{formatEventDate(novaEvent.endDate, "en-GB", { weekday: undefined })}</time></> : null}
                 </p>
                 <h2 className="mb-5 font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-5xl">
                   NOVUM archive
@@ -379,7 +385,7 @@ export default function RfgNova() {
                   A record of Rave for Good at Debrznica: music, community and shared energy in the palace grounds.
                 </p>
               </div>
-              <Link href="/events" className="w-full shrink-0 sm:w-auto">
+              <Link href="/upcoming-events" className="w-full shrink-0 sm:w-auto">
                 <Button
                   size="lg"
                   className="btn-cta h-12 w-full rounded-none px-6 text-xs font-bold uppercase tracking-[0.14em] sm:w-auto sm:px-8"

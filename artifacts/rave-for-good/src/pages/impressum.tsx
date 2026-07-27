@@ -1,51 +1,12 @@
-import { useEffect } from "react";
 import { Mail } from "lucide-react";
+import { SITE_CONTACT, contactMailto } from "@/data/site";
 
-type LegalPageProps = {
-  canonicalPath?: string;
-  noindex?: boolean;
-};
-
-function setLegalMeta(title: string, description: string, canonicalPath: string, noindex?: boolean) {
-  document.title = title;
-
-  const descriptionMeta =
-    document.querySelector<HTMLMetaElement>('meta[name="description"]') ??
-    document.head.appendChild(document.createElement("meta"));
-  descriptionMeta.name = "description";
-  descriptionMeta.content = description;
-
-  const canonical =
-    document.querySelector<HTMLLinkElement>('link[rel="canonical"]') ??
-    document.head.appendChild(document.createElement("link"));
-  canonical.rel = "canonical";
-  canonical.href = `${window.location.origin}${canonicalPath}`;
-
-  const robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
-  if (noindex) {
-    const robotsMeta = robots ?? document.head.appendChild(document.createElement("meta"));
-    robotsMeta.name = "robots";
-    robotsMeta.content = "noindex,follow";
-  } else if (robots) {
-    robots.remove();
-  }
-}
-
-export default function Impressum({ canonicalPath = "/impressum", noindex = false }: LegalPageProps) {
-  useEffect(() => {
-    setLegalMeta(
-      "Impressum | Rave for Good e.V.",
-      "Impressum und Anbieterkennzeichnung von Rave for Good e.V. in Berlin.",
-      canonicalPath,
-      noindex,
-    );
-  }, [canonicalPath, noindex]);
-
+export default function Impressum() {
   return (
     <div className="w-full pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-40 md:pb-32" data-testid="page-impressum">
       <div className="container px-4 sm:px-6">
         <div className="mb-14 max-w-4xl sm:mb-20">
-          <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-primary/70">Legal</p>
+          <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-primary-readable">Legal</p>
           <h1 className="mb-6 font-display text-4xl font-bold uppercase leading-[0.9] tracking-tighter sm:text-5xl md:text-7xl lg:text-8xl">
             Impressum
           </h1>
@@ -67,28 +28,28 @@ export default function Impressum({ canonicalPath = "/impressum", noindex = fals
               </address>
 
               <div>
-                <h3 className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary/70">Vertreten durch den Vorstand</h3>
+                <h3 className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary-readable">Vertreten durch den Vorstand</h3>
                 <p>Marco Creiti, Matthew Jones, Bianka Tonko, Sven Meissner, Keith Grehan, Diana Flodur</p>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <h3 className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/35">Registergericht</h3>
+                  <h3 className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Registergericht</h3>
                   <p>Amtsgericht Charlottenburg</p>
                 </div>
                 <div>
-                  <h3 className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/35">Registernummer</h3>
+                  <h3 className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Registernummer</h3>
                   <p>VR 39221 B</p>
                 </div>
                 <div>
-                  <h3 className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/35">Steuernummer</h3>
+                  <h3 className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Steuernummer</h3>
                   <p>27/676/50019</p>
                 </div>
                 <div>
-                  <h3 className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/35">E-Mail</h3>
-                  <a className="link-line inline-flex items-center gap-2 text-foreground/75 hover:text-foreground" href="mailto:info@raveforgood.berlin">
+                  <h3 className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">E-Mail</h3>
+                  <a className="link-line inline-flex items-center gap-2 text-foreground/75 hover:text-foreground" href={contactMailto()}>
                     <Mail size={15} />
-                    info@raveforgood.berlin
+                    {SITE_CONTACT.email}
                   </a>
                 </div>
               </div>

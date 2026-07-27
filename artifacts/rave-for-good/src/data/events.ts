@@ -1,3 +1,5 @@
+import type { EventDateRecord } from "../lib/event-dates";
+
 export type EventLineupItem = {
   time: string;
   artist: string;
@@ -5,29 +7,75 @@ export type EventLineupItem = {
 
 export type EventCategory = "music" | "community";
 
-export type Event = {
+export type EventLogisticsStatus = "confirmed" | "tbc";
+
+export type EventLogistics = {
+  time: EventLogisticsStatus;
+  meetingPoint: EventLogisticsStatus;
+  route: EventLogisticsStatus;
+};
+
+export type EventMusicProgramme = {
+  throughout: boolean;
+  includesDjs: boolean;
+};
+
+type EventDetails = {
   id: string;
   title: string;
-  date: string;
-  venue: string;
+  venue?: string;
   city: string;
   description: string;
-  status: "upcoming" | "past";
   image: string;
+  imageAlt?: string;
+  imageCredit?: string;
   detailPath?: string;
   startTime?: string;
   endTime?: string;
   startLocation?: string;
   endLocation?: string;
+  route?: string;
+  logistics?: EventLogistics;
   lineup?: EventLineupItem[];
   category?: EventCategory;
+  durationHours?: number;
+  musicProgramme?: EventMusicProgramme;
+  volunteerCount?: number;
 };
 
+export type Event = EventDetails & EventDateRecord;
+
+export const CLEANUP_PHOTO_CREDIT = "© raveforgood.berlin e.V.";
+
 export const events: Event[] = [
+  {
+    id: "rave-for-good-cleanup-2026-08-16",
+    title: "Rave for Good Cleanup",
+    date: "2026-08-16",
+    city: "Berlin",
+    description:
+      "A moving community cleanup bringing Berlin’s electronic music scene together for direct action in shared public space.",
+    category: "community",
+    durationHours: 6,
+    musicProgramme: {
+      throughout: true,
+      includesDjs: true,
+    },
+    logistics: {
+      time: "tbc",
+      meetingPoint: "tbc",
+      route: "tbc",
+    },
+    image: "/images/cleanup-collective-group-berlin.jpeg",
+    imageAlt: "Rave for Good volunteers taking part in a Berlin cleanup",
+    imageCredit: CLEANUP_PHOTO_CREDIT,
+    detailPath: "/park-cleanup",
+  },
   {
     id: "trash-pickup-2026-07-19",
     title: "Trash Pickup",
     date: "2026-07-19",
+    endsAt: "2026-07-19T20:00:00+02:00",
     startTime: "14:00",
     endTime: "20:00",
     startLocation: "Lohmühlenplatz",
@@ -36,10 +84,12 @@ export const events: Event[] = [
     city: "Berlin",
     description:
       "A community park cleanup bringing together volunteers, local artists and Berlin’s music community for direct action in shared public space.",
-    status: "upcoming",
     category: "community",
+    volunteerCount: 28,
     image: "/images/events/trash-pickup-2026-07-19.jpg",
-    detailPath: "/park-cleanup",
+    imageAlt: "Rave for Good volunteers cleaning a shared public space in Berlin",
+    imageCredit: CLEANUP_PHOTO_CREDIT,
+    detailPath: "/park-cleanup#trash-pickup-2026-07-19-lineup",
     lineup: [
       { time: "14:00", artist: "l_udwig" },
       { time: "15:00", artist: "Confidentially Blonde" },
@@ -53,6 +103,7 @@ export const events: Event[] = [
     id: "berlin-park-cleanup-2026-06-14",
     title: "Berlin Park Cleanup",
     date: "2026-06-14",
+    endsAt: "2026-06-14T20:00:00+02:00",
     startTime: "14:00",
     endTime: "20:00",
     startLocation: "Lohmühlenplatz",
@@ -61,21 +112,23 @@ export const events: Event[] = [
     city: "Berlin",
     description:
       "A Berlin community cleanup bringing volunteers, artists, ravers and neighbours together to care for shared public space.",
-    status: "past",
     category: "community",
+    volunteerCount: 16,
     image: "/images/berlin-park-cleanup.jpg",
+    imageAlt: "Rave for Good volunteers taking part in a Berlin park cleanup",
+    imageCredit: CLEANUP_PHOTO_CREDIT,
     detailPath: "/berlin-park-cleanup"
   },
   {
     id: "rfg-nova",
     title: "RFG @ NOVUM",
     date: "2026-06-26",
+    endDate: "2026-06-29",
     venue: "Palace in Debrznica",
     city: "Poland",
-    description: "Rave for Good joined NOVUM for a four-day electronic music gathering at a 19th-century palace in the forest, surrounded by water, nature and open-air dancefloors.",
-    status: "past",
+    description: "Rave for Good joined NOVUM for an electronic music gathering at a 19th-century palace in the forest, surrounded by water, nature and open-air dancefloors.",
     image: "/images/events/rfg-nova/festival-flyer.jpg",
-    detailPath: "/events/rfg-nova"
+    detailPath: "/upcoming-events/rfg-nova"
   },
   {
     id: "party-of-hearts-kater-blau",
@@ -84,7 +137,6 @@ export const events: Event[] = [
     venue: "Kater Blau",
     city: "Berlin",
     description: "The Party of Hearts returned to Berlin with a colorful multi-floor fundraising night after moving from Mensch Meier.",
-    status: "past",
     image: "/images/kater.png"
   },
   {
@@ -94,7 +146,6 @@ export const events: Event[] = [
     venue: "Rave The Planet",
     city: "Berlin",
     description: "A full-day community activation with partner collectives, artists, and volunteers managing float operations and safety.",
-    status: "past",
     image: "/images/rave-the-planet.jpg"
   },
   {
@@ -104,7 +155,8 @@ export const events: Event[] = [
     venue: "Mensch Meier",
     city: "Berlin",
     description: "A final 2023 fundraiser featuring DJ sets and live sets before the venue closure.",
-    status: "past",
     image: "/images/meier-lineup.png"
   }
 ];
+
+export { getEventStatus, partitionEvents } from "../lib/event-dates";

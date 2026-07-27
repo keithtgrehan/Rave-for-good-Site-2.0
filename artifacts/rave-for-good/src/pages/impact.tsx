@@ -1,106 +1,109 @@
 import { motion } from "framer-motion";
+import { Download } from "lucide-react";
+import { events, type Event } from "@/data/events";
+import { impactProjects, type ImpactProject } from "@/data/impact";
+import { formatEventDate } from "@/lib/event-dates";
 
-const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const statusLabels = {
+  completed: "Completed",
+  active: "Active",
+  planned: "Planned",
+} as const;
 
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: easeOut } }
-};
-
-export default function Impact() {
+export default function Impact({
+  eventRecords = events,
+  projects = impactProjects,
+}: {
+  eventRecords?: readonly Event[];
+  projects?: readonly ImpactProject[];
+}) {
   return (
-    <div className="w-full relative overflow-hidden" data-testid="page-impact">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[radial-gradient(ellipse,rgba(109,94,245,0.07)_0%,transparent_65%)] pointer-events-none" />
+    <div className="relative w-full overflow-hidden pb-20 pt-24 sm:pt-28 md:pb-32 md:pt-44" data-testid="page-impact">
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(109,94,245,0.07)_0%,transparent_65%)]" />
+      <div className="container relative z-10 px-4 sm:px-6">
+        <header className="mb-16 max-w-5xl sm:mb-24">
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-primary-readable">Projects and evidence</p>
+          <motion.h1 className="mb-8 font-display text-[clamp(3.5rem,10vw,9rem)] font-bold uppercase leading-[0.85] tracking-[-0.035em]" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}>
+            Our social mission
+          </motion.h1>
+          <p className="max-w-3xl text-lg font-light leading-relaxed text-foreground/75 sm:text-xl md:text-2xl">
+            We believe nightlife can mobilise people, resources and attention for practical community action. These records separate published facts from information that has not yet been documented.
+          </p>
+        </header>
 
-      <div className="pt-32 pb-24 md:pt-44 md:pb-36">
-        <div className="container px-4 md:px-6 relative z-10">
-          <div className="max-w-5xl mb-20 md:mb-28">
-            <motion.div
-              className="flex items-center gap-3 mb-7"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60">Our Social Mission</span>
-            </motion.div>
-            <motion.h1
-              className="font-display text-[clamp(3.5rem,10vw,9rem)] font-bold uppercase tracking-[-0.035em] leading-[0.85] mb-8"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: easeOut }}
-              data-testid="heading-impact"
-            >
-              Our Social <br />
-              <span className="text-foreground/35">Mission</span>
-            </motion.h1>
-            <motion.p
-              className="text-xl md:text-2xl text-foreground/50 font-light leading-[1.65] max-w-[56ch]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-            >
-              We believe nightlife can do more than entertain. It can mobilize people, resources, and attention where they are needed most
-            </motion.p>
+        <section className="mb-16 grid gap-10 border-y border-white/[0.1] py-12 sm:mb-24 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.72fr)] lg:gap-16" aria-labelledby="impact-story-heading">
+          <div className="space-y-6 text-base font-light leading-relaxed text-muted-foreground sm:text-lg">
+            <h2 id="impact-story-heading" className="font-display text-3xl font-bold uppercase leading-[0.95] text-foreground sm:text-4xl">
+              Music, community and practical action
+            </h2>
+            <p>
+              Rave for Good began in 2018 with a simple idea: bring people together through music and dance while creating positive impact beyond the dance floor. Private raves grew into a community that raises awareness, gathers support and directs collective energy towards meaningful initiatives.
+            </p>
+            <p>
+              In December 2021, Rave for Good e.V. was formally established. That step created a durable structure for creative initiatives and for connecting music culture with practical community and humanitarian action.
+            </p>
+            <p>
+              The first major focus is Zigla Pakala in Burkina Faso, where access to basic infrastructure, including clean water and energy, is limited. Funds raised through community events supported the financing and construction of a new well to improve access to clean water for residents.
+            </p>
+            <p>
+              The wider mission extends beyond one project. Rave for Good brings electronic music culture, solidarity and social responsibility together, turning shared experiences into support that can be documented and reviewed.
+            </p>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-              }}
-              className="space-y-6 text-[15px] text-foreground/50 font-light leading-[1.75]"
-            >
-              <motion.p variants={fadeIn}>
-                Rave for Good began in 2018 with a simple but powerful idea: to bring our community together through music and dance while creating a positive impact beyond the dance floor. What started as private raves quickly grew into a movement with purpose - raising awareness, collecting donations from our scene, and using the collective energy of nightlife to support meaningful initiatives
-              </motion.p>
-              <motion.p variants={fadeIn}>
-                In December 2021, we took the next step by formally establishing our nonprofit organization. This milestone marked the beginning of a new chapter - one filled with creative initiatives, ambitious projects, and the challenge of transforming the power of music culture into lasting change
-              </motion.p>
-              <motion.p variants={fadeIn}>
-                Our first major focus lies in Zigla Pakala, a small village in Burkina Faso - one of the poorest countries in the world. Here, basic infrastructure such as water and energy supply is almost nonexistent. Access to clean drinking water has long been a daily struggle, with thousands of people depending on a single functioning well after the other three in the area dried up
-              </motion.p>
-              <motion.p variants={fadeIn}>
-                With the support of our community and funds raised through our events, we have already financed and built a new well in Zigla Pakala. This well now provides vital access to clean water for the villagers, directly improving their health, safety, and quality of life. It is a first step - and a living proof - that together we can turn the energy of our raves into concrete, life-changing results
-              </motion.p>
-              <motion.p variants={fadeIn}>
-                As a Berlin-based NGO, we believe that access to water, energy, and sustainable infrastructure is not a privilege but a human right. Our mission is to provide Zigla Pakala and other communities in need with sustainable living conditions. Through carefully designed projects and the support we generate from our events, we aim to bring tangible solutions that improve everyday life: access to clean water, renewable energy systems, and opportunities for long-term resilience
-              </motion.p>
-              <motion.p variants={fadeIn}>
-                But our vision goes beyond one village. By uniting the global rave and electronic music community with the principles of solidarity and social responsibility, we want to show that nightlife culture has the power to change lives. Each event we organize is not only a celebration but also an act of giving back - a chance to transform collective joy into meaningful support for those who need it most
-              </motion.p>
-              <motion.p variants={fadeIn}>
-                Rave for Good is more than just a name. It is a promise to continue building a bridge between music, community, and humanitarian action. Together, we can keep the beat alive - not only on the dance floor, but in the lives of people whose futures depend on access to the most basic resources
-              </motion.p>
-            </motion.div>
-
-            <motion.div
-              className="space-y-6 lg:sticky lg:top-32"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: easeOut }}
-            >
-              <div className="aspect-[4/5] bg-muted relative overflow-hidden border border-white/[0.06]">
-                <img
-                  src="/images/zigla-pakala-well-1.jpg"
-                  alt="Community around the Zigla Pakala well drill site"
-                  className="w-full h-full object-cover"
-                  data-testid="img-impact-story-primary"
-                />
-              </div>
-              <div className="aspect-[4/5] bg-muted relative overflow-hidden border border-white/[0.06]">
-                <img
-                  src="/images/zigla-pakala-well-2.jpg"
-                  alt="Technical well drilling activity in Zigla Pakala"
-                  className="w-full h-full object-cover"
-                  data-testid="img-impact-story-secondary"
-                />
-              </div>
-            </motion.div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+            <img src="/images/zigla-pakala-well-1.jpg" alt="Community members around the well site in Zigla Pakala" className="aspect-[4/3] h-full w-full border border-white/[0.1] bg-muted object-cover" />
+            <img src="/images/zigla-pakala-well-2.jpg" alt="Technical well drilling activity in Zigla Pakala" className="aspect-[4/3] h-full w-full border border-white/[0.1] bg-muted object-cover" />
           </div>
+        </section>
+
+        <div className="space-y-8">
+          {projects.map((project) => {
+            const event = project.eventId
+              ? eventRecords.find((candidate) => candidate.id === project.eventId)
+              : undefined;
+            if (project.eventId && !event) throw new RangeError(`Missing event "${project.eventId}" for impact project "${project.id}"`);
+
+            const title = event?.title ?? project.title;
+            const summary = event?.description ?? project.summary;
+            const image = event?.image ?? project.image;
+            const imageAlt = event?.imageAlt ?? project.imageAlt ?? "";
+
+            return (
+            <article key={project.id} className="grid overflow-hidden border border-white/[0.1] bg-card lg:grid-cols-[minmax(260px,0.58fr)_minmax(0,1fr)]" data-testid={`impact-project-${project.id}`}>
+              {image ? (
+                <figure className="bg-background">
+                  <img src={image} alt={imageAlt} className="h-full min-h-72 w-full object-cover" />
+                  {event?.imageCredit ? <figcaption className="border-t border-white/[0.08] px-5 py-3 text-xs text-muted-foreground">{event.imageCredit}</figcaption> : null}
+                </figure>
+              ) : null}
+              <div className="p-6 sm:p-8 md:p-10">
+                <div className="mb-5 flex flex-wrap items-center gap-3">
+                  <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary-readable">{statusLabels[project.status]}</span>
+                  {event ? <time dateTime={event.date} className="text-sm text-muted-foreground">{formatEventDate(event.date)}</time> : null}
+                </div>
+                <h2 className="mb-5 font-display text-3xl font-bold uppercase leading-[0.95] sm:text-4xl">{title}</h2>
+                <p className="mb-8 max-w-3xl leading-relaxed text-muted-foreground sm:text-lg">{summary}</p>
+
+                <dl className="grid gap-x-8 gap-y-5 border-y border-white/[0.1] py-6 sm:grid-cols-2">
+                  {event?.volunteerCount ? <div><dt className="mb-1 text-sm font-semibold text-foreground/90">Volunteer participation</dt><dd className="text-muted-foreground">{event.volunteerCount} volunteers</dd></div> : null}
+                  {project.beneficiaries ? <div><dt className="mb-1 text-sm font-semibold text-foreground/90">Beneficiaries</dt><dd className="text-muted-foreground">{project.beneficiaries}</dd></div> : null}
+                  {project.deliveryOrganisations?.length ? <div><dt className="mb-1 text-sm font-semibold text-foreground/90">Delivery organisations</dt><dd className="text-muted-foreground">{project.deliveryOrganisations.join(", ")}</dd></div> : null}
+                  {project.costs ? <div><dt className="mb-1 text-sm font-semibold text-foreground/90">Costs</dt><dd className="text-muted-foreground">{project.costs}</dd></div> : null}
+                  {project.funding ? <div><dt className="mb-1 text-sm font-semibold text-foreground/90">Funding</dt><dd className="text-muted-foreground">{project.funding}</dd></div> : null}
+                  {project.outcomes?.length ? <div className="sm:col-span-2"><dt className="mb-1 text-sm font-semibold text-foreground/90">Published outcomes</dt><dd className="text-muted-foreground">{project.outcomes.join(" ")}</dd></div> : null}
+                </dl>
+
+                <div className="mt-6">
+                  <h3 className="mb-3 font-display text-xl font-bold uppercase">Evidence and downloads</h3>
+                  {project.evidence.length ? (
+                    <ul className="space-y-2">{project.evidence.map((item) => <li key={item.href}><a href={item.href} className="inline-flex min-h-11 items-center gap-2 py-2 font-semibold text-primary-readable"><Download size={15} />{item.title}</a></li>)}</ul>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No public evidence download has been supplied for this record yet.</p>
+                  )}
+                </div>
+              </div>
+            </article>
+            );
+          })}
         </div>
       </div>
     </div>

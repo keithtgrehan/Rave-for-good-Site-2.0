@@ -1,34 +1,4 @@
-import { useEffect } from "react";
-
-type LegalPageProps = {
-  canonicalPath?: string;
-  noindex?: boolean;
-};
-
-function setLegalMeta(title: string, description: string, canonicalPath: string, noindex?: boolean) {
-  document.title = title;
-
-  const descriptionMeta =
-    document.querySelector<HTMLMetaElement>('meta[name="description"]') ??
-    document.head.appendChild(document.createElement("meta"));
-  descriptionMeta.name = "description";
-  descriptionMeta.content = description;
-
-  const canonical =
-    document.querySelector<HTMLLinkElement>('link[rel="canonical"]') ??
-    document.head.appendChild(document.createElement("link"));
-  canonical.rel = "canonical";
-  canonical.href = `${window.location.origin}${canonicalPath}`;
-
-  const robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
-  if (noindex) {
-    const robotsMeta = robots ?? document.head.appendChild(document.createElement("meta"));
-    robotsMeta.name = "robots";
-    robotsMeta.content = "noindex,follow";
-  } else if (robots) {
-    robots.remove();
-  }
-}
+import { SITE_CONTACT, contactMailto } from "@/data/site";
 
 const sections = [
   {
@@ -44,7 +14,7 @@ const sections = [
           Deutschland
         </address>
         <p>
-          E-Mail: <a className="link-line text-foreground/75 hover:text-foreground" href="mailto:info@raveforgood.berlin">info@raveforgood.berlin</a>
+          E-Mail: <a className="link-line text-foreground/75 hover:text-foreground" href={contactMailto()}>{SITE_CONTACT.email}</a>
         </p>
       </>
     ),
@@ -123,21 +93,12 @@ const sections = [
   },
 ];
 
-export default function Datenschutz({ canonicalPath = "/datenschutz", noindex = false }: LegalPageProps) {
-  useEffect(() => {
-    setLegalMeta(
-      "Datenschutz | Rave for Good e.V.",
-      "Datenschutzerklärung von Rave for Good e.V. mit Informationen zu Vercel Hosting, Kontakt und Spenden.",
-      canonicalPath,
-      noindex,
-    );
-  }, [canonicalPath, noindex]);
-
+export default function Datenschutz() {
   return (
     <div className="w-full pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-40 md:pb-32" data-testid="page-datenschutz">
       <div className="container px-4 sm:px-6">
         <div className="mb-14 max-w-4xl sm:mb-20">
-          <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-primary/70">Privacy</p>
+          <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-primary-readable">Privacy</p>
           <h1 className="mb-6 font-display text-4xl font-bold uppercase leading-[0.9] tracking-tighter sm:text-5xl md:text-7xl lg:text-8xl">
             Datenschutz
           </h1>

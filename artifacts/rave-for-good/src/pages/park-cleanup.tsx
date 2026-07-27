@@ -1,494 +1,253 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { events } from "@/data/events";
+import { CLEANUP_PHOTO_CREDIT, events, type Event, partitionEvents } from "@/data/events";
+import { localizeEvent } from "@/data/event-localizations";
+import { SITE_CONTACT, contactMailto } from "@/data/site";
+import { cleanupFormatDescription, cleanupParticipationSubject, eventLogisticsRows } from "@/lib/event-content";
+import { formatEventDate } from "@/lib/event-dates";
 
-const donationUrl = "https://paypal.me/RaveForGoodeV";
-const contactEmail = "info@raveforgood.berlin";
-const positioningStatement =
-  "The Rave for Good Cleanup Collective brings together Berlin’s electronic music community to protect and restore the city’s parks, canals and public spaces through community action.";
-const partnershipStatement =
-  "We partner with existing environmental organisations rather than reinventing the wheel.";
-const pageTitle = "Rave for Good Cleanup Collective | Rave for Good";
-const pageDescription = positioningStatement;
-const canonicalUrl = "https://www.raveforgood.berlin/park-cleanup";
-const openGraphImageUrl =
-  "https://www.raveforgood.berlin/images/cleanup-collective-group-berlin.jpeg";
+export type SiteLocale = "en" | "de";
+
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.65, ease: easeOut }
-  }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: easeOut } },
 };
 
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-};
+const copy = {
+  en: {
+    locale: "en-GB",
+    eyebrow: "Berlin community action",
+    title: "Rave for Good Cleanup Collective",
+    positioning: "The Rave for Good Cleanup Collective brings together Berlin’s electronic music community to protect and restore the city’s parks, canals and public spaces through community action.",
+    partnership: "We partner with existing environmental organisations rather than reinventing the wheel.",
+    galleryLabel: "Rave for Good Cleanup Collective gallery",
+    galleryAlts: [
+      "Rave for Good volunteers taking part in a Berlin cleanup",
+      "Rave for Good cleanup volunteers with collected waste bags in Berlin",
+    ],
+    nextEyebrow: "Next cleanup",
+    participation: "Take part",
+    partnershipCta: "Partner with us",
+    previous: "Past cleanups",
+    volunteers: "volunteers",
+    lineup: "Line-up",
+    contributionEyebrow: "What we contribute",
+    contributionTitle: "Community energy, organised for action",
+    contributionIntro: "Rave for Good brings practical strengths from Berlin’s electronic music community into clearly defined environmental collaborations.",
+    contributions: [
+      ["Community mobilisation", "We connect cleanup action with volunteers from Berlin’s electronic music community."],
+      ["Artists and DJs", "We curate music and coordinate participating artists and DJs as part of the moving cleanup format."],
+      ["Communications and content", "We support outreach, event communications and responsible documentation of the activity."],
+      ["Volunteer coordination", "We help volunteers understand how to join and coordinate participation within agreed roles."],
+    ],
+    contactTitle: "Join the next cleanup",
+    contactCopy: (name: string) => `Email ${name} to take part, ask a question or discuss a future environmental collaboration.`,
+    partnerPath: "/partners",
+    languagePath: "/de/park-cleanup",
+    languageLabel: "Deutsch",
+  },
+  de: {
+    locale: "de-DE",
+    eyebrow: "Gemeinschaftliches Handeln in Berlin",
+    title: "Rave for Good Cleanup Collective",
+    positioning: "Das Rave for Good Cleanup Collective bringt Berlins elektronische Musikszene zusammen, um die Parks, Kanäle und öffentlichen Räume der Stadt durch gemeinschaftliches Handeln zu schützen und wiederherzustellen.",
+    partnership: "Wir arbeiten mit bestehenden Umweltorganisationen zusammen, statt das Rad neu zu erfinden.",
+    galleryLabel: "Bilder des Rave for Good Cleanup Collective",
+    galleryAlts: [
+      "Freiwillige von Rave for Good bei einer Aufräumaktion in Berlin",
+      "Freiwillige des Rave for Good Cleanup Collective mit gesammelten Müllsäcken in Berlin",
+    ],
+    nextEyebrow: "Nächste Aufräumaktion",
+    participation: "Mitmachen",
+    partnershipCta: "Kooperation anfragen",
+    previous: "Vergangene Aufräumaktionen",
+    volunteers: "Freiwillige",
+    lineup: "Musikprogramm",
+    contributionEyebrow: "Unser Beitrag",
+    contributionTitle: "Gemeinschaftliche Energie, praktisch organisiert",
+    contributionIntro: "Rave for Good bringt konkrete Stärken der Berliner elektronischen Musikszene in klar vereinbarte Umweltkooperationen ein.",
+    contributions: [
+      ["Community-Mobilisierung", "Wir verbinden Aufräumaktionen mit Freiwilligen aus Berlins elektronischer Musikszene."],
+      ["Artists und DJs", "Wir kuratieren die Musik und koordinieren beteiligte Artists und DJs im mobilen Cleanup-Format."],
+      ["Kommunikation und Inhalte", "Wir unterstützen Reichweite, Veranstaltungsinformationen und eine verantwortungsvolle Dokumentation."],
+      ["Koordination der Freiwilligen", "Wir erklären, wie man mitmacht, und koordinieren die Teilnahme innerhalb klar vereinbarter Rollen."],
+    ],
+    contactTitle: "Bei der nächsten Aktion mitmachen",
+    contactCopy: (name: string) => `Schreib ${name}, wenn du teilnehmen, eine Frage stellen oder eine künftige Umweltkooperation besprechen möchtest.`,
+    partnerPath: "/de/partners",
+    languagePath: "/park-cleanup",
+    languageLabel: "English",
+  },
+} as const;
 
-const upcomingCommunityEvents = events.filter(
-  (event) => event.category === "community" && event.status === "upcoming",
-);
-
-const previousCommunityEvents = events.filter(
-  (event) => event.category === "community" && event.status === "past",
-);
-
-function setUniqueMeta(selector: string, attributes: Record<string, string>) {
-  const matches = Array.from(
-    document.head.querySelectorAll<HTMLMetaElement>(selector),
-  );
-  const meta = matches.shift() ?? document.createElement("meta");
-
-  for (const duplicate of matches) {
-    duplicate.remove();
-  }
-
-  for (const [name, value] of Object.entries(attributes)) {
-    meta.setAttribute(name, value);
-  }
-
-  if (!meta.isConnected) {
-    document.head.appendChild(meta);
-  }
-}
-
-function setUniqueCanonical() {
-  const matches = Array.from(
-    document.head.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]'),
-  );
-  const canonical = matches.shift() ?? document.createElement("link");
-
-  for (const duplicate of matches) {
-    duplicate.remove();
-  }
-
-  canonical.rel = "canonical";
-  canonical.href = canonicalUrl;
-
-  if (!canonical.isConnected) {
-    document.head.appendChild(canonical);
-  }
-}
-
-function useParkCleanupMetadata() {
-  useEffect(() => {
-    document.title = pageTitle;
-    setUniqueMeta('meta[name="description"]', {
-      name: "description",
-      content: pageDescription,
-    });
-    setUniqueMeta('meta[property="og:title"]', {
-      property: "og:title",
-      content: pageTitle,
-    });
-    setUniqueMeta('meta[property="og:description"]', {
-      property: "og:description",
-      content: pageDescription,
-    });
-    setUniqueMeta('meta[property="og:url"]', {
-      property: "og:url",
-      content: canonicalUrl,
-    });
-    setUniqueMeta('meta[property="og:type"]', {
-      property: "og:type",
-      content: "website",
-    });
-    setUniqueMeta('meta[property="og:image"]', {
-      property: "og:image",
-      content: openGraphImageUrl,
-    });
-    setUniqueCanonical();
-
-    return () => {
-      if (document.title === pageTitle) {
-        document.title = "Rave for Good";
-      }
-
-      document
-        .querySelectorAll(
-          'meta[name="description"], meta[property="og:title"], meta[property="og:description"], meta[property="og:url"], meta[property="og:type"], meta[property="og:image"]',
-        )
-        .forEach((element) => element.remove());
-
-      document
-        .querySelectorAll<HTMLLinkElement>('link[rel="canonical"]')
-        .forEach((element) => element.remove());
-    };
-  }, []);
-}
-
-function formatEventDate(date: string) {
-  return new Intl.DateTimeFormat("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(`${date}T12:00:00`));
-}
-
-export default function ParkCleanup() {
-  useParkCleanupMetadata();
+export function ParkCleanupPage({
+  locale = "en",
+  now = new Date(),
+  eventRecords = events,
+}: {
+  locale?: SiteLocale;
+  now?: Date;
+  eventRecords?: readonly Event[];
+}) {
+  const text = copy[locale];
+  const { upcoming, past } = partitionEvents(eventRecords, now);
+  const nextCleanup = upcoming.find((event) => event.category === "community");
+  const pastCleanups = past.filter((event) => event.category === "community");
+  const localizedNextCleanup = nextCleanup ? localizeEvent(nextCleanup, locale) : undefined;
+  const nextCleanupLogistics = nextCleanup ? eventLogisticsRows(nextCleanup, locale) : [];
 
   return (
-    <div className="relative w-full overflow-hidden" data-testid="page-park-cleanup">
-      <div className="pointer-events-none absolute right-0 top-0 h-[360px] w-[360px] bg-[radial-gradient(ellipse,rgba(109,94,245,0.075)_0%,transparent_68%)] sm:h-[680px] sm:w-[760px]" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-[320px] w-[320px] bg-[radial-gradient(ellipse,rgba(77,163,255,0.055)_0%,transparent_70%)] sm:h-[520px] sm:w-[520px]" />
+    <div className="relative w-full overflow-hidden" data-testid={`page-park-cleanup-${locale}`}>
+      <div className="pointer-events-none absolute right-0 top-0 h-[680px] w-[760px] bg-[radial-gradient(ellipse,rgba(109,94,245,0.075)_0%,transparent_68%)]" />
 
       <section className="relative pb-14 pt-24 sm:pb-20 sm:pt-28 md:pb-28 md:pt-44">
-        <motion.div
-          className="container relative z-10 px-4 sm:px-6"
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
-        >
-          <motion.div className="mb-6 flex items-center gap-3" variants={fadeUp}>
-            <span className="h-2 w-2 rounded-full bg-primary" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
-              Berlin Community Action
-            </span>
+        <motion.div className="container relative z-10 px-4 sm:px-6" initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}>
+          <motion.div className="mb-6 flex flex-wrap items-center justify-between gap-4" variants={fadeUp}>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary-readable">{text.eyebrow}</p>
+            <Link href={text.languagePath} className="inline-flex min-h-11 items-center border border-white/[0.18] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-foreground/80 hover:border-primary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              {text.languageLabel}
+            </Link>
           </motion.div>
-
-          <motion.h1
-            className="mb-7 font-display text-[clamp(2.5rem,9.5vw,7.25rem)] font-bold uppercase leading-[0.84] tracking-[-0.04em]"
-            variants={fadeUp}
-            data-testid="heading-park-cleanup"
-          >
-            <span className="block whitespace-nowrap">Rave for Good</span>
-            <span className="block whitespace-nowrap text-primary">Cleanup</span>
-            <span className="block whitespace-nowrap">Collective</span>
+          <motion.h1 className="mb-7 max-w-6xl font-display text-[clamp(2.7rem,10vw,7.25rem)] font-bold uppercase leading-[0.84] tracking-[-0.04em]" variants={fadeUp}>
+            {text.title}
           </motion.h1>
-
-          <motion.p
-            className="max-w-4xl text-lg font-light leading-relaxed text-foreground/68 sm:text-xl md:text-2xl"
-            variants={fadeUp}
-          >
-            {positioningStatement}
+          <motion.p className="max-w-4xl text-lg font-light leading-relaxed text-foreground/75 sm:text-xl md:text-2xl" variants={fadeUp}>
+            {text.positioning}
           </motion.p>
-
-          <motion.p
-            className="mt-5 max-w-3xl border-l-2 border-primary/55 pl-5 text-sm font-medium leading-relaxed text-foreground/52 sm:mt-6 sm:text-base md:text-lg"
-            variants={fadeUp}
-          >
-            {partnershipStatement}
+          <motion.p className="mt-6 max-w-3xl border-l-2 border-primary-readable pl-5 text-base font-medium leading-relaxed text-muted-foreground sm:text-lg" variants={fadeUp}>
+            {text.partnership}
           </motion.p>
         </motion.div>
       </section>
 
-      <section
-        className="relative pb-14 sm:pb-20 md:pb-28"
-        aria-label="Rave for Good Cleanup Collective gallery"
-      >
-        <motion.div
-          className="container grid grid-cols-1 gap-4 px-4 sm:gap-6 sm:px-6 md:grid-cols-2"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={stagger}
-        >
-          <motion.figure
-            className="relative aspect-[7/6] overflow-hidden border border-white/[0.07] bg-card"
-            variants={fadeUp}
-          >
-            <img
-              src="/images/cleanup-collective-group-berlin.jpeg"
-              alt="Rave for Good volunteers taking part in a Berlin park cleanup"
-              width="1106"
-              height="960"
-              decoding="async"
-              className="h-full w-full object-cover"
-              data-testid="img-cleanup-collective-group"
-            />
-          </motion.figure>
-
-          <motion.figure
-            className="relative aspect-[7/6] overflow-hidden border border-white/[0.07] bg-card"
-            variants={fadeUp}
-          >
-            <img
-              src="/images/rave-for-good-cleanup-team.jpeg"
-              alt="Rave for Good cleanup team with collected waste bags in Berlin"
-              width="1118"
-              height="955"
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover"
-              data-testid="img-cleanup-team"
-            />
-          </motion.figure>
-        </motion.div>
+      <section className="pb-16 sm:pb-20 md:pb-28" aria-label={text.galleryLabel}>
+        <div className="container grid grid-cols-1 gap-5 px-4 sm:px-6 md:grid-cols-2">
+          {["/images/cleanup-collective-group-berlin.jpeg", "/images/rave-for-good-cleanup-team.jpeg"].map((src, index) => (
+            <motion.figure key={src} className="overflow-hidden border border-white/[0.1] bg-card" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              <img src={src} alt={text.galleryAlts[index]} className="aspect-[7/6] h-full w-full object-cover" />
+              <figcaption className="border-t border-white/[0.08] px-4 py-3 text-xs text-muted-foreground">{CLEANUP_PHOTO_CREDIT}</figcaption>
+            </motion.figure>
+          ))}
+        </div>
       </section>
 
-      <section
-        className="relative bg-card py-14 sm:py-20 md:py-28"
-        aria-labelledby="upcoming-community-events"
-      >
+      {nextCleanup ? (
+        <section className="relative bg-card py-16 sm:py-20 md:py-28" aria-labelledby="next-cleanup-heading">
+          <div className="container grid gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.72fr)] lg:gap-16">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}>
+              <motion.p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.18em] text-primary-readable" variants={fadeUp}>{text.nextEyebrow}</motion.p>
+              <motion.h2 id="next-cleanup-heading" className="mb-6 font-display text-4xl font-bold uppercase leading-[0.92] tracking-[-0.03em] sm:text-5xl md:text-6xl" variants={fadeUp}>
+                <time dateTime={nextCleanup.date}>{formatEventDate(nextCleanup.date, text.locale)}</time>
+              </motion.h2>
+              <motion.p className="mb-8 max-w-2xl text-lg leading-relaxed text-foreground/75" variants={fadeUp}>
+                {cleanupFormatDescription(nextCleanup, locale).replace(/^./, (character) => character.toUpperCase())}.
+              </motion.p>
+              <motion.dl className="mb-8 divide-y divide-white/[0.1] border-y border-white/[0.1] text-sm sm:text-base" variants={fadeUp}>
+                {nextCleanupLogistics.map((row) => (
+                  <div key={row.key} className="grid gap-2 py-4 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-5">
+                    <dt className="sr-only">{row.label}</dt>
+                    <dd className="font-semibold text-foreground/90 sm:col-span-2">{row.value}</dd>
+                  </div>
+                ))}
+              </motion.dl>
+              <motion.div className="flex flex-col gap-3 sm:flex-row" variants={fadeUp}>
+                <Button asChild size="lg" className="btn-cta h-12 rounded-none px-7 text-xs font-bold uppercase tracking-[0.14em]">
+                  <a href={contactMailto(cleanupParticipationSubject(nextCleanup, locale))}>
+                    <Mail size={15} /> {text.participation}
+                  </a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="h-12 rounded-none px-7 text-xs font-bold uppercase tracking-[0.14em]">
+                  <Link href={text.partnerPath}>{text.partnershipCta} <ArrowRight size={14} /></Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+            <figure className="self-start overflow-hidden border border-white/[0.1] bg-background p-3">
+              <img src={nextCleanup.image} alt={localizedNextCleanup?.imageAlt ?? localizedNextCleanup?.title} className="aspect-[7/6] w-full object-cover" />
+              <figcaption className="px-2 pt-3 text-xs text-muted-foreground">{nextCleanup.imageCredit ?? CLEANUP_PHOTO_CREDIT}</figcaption>
+            </figure>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="py-16 sm:py-20 md:py-28" aria-labelledby="past-cleanups-heading">
         <div className="container px-4 sm:px-6">
-          <motion.div
-            className="mb-10 max-w-4xl sm:mb-14"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={stagger}
-          >
-            <motion.p
-              className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70"
-              variants={fadeUp}
-            >
-              Next action
-            </motion.p>
-            <motion.h2
-              id="upcoming-community-events"
-              className="font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-6xl"
-              variants={fadeUp}
-            >
-              Upcoming Community Events
-            </motion.h2>
-          </motion.div>
-
-          <motion.div
-            className="space-y-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={stagger}
-          >
-            {upcomingCommunityEvents.map((event) => (
-              <motion.article
-                key={event.id}
-                className="grid min-w-0 overflow-hidden border border-white/[0.07] bg-background lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.78fr)]"
-                variants={fadeUp}
-                data-testid={`community-event-${event.id}`}
-              >
-                <div className="min-w-0 p-6 sm:p-8 md:p-10 lg:p-12">
-                  <p className="mb-4 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-primary/75">
-                    <time dateTime={event.date}>{formatEventDate(event.date)}</time>
-                  </p>
-                  <h3 className="mb-6 font-display text-4xl font-bold uppercase leading-[0.9] tracking-[-0.03em] text-foreground/94 sm:text-5xl md:text-6xl">
-                    {event.title}
-                  </h3>
-
-                  <dl className="mb-9 grid gap-5 border-y border-white/[0.07] py-6 sm:grid-cols-2">
-                    {event.startTime && event.endTime ? (
-                      <div>
-                        <dt className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/34">
-                          Operating time
-                        </dt>
-                        <dd className="font-display text-2xl font-bold uppercase text-foreground/88">
-                          <time dateTime={`${event.date}T${event.startTime}`}>
-                            {event.startTime}
-                          </time>
-                          <span aria-hidden="true">–</span>
-                          <time dateTime={`${event.date}T${event.endTime}`}>
-                            {event.endTime}
-                          </time>
-                        </dd>
-                      </div>
+          <h2 id="past-cleanups-heading" className="mb-10 font-display text-3xl font-bold uppercase tracking-[-0.025em] sm:text-4xl md:text-5xl">{text.previous}</h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {pastCleanups.map((event) => {
+              const localizedEvent = localizeEvent(event, locale);
+              return (
+                <article key={event.id} className="overflow-hidden border border-white/[0.1] bg-card">
+                  <figure>
+                    <img src={event.image} alt={localizedEvent.imageAlt ?? `${localizedEvent.title} event image`} className="aspect-[4/3] w-full bg-background object-contain" />
+                    {event.imageCredit ? <figcaption className="border-t border-white/[0.08] px-6 py-3 text-xs text-muted-foreground sm:px-8">{event.imageCredit}</figcaption> : null}
+                  </figure>
+                  <div className="p-6 sm:p-8">
+                    <p className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-primary-readable"><time dateTime={event.date}>{formatEventDate(event.date, text.locale)}</time></p>
+                    <h3 className="mb-4 font-display text-2xl font-bold uppercase">{localizedEvent.title}</h3>
+                    {event.volunteerCount ? <p className="mb-4 text-lg font-semibold text-foreground/90">{event.volunteerCount} {text.volunteers}</p> : null}
+                    <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{localizedEvent.description}</p>
+                    {event.lineup?.length ? (
+                      <section
+                        id={`${event.id}-lineup`}
+                        className="mt-7 border-t border-white/[0.1] pt-6"
+                        aria-labelledby={`${event.id}-lineup-heading`}
+                      >
+                        <h4 id={`${event.id}-lineup-heading`} className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary-readable">
+                          {text.lineup}
+                        </h4>
+                        <ol className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                          {event.lineup.map((slot) => (
+                            <li key={`${event.id}-${slot.time}`} className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-4 py-3 text-sm sm:text-base">
+                              <time dateTime={`${event.date}T${slot.time}`} className="font-mono font-semibold text-primary-readable">{slot.time}</time>
+                              <span className="font-medium text-foreground/90">{slot.artist}</span>
+                            </li>
+                          ))}
+                        </ol>
+                      </section>
                     ) : null}
-
-                    <div>
-                      <dt className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/34">
-                        City
-                      </dt>
-                      <dd className="font-display text-2xl font-bold uppercase text-foreground/88">
-                        {event.city}
-                      </dd>
-                    </div>
-                  </dl>
-
-                  {event.startLocation && event.endLocation ? (
-                    <div className="mb-9 border-l-2 border-primary/55 pl-5">
-                      <p className="mb-3 flex items-start gap-3 text-base font-light leading-relaxed text-foreground/62 sm:text-lg">
-                        <MapPin className="mt-1 shrink-0 text-primary" size={17} aria-hidden="true" />
-                        <span>
-                          Starts at <strong className="font-medium text-foreground/88">{event.startLocation}</strong> at {event.startTime}.
-                        </span>
-                      </p>
-                      <p className="flex items-start gap-3 text-base font-light leading-relaxed text-foreground/62 sm:text-lg">
-                        <MapPin className="mt-1 shrink-0 text-accent" size={17} aria-hidden="true" />
-                        <span>
-                          Finishes at <strong className="font-medium text-foreground/88">{event.endLocation}</strong> at {event.endTime}.
-                        </span>
-                      </p>
-                      <p className="mt-4 text-sm font-light leading-relaxed text-foreground/42">
-                        The cleanup moves from the start point to the finish point through shared public space.
-                      </p>
-                    </div>
-                  ) : null}
-
-                  <p className="mb-10 max-w-[62ch] text-base font-light leading-relaxed text-foreground/54 sm:text-lg">
-                    {event.description}
-                  </p>
-
-                  {event.lineup?.length ? (
-                    <div>
-                      <h4 className="mb-5 font-display text-2xl font-bold uppercase tracking-[-0.02em] text-foreground/88">
-                        Lineup
-                      </h4>
-                      <ol className="border-t border-white/[0.07]" data-testid="trash-pickup-lineup">
-                        {event.lineup.map((slot) => (
-                          <li
-                            key={`${slot.time}-${slot.artist}`}
-                            className="grid min-w-0 grid-cols-[4.5rem_minmax(0,1fr)] items-center gap-4 border-b border-white/[0.07] py-4 sm:grid-cols-[5.5rem_minmax(0,1fr)] sm:gap-6"
-                          >
-                            <time
-                              dateTime={`${event.date}T${slot.time}`}
-                              className="font-mono text-xs font-bold tracking-[0.12em] text-primary"
-                            >
-                              {slot.time}
-                            </time>
-                            <span className="min-w-0 break-words font-display text-lg font-bold uppercase leading-tight text-foreground/84 sm:text-xl">
-                              {slot.artist}
-                            </span>
-                          </li>
-                        ))}
-                      </ol>
-                    </div>
-                  ) : null}
-                </div>
-
-                <figure className="flex min-w-0 items-center justify-center border-t border-white/[0.07] bg-card p-3 sm:p-5 lg:border-l lg:border-t-0">
-                  <img
-                    src={event.image}
-                    alt="Trash Pickup community cleanup flyer for Sunday 19 July 2026, featuring the Rave for Good lineup and route from Lohmühlenplatz to Schlesischer Busch"
-                    width="1080"
-                    height="1440"
-                    className="aspect-[3/4] h-auto w-full max-w-[720px] object-contain"
-                    data-testid="img-trash-pickup-flyer"
-                  />
-                </figure>
-              </motion.article>
-            ))}
-          </motion.div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      <section className="relative py-14 sm:py-20 md:py-28" aria-labelledby="previous-community-events">
+      <section className="bg-card py-16 sm:py-20 md:py-28" aria-labelledby="cleanup-contribution-heading">
         <div className="container px-4 sm:px-6">
-          <motion.div
-            className="mb-10 sm:mb-14"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={stagger}
-          >
-            <motion.p
-              className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70"
-              variants={fadeUp}
-            >
-              Archive
-            </motion.p>
-            <motion.h2
-              id="previous-community-events"
-              className="font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-6xl"
-              variants={fadeUp}
-            >
-              Previous Events
-            </motion.h2>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={stagger}
-          >
-            {previousCommunityEvents.map((event) => (
-              <motion.article
-                key={event.id}
-                className="card-lift overflow-hidden border border-white/[0.07] bg-card"
-                variants={fadeUp}
-                data-testid={`previous-community-event-${event.id}`}
-              >
-                <div className="bg-background p-3">
-                  <img
-                    src={event.image}
-                    alt={`${event.title} flyer`}
-                    width="1080"
-                    height="1440"
-                    loading="lazy"
-                    className="aspect-[3/4] h-auto w-full object-contain"
-                  />
-                </div>
-                <div className="p-6 sm:p-8">
-                  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.16em] text-primary/70">
-                    <time dateTime={event.date}>{formatEventDate(event.date)}</time>
-                  </p>
-                  <h3 className="mb-4 font-display text-2xl font-bold uppercase leading-[0.95] tracking-[-0.02em] text-foreground/90 sm:text-3xl">
-                    {event.title}
-                  </h3>
-                  <p className="mb-6 text-sm font-light leading-relaxed text-foreground/50 sm:text-base">
-                    {event.description}
-                  </p>
-                  {event.detailPath ? (
-                    <Link
-                      href={event.detailPath}
-                      className="link-line inline-flex min-h-11 items-center gap-2 py-3 text-[11px] font-bold uppercase tracking-[0.16em] text-foreground/55 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-card"
-                      data-testid={`link-previous-community-event-${event.id}`}
-                    >
-                      View Previous Event
-                      <ArrowRight size={13} />
-                    </Link>
-                  ) : null}
-                </div>
-              </motion.article>
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-primary-readable">{text.contributionEyebrow}</p>
+          <h2 id="cleanup-contribution-heading" className="mb-5 max-w-4xl font-display text-3xl font-bold uppercase leading-[0.95] sm:text-4xl md:text-5xl">{text.contributionTitle}</h2>
+          <p className="mb-10 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">{text.contributionIntro}</p>
+          <div className="grid gap-px bg-white/[0.12] md:grid-cols-2 xl:grid-cols-4">
+            {text.contributions.map(([title, description]) => (
+              <article key={title} className="bg-background p-6 sm:p-8">
+                <h3 className="mb-4 font-display text-xl font-bold uppercase text-foreground/95">{title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
+              </article>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      <section className="relative border-t border-white/[0.06] bg-card py-14 sm:py-20 md:py-24">
-        <motion.div
-          className="container grid grid-cols-1 gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={stagger}
-        >
-          <motion.div variants={fadeUp}>
-            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
-              Take part
-            </p>
-            <h2 className="mb-5 font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.025em] sm:text-4xl md:text-5xl">
-              Support community action
-            </h2>
-            <p className="max-w-2xl text-base font-light leading-relaxed text-foreground/52 sm:text-lg">
-              Help fund cleanup materials and future charity projects, or contact the crew to volunteer and collaborate.
-            </p>
-          </motion.div>
-
-          <motion.div className="flex flex-col gap-3 sm:flex-row" variants={fadeUp}>
-            <Button
-              asChild
-              size="lg"
-              className="btn-cta h-12 min-h-11 rounded-none px-7 text-xs font-bold uppercase tracking-[0.14em]"
-            >
-              <a href={donationUrl} target="_blank" rel="noopener noreferrer" data-testid="button-donate-park-cleanup">
-                Support the cleanup
-                <ArrowRight size={14} />
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-12 min-h-11 rounded-none px-7 text-xs font-bold uppercase tracking-[0.14em]"
-            >
-              <a href={`mailto:${contactEmail}`} data-testid="link-volunteer-park-cleanup">
-                <Mail size={14} />
-                Volunteer
-              </a>
-            </Button>
-          </motion.div>
-        </motion.div>
+      <section className="py-16 sm:py-20 md:py-24">
+        <div className="container grid gap-6 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div>
+            <h2 className="mb-4 font-display text-3xl font-bold uppercase sm:text-4xl">{text.contactTitle}</h2>
+            <p className="max-w-2xl text-muted-foreground">{text.contactCopy(SITE_CONTACT.name)}</p>
+          </div>
+          <a className="link-line inline-flex min-h-11 items-center gap-2 py-3 font-semibold text-primary-readable focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" href={contactMailto()}>
+            {SITE_CONTACT.name} · {SITE_CONTACT.email}
+          </a>
+        </div>
       </section>
     </div>
   );
+}
+
+export default function ParkCleanup() {
+  return <ParkCleanupPage locale="en" />;
 }

@@ -28,6 +28,7 @@ node_modules
 !.vscode/extensions.json
 
 # misc
+.vercel/
 /.sass-cache
 /connect.lock
 /coverage

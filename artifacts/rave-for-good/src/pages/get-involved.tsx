@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, Copy, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SITE_CONTACT, contactMailto } from "@/data/site";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -24,7 +25,7 @@ export default function GetInvolved() {
             Take <br/><span className="text-primary">Action</span>
           </motion.h1>
           <motion.p
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/40 sm:text-sm md:text-base"
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:text-sm md:text-base"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -43,44 +44,44 @@ export default function GetInvolved() {
             transition={{ duration: 0.6, delay: 0.3 }}
             data-testid="section-donate"
           >
-            <div className="mb-6 inline-block border border-primary/30 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-primary/80 sm:mb-8">
+            <div className="mb-6 inline-block border border-primary/30 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-primary-readable sm:mb-8">
               Direct Support
             </div>
             <h2 className="mb-5 font-display text-3xl font-bold uppercase tracking-tighter sm:text-4xl md:mb-6 md:text-5xl">
               Fund the well
             </h2>
             <p className="mb-8 text-base font-light leading-relaxed text-foreground/55 sm:mb-10 sm:text-lg">
-              Can't make it to a dancefloor? You can still contribute directly to our active infrastructure projects. 100% of public donations go to implementation, zero to admin overhead.
+              Can&apos;t make it to a dancefloor? You can still contribute to Rave for Good&apos;s active infrastructure work. Contact us if you need current information about how a contribution may be used.
             </p>
 
             <div className="space-y-6">
               <div className="grid gap-3 text-sm font-light text-foreground/55 sm:grid-cols-2">
                 <div className="border border-white/[0.06] bg-background/45 p-4">
-                  <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.16em] text-primary/70">Bank</div>
+                  <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.16em] text-primary-readable">Bank</div>
                   <dl className="space-y-2">
                     <div>
-                      <dt className="text-foreground/30">Bank</dt>
+                      <dt className="text-muted-foreground">Bank</dt>
                       <dd className="text-foreground/75">GLS Bank</dd>
                     </div>
                     <div>
-                      <dt className="text-foreground/30">Account holder</dt>
+                      <dt className="text-muted-foreground">Account holder</dt>
                       <dd className="text-foreground/75">Rave for good berlin</dd>
                     </div>
                     <div>
-                      <dt className="text-foreground/30">IBAN</dt>
+                      <dt className="text-muted-foreground">IBAN</dt>
                       <dd className="break-all font-mono text-foreground/75">DE86 4306 0967 1270 1648 00</dd>
                     </div>
                   </dl>
                 </div>
                 <div className="border border-white/[0.06] bg-background/45 p-4">
-                  <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.16em] text-primary/70">PayPal</div>
+                  <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.16em] text-primary-readable">PayPal</div>
                   <dl className="space-y-2">
                     <div>
-                      <dt className="text-foreground/30">PayPal</dt>
-                      <dd className="text-foreground/75">info@raveforgood.berlin</dd>
+                      <dt className="text-muted-foreground">PayPal</dt>
+                      <dd className="text-foreground/75">{SITE_CONTACT.email}</dd>
                     </div>
                     <div>
-                      <dt className="text-foreground/30">Link</dt>
+                      <dt className="text-muted-foreground">Link</dt>
                       <dd className="break-all text-foreground/75">paypal.me/RaveForGoodeV</dd>
                     </div>
                   </dl>
@@ -97,15 +98,15 @@ export default function GetInvolved() {
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="h-12 w-full rounded-none border-white/[0.1] bg-transparent px-8 font-bold uppercase tracking-widest text-foreground/60 hover:border-primary/50 hover:text-primary sm:h-14 sm:w-auto" data-testid="button-donate-email">
-                  <a href="mailto:info@raveforgood.berlin">
+                  <a href={contactMailto()}>
                     <Mail size={16} />
                     Donation questions
                   </a>
                 </Button>
               </div>
-              <p className="flex items-start gap-2 text-xs font-light leading-relaxed text-foreground/40">
+              <p className="flex items-start gap-2 text-xs font-light leading-relaxed text-muted-foreground">
                 <Copy size={14} className="mt-0.5 shrink-0 text-foreground/25" />
-                For questions about donations, contact info@raveforgood.berlin.
+                For questions about donations, contact {SITE_CONTACT.email}.
               </p>
             </div>
           </motion.div>
@@ -121,10 +122,10 @@ export default function GetInvolved() {
             <div className="group flex flex-1 flex-col bg-card p-6 transition-colors duration-300 hover:bg-background sm:p-8" data-testid="card-attend">
               <h3 className="font-display text-2xl font-bold uppercase tracking-tight mb-3">Attend</h3>
               <p className="text-foreground/50 text-sm mb-6 flex-grow font-light leading-relaxed">
-                The easiest way to help. Buy a ticket, come dance. Your door fee becomes clean water.
+                Take part in events that support the association&apos;s social mission and community work.
               </p>
-              <Link href="/events">
-                <span className="inline-flex items-center gap-2 text-foreground/40 hover:text-primary font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-attend-events">
+              <Link href="/upcoming-events">
+                <span className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary-readable font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-attend-events">
                   Find Events <ArrowRight size={14} />
                 </span>
               </Link>
@@ -135,11 +136,11 @@ export default function GetInvolved() {
               <p className="text-foreground/50 text-sm mb-6 flex-grow font-light leading-relaxed">
                 We need hands in Berlin: door staff, promoters, designers. Donate your time and skills to the crew.
               </p>
-              <Link href="/contact">
-                <span className="inline-flex items-center gap-2 text-foreground/40 hover:text-primary font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-volunteer-contact">
+              <a href={contactMailto("Volunteer with Rave for Good")}>
+                <span className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary-readable font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-volunteer-contact">
                   Apply to Crew <ArrowRight size={14} />
                 </span>
-              </Link>
+              </a>
             </div>
 
             <div className="group flex flex-1 flex-col bg-card p-6 transition-colors duration-300 hover:bg-background sm:p-8" data-testid="card-partner">
@@ -147,8 +148,8 @@ export default function GetInvolved() {
               <p className="text-foreground/50 text-sm mb-6 flex-grow font-light leading-relaxed">
                 Represent a venue, label, or artist agency? Let's build a structural alliance.
               </p>
-              <Link href="/contact">
-                <span className="inline-flex items-center gap-2 text-foreground/40 hover:text-primary font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-partner-info">
+              <Link href="/partners">
+                <span className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary-readable font-medium uppercase tracking-widest text-xs transition-colors cursor-pointer" data-testid="link-partner-info">
                   View Info <ArrowRight size={14} />
                 </span>
               </Link>
