@@ -49,6 +49,30 @@ export const CLEANUP_PHOTO_CREDIT = "© raveforgood.berlin e.V.";
 
 export const events: Event[] = [
   {
+    id: "trash-mob-2026-09-19",
+    title: "Trash Mob",
+    date: "2026-09-19",
+    startTime: "15:00",
+    endTime: "20:00",
+    startLocation: "Schlesischer Busch",
+    endLocation: "Görlitzer Park",
+    route: "Schlesischer Busch → Görlitzer Park",
+    venue: "Schlesischer Busch → Görlitzer Park",
+    city: "Berlin",
+    description: "Trash Mob: a community cleanup from Schlesischer Busch to Görlitzer Park.",
+    category: "community",
+    image: "/images/events/trash-mob-2026-09-19-poster.jpeg",
+    imageAlt: "Yellow and orange Trash Mob poster for 19 September 2026, showing a DJ pushing a mobile sound system",
+    detailPath: "/park-cleanup#trash-mob-2026-09-19-lineup",
+    lineup: [
+      { time: "15:00", artist: "BIUSH" },
+      { time: "16:00", artist: "Ser Silvestre" },
+      { time: "17:00", artist: "Balzac" },
+      { time: "18:00", artist: "Goodrug" },
+      { time: "19:00", artist: "Esben" },
+    ],
+  },
+  {
     id: "rave-for-good-cleanup-2026-08-16",
     title: "Rave for Good Cleanup",
     date: "2026-08-16",
@@ -70,6 +94,14 @@ export const events: Event[] = [
     imageAlt: "Rave for Good volunteers taking part in a Berlin cleanup",
     imageCredit: CLEANUP_PHOTO_CREDIT,
     detailPath: "/park-cleanup",
+    lineup: [
+      { time: "14:00", artist: "Pragmatik" },
+      { time: "15:00", artist: "Ferniture" },
+      { time: "16:00", artist: "Rikuto & KCD" },
+      { time: "17:00", artist: "Huma" },
+      { time: "18:00", artist: "The Briss" },
+      { time: "19:00", artist: "GRYDER" },
+    ],
   },
   {
     id: "trash-pickup-2026-07-19",

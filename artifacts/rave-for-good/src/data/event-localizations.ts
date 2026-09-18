@@ -5,6 +5,11 @@ export type EventLocale = "en" | "de";
 export type LocalizedEventCopy = Pick<Event, "title" | "description" | "imageAlt">;
 
 const germanEventCopy: Record<string, LocalizedEventCopy> = {
+  "trash-mob-2026-09-19": {
+    title: "Trash Mob",
+    description: "Trash Mob: eine gemeinschaftliche Aufräumaktion vom Schlesischen Busch zum Görlitzer Park.",
+    imageAlt: "Gelb-oranges Trash-Mob-Plakat für den 19. September 2026 mit einem DJ, der eine mobile Musikanlage schiebt",
+  },
   "rave-for-good-cleanup-2026-08-16": {
     title: "Rave for Good Aufräumaktion",
     description:
