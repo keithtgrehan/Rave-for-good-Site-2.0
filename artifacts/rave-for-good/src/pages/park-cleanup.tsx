@@ -1,11 +1,12 @@
+import { useEventClock } from "@/hooks/use-event-clock";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CLEANUP_PHOTO_CREDIT, events, type Event, partitionEvents } from "@/data/events";
 import { localizeEvent } from "@/data/event-localizations";
 import { SITE_CONTACT, contactMailto } from "@/data/site";
-import { cleanupFormatDescription, cleanupParticipationSubject, eventLogisticsRows } from "@/lib/event-content";
+import { cleanupFormatDescription, eventLogisticsRows } from "@/lib/event-content";
 import { formatEventDate } from "@/lib/event-dates";
 
 export type SiteLocale = "en" | "de";
@@ -29,8 +30,15 @@ const copy = {
       "Rave for Good volunteers taking part in a Berlin cleanup",
       "Rave for Good cleanup volunteers with collected waste bags in Berlin",
     ],
-    nextEyebrow: "Next cleanup",
+    nextEyebrow: "Upcoming events",
+    berlinTime: "Berlin time",
     participation: "Take part",
+    weatherTitle: "Weather",
+    weatherCopy: (deadline: string) => `Proceed in light rain. Cancel or postpone for thunderstorms, dangerous heat or relevant official warnings. The decision will be published by ${deadline} on the event day.`,
+    musicTitle: "Mobile music format",
+    musicCopy: (pending: boolean) => `Music is essential to the concept: portable, battery-powered and low volume, with no generator or stationary sound system. It moves onwards after each location is cleaned${pending ? " and remains subject to partner and authority acceptance" : ""}. Any volume limit is subject to authority or partner guidance.`,
+    measurementTitle: "Measurement",
+    measurementCopy: "We will record registrations, attendance, volunteer hours, route and distance, bag counts, incidents, hazardous-waste reports and consented photographs. There is no weighing equipment, so no waste weight will be estimated or published.",
     partnershipCta: "Partner with us",
     previous: "Past cleanups",
     volunteers: "volunteers",
@@ -61,8 +69,15 @@ const copy = {
       "Freiwillige von Rave for Good bei einer Aufräumaktion in Berlin",
       "Freiwillige des Rave for Good Cleanup Collective mit gesammelten Müllsäcken in Berlin",
     ],
-    nextEyebrow: "Nächste Aufräumaktion",
+    nextEyebrow: "Kommende Veranstaltungen",
+    berlinTime: "Berliner Zeit",
     participation: "Mitmachen",
+    weatherTitle: "Wetter",
+    weatherCopy: (deadline: string) => `Bei leichtem Regen findet die Aktion statt. Bei Gewittern, gefährlicher Hitze oder relevanten amtlichen Warnungen wird sie abgesagt oder verschoben. Die Entscheidung wird am Veranstaltungstag bis ${deadline} Uhr veröffentlicht.`,
+    musicTitle: "Mobiles Musikformat",
+    musicCopy: (pending: boolean) => `Musik ist ein wesentlicher Teil des Konzepts: tragbar, batteriebetrieben und in niedriger Lautstärke, ohne Generator oder stationäre Anlage. Nach der Reinigung zieht die Musikgruppe weiter.${pending ? " Das Format steht unter dem Vorbehalt der Zustimmung von Partnern und Behörden." : ""} Lautstärkevorgaben richten sich nach Hinweisen von Behörden oder Partnern.`,
+    measurementTitle: "Wirkungsmessung",
+    measurementCopy: "Erfasst werden Anmeldungen, tatsächliche Teilnahme, freiwillige Stunden, Route und gereinigte Strecke, Anzahl der Müllsäcke, Vorfälle, Meldungen zu gefährlichen Abfällen und freigegebene Fotos. Es gibt keine Waage; Abfallgewicht wird weder geschätzt noch veröffentlicht.",
     partnershipCta: "Kooperation anfragen",
     previous: "Vergangene Aufräumaktionen",
     volunteers: "Freiwillige",
@@ -84,17 +99,38 @@ const copy = {
   },
 } as const;
 
+function CleanupLineup({ event, label }: { event: Event; label: string }) {
+  if (!event.lineup?.length) return null;
+
+  return (
+    <section id={`${event.id}-lineup`} className="mt-7 border-t border-white/[0.1] pt-6" aria-labelledby={`${event.id}-lineup-heading`}>
+      <h4 id={`${event.id}-lineup-heading`} className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary-readable">
+        {label}
+      </h4>
+      <ol className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+        {event.lineup.map((slot) => (
+          <li key={`${event.id}-${slot.time}`} className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-4 py-3 text-sm sm:text-base">
+            <time dateTime={`${event.date}T${slot.time}`} className="font-mono font-semibold text-primary-readable">{slot.time}</time>
+            <span className="font-medium text-foreground/90">{slot.artist}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
 export function ParkCleanupPage({
   locale = "en",
-  now = new Date(),
+  now,
   eventRecords = events,
 }: {
   locale?: SiteLocale;
   now?: Date;
   eventRecords?: readonly Event[];
 }) {
+  const clock = useEventClock(now);
   const text = copy[locale];
-  const { upcoming, past } = partitionEvents(eventRecords, now);
+  const { upcoming, past } = partitionEvents(eventRecords, clock);
   const nextCleanup = upcoming.find((event) => event.category === "community");
   const pastCleanups = past.filter((event) => event.category === "community");
   const localizedNextCleanup = nextCleanup ? localizeEvent(nextCleanup, locale) : undefined;
@@ -104,7 +140,7 @@ export function ParkCleanupPage({
     <div className="relative w-full overflow-hidden" data-testid={`page-park-cleanup-${locale}`}>
       <div className="pointer-events-none absolute right-0 top-0 h-[680px] w-[760px] bg-[radial-gradient(ellipse,rgba(109,94,245,0.075)_0%,transparent_68%)]" />
 
-      <section className="relative pb-14 pt-24 sm:pb-20 sm:pt-28 md:pb-28 md:pt-44">
+      <section className="relative pb-16 pt-24 sm:pb-20 sm:pt-28 md:pb-28 md:pt-44">
         <motion.div className="container relative z-10 px-4 sm:px-6" initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}>
           <motion.div className="mb-6 flex flex-wrap items-center justify-between gap-4" variants={fadeUp}>
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary-readable">{text.eyebrow}</p>
@@ -124,41 +160,34 @@ export function ParkCleanupPage({
         </motion.div>
       </section>
 
-      <section className="pb-16 sm:pb-20 md:pb-28" aria-label={text.galleryLabel}>
-        <div className="container grid grid-cols-1 gap-5 px-4 sm:px-6 md:grid-cols-2">
-          {["/images/cleanup-collective-group-berlin.jpeg", "/images/rave-for-good-cleanup-team.jpeg"].map((src, index) => (
-            <motion.figure key={src} className="overflow-hidden border border-white/[0.1] bg-card" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-              <img src={src} alt={text.galleryAlts[index]} className="aspect-[7/6] h-full w-full object-cover" />
-              <figcaption className="border-t border-white/[0.08] px-4 py-3 text-xs text-muted-foreground">{CLEANUP_PHOTO_CREDIT}</figcaption>
-            </motion.figure>
-          ))}
-        </div>
-      </section>
-
       {nextCleanup ? (
         <section className="relative bg-card py-16 sm:py-20 md:py-28" aria-labelledby="next-cleanup-heading">
           <div className="container grid gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.72fr)] lg:gap-16">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}>
-              <motion.p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.18em] text-primary-readable" variants={fadeUp}>{text.nextEyebrow}</motion.p>
-              <motion.h2 id="next-cleanup-heading" className="mb-6 font-display text-4xl font-bold uppercase leading-[0.92] tracking-[-0.03em] sm:text-5xl md:text-6xl" variants={fadeUp}>
+              <motion.h2 id="next-cleanup-heading" className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.18em] text-primary-readable" variants={fadeUp}>{text.nextEyebrow}</motion.h2>
+              <motion.h3 className="mb-6 font-display text-4xl font-bold uppercase leading-[0.92] tracking-[-0.03em] sm:text-5xl md:text-6xl" variants={fadeUp}>
+                {localizedNextCleanup?.title}
+              </motion.h3>
+              <motion.p className="mb-6 font-mono text-sm text-primary-readable" variants={fadeUp}>
                 <time dateTime={nextCleanup.date}>{formatEventDate(nextCleanup.date, text.locale)}</time>
-              </motion.h2>
+              </motion.p>
               <motion.p className="mb-8 max-w-2xl text-lg leading-relaxed text-foreground/75" variants={fadeUp}>
                 {cleanupFormatDescription(nextCleanup, locale).replace(/^./, (character) => character.toUpperCase())}.
               </motion.p>
-              <motion.dl className="mb-8 divide-y divide-white/[0.1] border-y border-white/[0.1] text-sm sm:text-base" variants={fadeUp}>
+              {nextCleanup.startTime && nextCleanup.endTime ? <p className="mb-4 text-lg font-semibold">{nextCleanup.startTime}–{nextCleanup.endTime} · {text.berlinTime}</p> : null}
+              {nextCleanup.route ? <p className="mb-6 text-lg text-foreground/90">{nextCleanup.route}</p> : null}
+              <CleanupLineup event={nextCleanup} label={text.lineup} />
+              {nextCleanupLogistics.length ? <motion.dl className="mb-8 divide-y divide-white/[0.1] border-y border-white/[0.1] text-sm sm:text-base" variants={fadeUp}>
                 {nextCleanupLogistics.map((row) => (
                   <div key={row.key} className="grid gap-2 py-4 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-5">
                     <dt className="sr-only">{row.label}</dt>
                     <dd className="font-semibold text-foreground/90 sm:col-span-2">{row.value}</dd>
                   </div>
                 ))}
-              </motion.dl>
-              <motion.div className="flex flex-col gap-3 sm:flex-row" variants={fadeUp}>
+              </motion.dl> : null}
+              <motion.div className="mt-8 flex flex-col gap-3 sm:flex-row" variants={fadeUp}>
                 <Button asChild size="lg" className="btn-cta h-12 rounded-none px-7 text-xs font-bold uppercase tracking-[0.14em]">
-                  <a href={contactMailto(cleanupParticipationSubject(nextCleanup, locale))}>
-                    <Mail size={15} /> {text.participation}
-                  </a>
+                  <a href={contactMailto()}>{text.participation} <ArrowRight size={14} /></a>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="h-12 rounded-none px-7 text-xs font-bold uppercase tracking-[0.14em]">
                   <Link href={text.partnerPath}>{text.partnershipCta} <ArrowRight size={14} /></Link>
@@ -166,14 +195,35 @@ export function ParkCleanupPage({
               </motion.div>
             </motion.div>
             <figure className="self-start overflow-hidden border border-white/[0.1] bg-background p-3">
-              <img src={nextCleanup.image} alt={localizedNextCleanup?.imageAlt ?? localizedNextCleanup?.title} className="aspect-[7/6] w-full object-cover" />
-              <figcaption className="px-2 pt-3 text-xs text-muted-foreground">{nextCleanup.imageCredit ?? CLEANUP_PHOTO_CREDIT}</figcaption>
+              <img src={nextCleanup.image} alt={localizedNextCleanup?.imageAlt ?? localizedNextCleanup?.title} className="h-auto w-full object-contain" />
+              {nextCleanup.imageCredit ? <figcaption className="px-2 pt-3 text-xs text-muted-foreground">{nextCleanup.imageCredit}</figcaption> : null}
             </figure>
           </div>
         </section>
       ) : null}
 
-      <section className="py-16 sm:py-20 md:py-28" aria-labelledby="past-cleanups-heading">
+      <section className={`pb-16 sm:pb-20 md:pb-28${nextCleanup ? " pt-16 sm:pt-20 md:pt-28" : ""}`} aria-label={text.galleryLabel}>
+        <div className="container grid grid-cols-1 gap-6 px-4 sm:px-6 md:grid-cols-2">
+          {["/images/cleanup-collective-group-berlin.jpeg", "/images/rave-for-good-cleanup-team.jpeg"].map((src, index) => (
+            <motion.figure key={src} className="overflow-hidden border border-white/[0.1] bg-card" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              <img src={src} alt={text.galleryAlts[index]} className="aspect-[7/6] h-auto w-full object-cover" />
+              <figcaption className="border-t border-white/[0.08] px-4 py-3 text-xs text-muted-foreground">{CLEANUP_PHOTO_CREDIT}</figcaption>
+            </motion.figure>
+          ))}
+        </div>
+      </section>
+
+      <div className="pb-16 sm:pb-20 md:pb-28">
+        <div className="container px-4 sm:px-6">
+          <div className="grid gap-px bg-white/[0.12] md:grid-cols-3">
+            {[[text.weatherTitle, text.weatherCopy("10:00")], [text.musicTitle, text.musicCopy(true)], [text.measurementTitle, text.measurementCopy]].map(([title, body]) => (
+              <article key={title} className="bg-card p-6 sm:p-8"><h2 className="mb-4 font-display text-xl font-bold uppercase">{title}</h2><p className="text-sm leading-relaxed text-muted-foreground">{body}</p></article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <section className="pb-16 sm:pb-20 md:pb-28" aria-labelledby="past-cleanups-heading">
         <div className="container px-4 sm:px-6">
           <h2 id="past-cleanups-heading" className="mb-10 font-display text-3xl font-bold uppercase tracking-[-0.025em] sm:text-4xl md:text-5xl">{text.previous}</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -190,25 +240,7 @@ export function ParkCleanupPage({
                     <h3 className="mb-4 font-display text-2xl font-bold uppercase">{localizedEvent.title}</h3>
                     {event.volunteerCount ? <p className="mb-4 text-lg font-semibold text-foreground/90">{event.volunteerCount} {text.volunteers}</p> : null}
                     <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{localizedEvent.description}</p>
-                    {event.lineup?.length ? (
-                      <section
-                        id={`${event.id}-lineup`}
-                        className="mt-7 border-t border-white/[0.1] pt-6"
-                        aria-labelledby={`${event.id}-lineup-heading`}
-                      >
-                        <h4 id={`${event.id}-lineup-heading`} className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary-readable">
-                          {text.lineup}
-                        </h4>
-                        <ol className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
-                          {event.lineup.map((slot) => (
-                            <li key={`${event.id}-${slot.time}`} className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-4 py-3 text-sm sm:text-base">
-                              <time dateTime={`${event.date}T${slot.time}`} className="font-mono font-semibold text-primary-readable">{slot.time}</time>
-                              <span className="font-medium text-foreground/90">{slot.artist}</span>
-                            </li>
-                          ))}
-                        </ol>
-                      </section>
-                    ) : null}
+                    <CleanupLineup event={event} label={text.lineup} />
                   </div>
                 </article>
               );

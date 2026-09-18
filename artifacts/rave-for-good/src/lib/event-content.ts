@@ -1,3 +1,4 @@
+import { localizeEvent } from "../data/event-localizations";
 import type { Event } from "../data/events";
 import type { EventLocale } from "../data/event-localizations";
 import { formatEventDate } from "./event-dates";
@@ -29,6 +30,7 @@ function requireMusicProgramme(event: Event) {
 }
 
 export function cleanupFormatDescription(event: Event, locale: EventLocale) {
+  if (!event.musicProgramme) return localizeEvent(event, locale).description.replace(/\.$/, "");
   const duration = requireDuration(event);
   requireMusicProgramme(event);
 
